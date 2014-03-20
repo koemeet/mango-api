@@ -1,0 +1,7 @@
+parameters:
+#    mango_api_docs.example.class: Mango\API\DocsBundle\Example
+
+services:
+#    mango_api_docs.example:
+#        class: %mango_api_docs.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

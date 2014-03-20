@@ -1,0 +1,8 @@
+mango_api_docs_homepage:
+    pattern:  /
+    defaults: { _controller: MangoAPIDocsBundle:Default:index }
+
+mango_api_docs_console:
+    pattern:  /console
+    defaults: { _controller: MangoAPIDocsBundle:Console:index }
+

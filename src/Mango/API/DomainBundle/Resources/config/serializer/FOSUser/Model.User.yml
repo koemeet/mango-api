@@ -1,0 +1,14 @@
+FOS\UserBundle\Model\User:
+    properties:
+        usernameCanonical:
+            exclude: true
+        emailCanonical:
+            exclude: true
+        salt:
+            exclude: true
+        password:
+            exclude: true
+        plainPassword:
+            exclude: true
+        confirmationToken:
+            exclude: true

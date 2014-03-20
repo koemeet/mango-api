@@ -1,0 +1,29 @@
+Mango\API\DomainBundle\Entity\User:
+    relations:
+        - rel: self
+          href:
+            route: get_user
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+
+        - rel: new
+          href:
+            route: new_users
+            absolute: true
+
+        - rel: customer
+          href:
+            route: get_customer
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+          embedded:
+            content: expr(object.getCustomer())
+          exclusion:
+            maxDepth: 1
+            exclude_if: expr(!object.getCustomer())
+
+    properties:
+        customer:
+            exclude: true
