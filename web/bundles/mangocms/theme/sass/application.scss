@@ -1,0 +1,147 @@
+@import "variables";
+
+* { outline: 0 !important; }
+
+html { height: 100%; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: image-url('backgrounds/body.jpg');
+  font-size: 12px;
+  line-height: 22px;
+  color: #5f5f5f;
+  min-height: 100%;
+  position: relative;
+  min-height: 100%;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+}
+
+a {
+  color: $link-color;
+
+  &:hover, &:active, &:focus {
+    cursor: pointer;
+    outline: 0px none;
+    text-decoration: none;
+    color: $link-hover-color;
+  }
+}
+
+.fa {
+  display: inline-block;
+  width: 1.25em;
+  text-align: center;
+}
+
+.divider {
+  height: 0;
+  border-top: 1px solid #cdcdcd;
+  border-bottom: 1px solid #f5f5f5;
+  position: relative;
+  margin: 20px 0;
+
+  > span {
+    position: absolute;
+    left: 50%;
+    margin-left: -21px;
+    background: #e6e6e6 image-url('div.png') no-repeat 50%;
+    width: 36px;
+    padding: 0 3px;
+    height: 9px;
+    display: block;
+    top: -4px;
+  }
+}
+
+
+.padded {
+  padding: 15px;
+}
+
+.nopadding {
+  padding: 0;
+}
+
+.hpadded {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.vpadded {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.separate-sections {
+  margin: 0;
+  list-style: none;
+  padding-bottom: 5px;
+
+  > li, > div {
+    margin-bottom: 15px !important;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+
+.avatar {
+  display: inline-block;
+  img {
+    @include border-radius(50%);
+    @include box-shadow(0 1px 3px 0px rgba(0,0,0,.3));
+  }
+}
+
+.avatar-small {
+  max-width: 32px;
+  max-height: 32px;
+}
+
+.twitter-color {
+  color: #4099ff;
+}
+
+.facebook-color {
+  color: #35508F;
+}
+
+.note {
+  color: #909090;
+  font-style: italic;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+.close {
+  line-height: 14px;
+}
+
+.relative {
+  position: relative;
+}
+
+.indent {
+  margin-left: 10px;
+}
+
+.strikethrough {
+  text-decoration:line-through;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+
+  &.padded > .row {
+    margin: 0;
+  }
+}
+
+.disabled {
+  @include opacity(0.6);
+}

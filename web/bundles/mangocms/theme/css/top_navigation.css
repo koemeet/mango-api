@@ -1,0 +1,35 @@
+/* line 3, ../sass/top_navigation.scss */
+.navbar {
+  margin-bottom: 0px;
+}
+/* line 6, ../sass/top_navigation.scss */
+.navbar .navbar-brand {
+  font-family: "Myriad Pro";
+  color: #eee;
+}
+
+/* line 11, ../sass/top_navigation.scss */
+.navbar-inverse {
+  background-image: url('../images/backgrounds/top.jpg?1383686059');
+  border-color: #1c1c1c;
+}
+/* line 16, ../sass/top_navigation.scss */
+.navbar-inverse .nav > li.round {
+  margin-top: 10px;
+}
+/* line 19, ../sass/top_navigation.scss */
+.navbar-inverse .nav > li.round > a {
+  padding: 5px 0 0 0;
+  height: 28px;
+  width: 28px;
+  display: inline-block;
+  margin: 0 0 0 10px;
+  background: #191919;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  box-shadow: 0 1px 0 #4e4e4e;
+  -webkit-box-shadow: 0 1px 0 #4e4e4e;
+  -moz-box-shadow: 0 1px 0 #4e4e4e;
+  text-align: center;
+}

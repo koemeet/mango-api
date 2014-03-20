@@ -1,0 +1,189 @@
+/* ===== iPhone like checkboxes ===== */
+
+.on_off {
+  .ibutton-container {
+    @include box-sizing(content-box); 
+    height: 21px;
+  }
+
+  .ibutton-label-on, .ibutton-label-off {
+    height: 21px;
+  }
+
+  .ibutton-label-on {
+    @include box-sizing(content-box);  color: #fff; text-shadow: 0 1px #808080; left: 0; z-index: 1; background-position: 0 -52px;
+
+    span {
+      @include box-sizing(content-box);  background: image-url('ibutton/yes.png') no-repeat; width: 11px; left: -1px; position: relative;
+      height: 11px; display: block; float: right; padding-top: 0px; margin-top: 1px; padding-right: 7px;
+    }
+  }
+
+  .ibutton-label-off {
+    @include box-sizing(content-box);  color: #fff; text-shadow: 0 1px #808080; text-align: right; right: 0;
+    width: 95%; background-position: 100% -52px;
+
+    span {
+      @include box-sizing(content-box);  background: image-url('ibutton/no.png') no-repeat; width: 8px; height: 9px; position: relative;
+      left: -4px; display: block; float: right; padding-top: 0; margin-top: 2px; padding-right: 7px; text-indent: -9999px;
+    }
+  }
+
+  .ibutton-handle {
+    @include box-sizing(content-box); 
+    height: 20px;
+    background-position: 0 -73px;
+  }
+
+  .ibutton-handle-right {
+    @include box-sizing(content-box); 
+    background: transparent image-url('ibutton/ibutton-slider-default.png') no-repeat scroll 100% -73px;
+  }
+
+  .ibutton-handle-middle {
+    @include box-sizing(content-box); 
+    background: transparent image-url('ibutton/ibutton-slider-default.png') no-repeat scroll 50% -73px;
+  }
+
+  .ibutton-padding-left, .ibutton-padding-right {
+    @include box-sizing(content-box); 
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    background: transparent image-url('ibutton/ibutton-slider-default.png') no-repeat scroll 0 -52px;
+    width: 3px;
+    height: 20px;
+  }
+
+  .ibutton-padding-right {
+    background-position: 100% -52px;
+  }
+}
+
+.ibutton-container {
+  @include box-sizing(content-box);
+  position: relative;
+  height: 26px;
+  cursor: pointer;
+  overflow: hidden;
+  max-width: 400px;
+  -khtml-user-select: none;
+  -o-user-select: none;
+  -moz-user-select: none;
+  -moz-user-focus: ignore;
+  -moz-user-input: disabled;
+  width: 89px;
+
+
+  input {
+    @include box-sizing(content-box); 
+    position: absolute;
+    top: 0;
+    left: 0;
+    @include opacity(0);
+    -moz-user-input: enabled !important;
+  }
+}
+
+.ibutton-handle {
+  @include box-sizing(content-box); 
+  display: block;
+  height: 25px;
+  cursor: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  background: transparent image-url('ibutton/ibutton-slider-default.png') no-repeat scroll 0 -26px;
+  z-index: 3;
+  padding-left: 3px;
+  width: 33px;
+}
+
+.ibutton-handle-right {
+  @include box-sizing(content-box); 
+  height: 100%;
+  width: 100%;
+  padding-right: 3px;
+  background: transparent image-url('ibutton/ibutton-slider-default.png') no-repeat scroll 100% -26px;
+  z-index: 3;
+}
+
+.ibutton-handle-middle {
+  @include box-sizing(content-box); 
+  height: 100%;
+  width: 100%;
+  background: transparent image-url('ibutton/ibutton-slider-default.png') no-repeat scroll 50% -26px;
+  z-index: 3;
+}
+
+div.ibutton-label-on, div.ibutton-label-off {
+  @include box-sizing(content-box); 
+  white-space: nowrap;
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: inherit;
+  display: block;
+  height: 26px;
+  position: absolute;
+  width: auto;
+  top: 0;
+  padding-top: 4px;
+  overflow: hidden;
+  text-align: center;
+  background: transparent image-url('ibutton/ibutton-slider-default.png') no-repeat scroll 0 0;
+}
+
+div.ibutton-label-on {
+  @include box-sizing(content-box); 
+  color: #fff;
+  text-shadow: 0 1px #808080;
+  left: 0;
+  z-index: 1;
+}
+
+div.ibutton-label-on {
+  span {
+    @include box-sizing(content-box); 
+    padding-left: 0px;
+  }
+}
+
+div.ibutton-label-off {
+  @include box-sizing(content-box); 
+  color: #fff;
+  background-position: 100% 0;
+  text-shadow: 0 1px #808080;
+  text-align: right;
+  right: 0;
+  width: 95%;
+}
+
+div.ibutton-label-off {
+  span {
+    label {
+      @include box-sizing(content-box); 
+      padding-right: 10px;
+      margin-left: -2px
+    }
+  }
+}
+
+.ibutton-padding-left {
+  @include box-sizing(content-box); 
+  left: 0;
+}
+
+.ibutton-padding-right {
+  @include box-sizing(content-box); 
+  right: 0;
+}
+
+.ibutton-disabled {
+  @include box-sizing(content-box); 
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}

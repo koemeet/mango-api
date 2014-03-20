@@ -1,0 +1,15 @@
+@import "variables";
+
+.left-content {
+  position: relative;
+  margin-left: $navigation-width;
+  width: 200px;
+  background-color: red;
+}
+
+#content {
+  position: relative;
+  margin-left: 326px;
+
+  @import "content-header";
+}

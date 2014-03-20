@@ -1,0 +1,134 @@
+/* line 10, ../sass/panels.scss */
+.panel {
+  -webkit-box-shadow: 0 2px 2px -2px #cccccc;
+  -moz-box-shadow: 0 2px 2px -2px #cccccc;
+  box-shadow: 0 2px 2px -2px #cccccc;
+  background: #fbfbfb;
+  border: 1px solid #cdcdcd;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+/* line 25, ../sass/panels.scss */
+.panel > .list-group {
+  margin-bottom: 0;
+}
+/* line 28, ../sass/panels.scss */
+.panel > .list-group .list-group-item {
+  border-width: 1px 0;
+}
+/* line 32, ../sass/panels.scss */
+.panel > .list-group .list-group-item:first-child {
+  -moz-border-radius-topleft: 0;
+  -webkit-border-top-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-border-radius-topright: 0;
+  -webkit-border-top-right-radius: 0;
+  border-top-right-radius: 0;
+}
+/* line 36, ../sass/panels.scss */
+.panel > .list-group .list-group-item:last-child {
+  border-bottom: 0;
+}
+
+/* line 44, ../sass/panels.scss */
+.panel-heading + .list-group .list-group-item:first-child {
+  border-top-width: 0;
+}
+
+/* line 56, ../sass/panels.scss */
+.panel > .table {
+  margin-bottom: 0;
+}
+
+/* line 66, ../sass/panels.scss */
+.panel-heading {
+  padding: 8px 12px;
+  *zoom: 1;
+  background: #eaeaea;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZkZmRmZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2VhZWFlYSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fdfdfd), color-stop(100%, #eaeaea));
+  background-image: -webkit-linear-gradient(top, #fdfdfd, #eaeaea);
+  background-image: -moz-linear-gradient(top, #fdfdfd, #eaeaea);
+  background-image: -o-linear-gradient(top, #fdfdfd, #eaeaea);
+  background-image: linear-gradient(top, #fdfdfd, #eaeaea);
+  text-shadow: 0 1px white;
+  border-bottom: 1px solid #CDCDCD;
+  color: #636363;
+  font-weight: bold;
+}
+/* line 24, ../sass/mixin_helpers.scss */
+.panel-heading:before, .panel-heading:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 30, ../sass/mixin_helpers.scss */
+.panel-heading:after {
+  clear: both;
+}
+
+/* line 79, ../sass/panels.scss */
+.panel-footer {
+  *zoom: 1;
+}
+/* line 24, ../sass/mixin_helpers.scss */
+.panel-footer:before, .panel-footer:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 30, ../sass/mixin_helpers.scss */
+.panel-footer:after {
+  clear: both;
+}
+
+/* line 89, ../sass/panels.scss */
+.panel-group {
+  margin-bottom: 20px;
+}
+/* line 93, ../sass/panels.scss */
+.panel-group .panel {
+  -moz-border-radius-bottomleft: 0;
+  -webkit-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+/* line 96, ../sass/panels.scss */
+.panel-group .panel + .panel {
+  margin-top: -1px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+/* line 101, ../sass/panels.scss */
+.panel-group .panel:last-child {
+  -moz-border-radius-bottomleft: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  -moz-border-radius-bottomright: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+/* line 106, ../sass/panels.scss */
+.panel-group .panel-heading {
+  padding: 0;
+}
+/* line 109, ../sass/panels.scss */
+.panel-group .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #cdcdcd;
+}
+/* line 113, ../sass/panels.scss */
+.panel-group .panel-heading a {
+  padding: 8px 12px;
+  display: block;
+}

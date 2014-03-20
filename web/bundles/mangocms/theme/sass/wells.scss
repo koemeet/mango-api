@@ -1,0 +1,5 @@
+.well {
+  .triangle-button {
+    @include border-top-right-radius(4px);
+  }
+}

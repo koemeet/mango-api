@@ -1,0 +1,105 @@
+div.checker, div.radio {
+  display: -moz-inline-box;
+  display: inline-block;
+  zoom: 1;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+
+div.checker {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  display: -moz-inline-box;
+  display: block;
+  vertical-align: middle;
+  zoom: 1;
+  float: left;
+  margin-top: 3px;
+  margin-right: 8px;
+  box-shadow: 0 1px 0 #fff;
+  -webkit-box-shadow: 0 1px 0 #fff;
+  -moz-box-shadow: 0 1px 0 #fff;
+
+  span {
+    display: -moz-inline-box;
+    display: inline-block;
+    zoom: 1;
+    text-align: center;
+    background-position: 0 0;
+    width: 16px;
+    height: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  input {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    border: none;
+    background: none;
+    display: -moz-inline-box;
+    display: inline-block;
+    zoom: 1;
+    width: 19px;
+    height: 19px;
+    cursor: pointer;
+  }
+}
+
+div.checker input, input[type="search"], input[type="search"]:active {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+div.checker {
+  span {
+    background: url(../images/elements/forms/checkboxes.png) no-repeat 0 0;
+    height: 16px;
+    width: 16px;
+    display: -moz-inline-box;
+    display: inline-block;
+    text-align: center;
+
+    &.checked {
+      background-position: 0 -17px;
+    }
+  }
+}
+
+div.radio {
+  width: 16px;
+  height: 17px;
+  position: relative;
+  display: -moz-inline-box;
+  display: block;
+  vertical-align: middle;
+  zoom: 1;
+  float: left;
+  margin-top: 3px;
+  margin-right: 8px;
+
+  span {
+    background: image-url('elements/forms/radios.png') no-repeat 0 0;
+    height: 17px;
+    width: 16px;
+    display: -moz-inline-box;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+
+    &.checked {
+      background-position: 0 -18px;
+    }
+  }
+
+  input {
+    width: 16px;
+    height: 17px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    display: none;
+    background: none;
+  }
+}
