@@ -1,0 +1,8 @@
+Mango\API\DomainBundle\Entity\User:
+    properties:
+        username:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+            - Email: ~
+        plainPassword: ~

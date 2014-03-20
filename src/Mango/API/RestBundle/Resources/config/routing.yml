@@ -1,0 +1,11 @@
+mango_api_rest_customers:
+    type: rest
+    resource: MangoAPIRestBundle:Customers
+
+mango_api_rest_users:
+    type: rest
+    resource: MangoAPIRestBundle:Users
+
+mango_api_rest_routes:
+    type: rest
+    resource: MangoAPIRestBundle:Routes
