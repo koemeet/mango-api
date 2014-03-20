@@ -1,0 +1,19 @@
+/* line 1, ../sass/content-header.scss */
+.header {
+  background: url('../images/backgrounds/contentTop.png?1383682122') repeat-x;
+}
+/* line 4, ../sass/content-header.scss */
+.header .title {
+  display: block;
+}
+/* line 7, ../sass/content-header.scss */
+.header .title .fa {
+  font-size: 16px;
+}
+/* line 11, ../sass/content-header.scss */
+.header .title h2 {
+  margin: 25px 10px;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+}

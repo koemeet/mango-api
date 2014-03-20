@@ -1,0 +1,32 @@
+/* line 3, ../sass/content.scss */
+.left-content {
+  position: relative;
+  margin-left: 100px;
+  width: 200px;
+  background-color: red;
+}
+
+/* line 10, ../sass/content.scss */
+#content {
+  position: relative;
+  margin-left: 326px;
+}
+/* line 1, ../sass/content-header.scss */
+#content .header {
+  background: url('../images/backgrounds/contentTop.png?1383682122') repeat-x;
+}
+/* line 4, ../sass/content-header.scss */
+#content .header .title {
+  display: block;
+}
+/* line 7, ../sass/content-header.scss */
+#content .header .title .fa {
+  font-size: 16px;
+}
+/* line 11, ../sass/content-header.scss */
+#content .header .title h2 {
+  margin: 25px 10px;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+}

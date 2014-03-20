@@ -1,0 +1,23 @@
+.nav {
+  > li {
+    position: relative;
+    display: block;
+  }
+}
+
+.nav-tabs {
+  > li {
+    float: left;
+    margin-bottom: -1px;
+  }
+
+  > li.active {
+    > a {
+      color: #555555;
+      background-color: white;
+      border: 1px solid #dddddd;
+      border-bottom-color: transparent;
+      cursor: default;
+    }
+  }
+}
