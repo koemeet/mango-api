@@ -1,0 +1,8 @@
+Doctrine\Tests\ODM\PHPCR\Mapping\Model\ChildrenMappingObject:
+  id: id
+  children:
+    all: ~
+    some:
+      filter: "*some*"
+      fetchDepth: 2
+      cascade: ['persist', 'remove']

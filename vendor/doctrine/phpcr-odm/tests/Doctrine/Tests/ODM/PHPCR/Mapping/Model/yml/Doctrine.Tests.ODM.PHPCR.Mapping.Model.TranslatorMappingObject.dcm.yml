@@ -1,0 +1,13 @@
+Doctrine\Tests\ODM\PHPCR\Mapping\Model\TranslatorMappingObject:
+  translator: attribute
+  id: id
+  locale: doclocale
+  fields:
+    publishDate:
+      type: date
+    topic:
+      type: string
+      translated: true
+    image:
+      type: binary
+      translated: true

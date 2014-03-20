@@ -1,0 +1,35 @@
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping
+    https://github.com/doctrine/phpcr-odm/raw/master/doctrine-phpcr-odm-mapping.xsd"
+    >
+
+    <mapped-superclass
+        name="Symfony\Cmf\Bundle\BlockBundle\Model\AbstractBlock"
+        >
+
+        <mixins>
+            <mixin type="mix:created" />
+            <mixin type="mix:lastModified" />
+        </mixins>
+
+        <id name="id">
+            <generator strategy="PARENT"/>
+        </id>
+        <nodename name="name"/>
+        <parent-document name="parentDocument"/>
+
+        <field name="ttl" type="int"/>
+
+        <field name="createdAt" type="date" property="jcr:created"/>
+        <field name="updatedAt" type="date" property="jcr:lastModified"/>
+
+        <field name="publishable" type="boolean"/>
+        <field name="publishStartDate" type="date" nullable="true"/>
+        <field name="publishEndDate" type="date" nullable="true"/>
+
+        <field name="settings" type="string" assoc=""/>
+    </mapped-superclass>
+
+</doctrine-mapping>

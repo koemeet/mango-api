@@ -1,0 +1,48 @@
+<?php
+/**
+ * The config file is responsible to make class loading work and initialize a
+ * DocumentManagerHelper that contains the doctrine document manager with a
+ * Session of your phcpr implementation.
+ * The array $extraCommands can be used to inject implementation specific commands.
+ * Add instances of commands for eventual implementation specific commands to this array.
+ */
+
+$extraCommands = array();
+$extraCommands[] = new \Jackalope\Tools\Console\Command\JackrabbitCommand();
+
+if (! isset($argv[1])
+    || $argv[1] == 'jackalope:run:jackrabbit'
+    || $argv[1] == 'list'
+    || $argv[1] == 'help'
+) {
+    //abort here, do not try to init repository
+    return;
+}
+
+$params = array(
+    'jackalope.jackrabbit_uri'  => 'http://localhost:8080/server/',
+);
+
+$workspace = 'default';
+$user = 'admin';
+$pass = 'admin';
+
+/* bootstrapping the repository implementation. for jackalope, do this: */
+$factory = new \Jackalope\RepositoryFactoryJackrabbit();
+$repository = $factory->getRepository($params);
+$credentials = new \PHPCR\SimpleCredentials($user, $pass);
+$session = $repository->login($credentials, $workspace);
+
+/* prepare the doctrine configuration */
+$config = new \Doctrine\ODM\PHPCR\Configuration();
+$driver = new \Doctrine\ODM\PHPCR\Mapping\Driver\AnnotationDriver(
+    new \Doctrine\Common\Annotations\AnnotationReader(),
+    __DIR__ . '/lib/Doctrine/ODM/PHPCR/Document'
+);
+$config->setMetadataDriverImpl($driver);
+
+$dm = \Doctrine\ODM\PHPCR\DocumentManager::create($session, $config);
+
+$helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
+    'dm' => new \Doctrine\ODM\PHPCR\Tools\Console\Helper\DocumentManagerHelper(null, $dm)
+));

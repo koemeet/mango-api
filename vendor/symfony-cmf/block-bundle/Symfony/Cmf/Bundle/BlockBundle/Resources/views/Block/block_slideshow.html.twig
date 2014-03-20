@@ -1,0 +1,18 @@
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+
+    {% if block.children %}
+        {% if block.title is defined %}
+            <h3>{{ block.title }}</h3>
+        {% endif %}
+        <div class="slideshow">
+            <ul>
+                {% for item in block.children %}
+                    <li>{{ sonata_block_render(item) }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+{% endblock %}

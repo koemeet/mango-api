@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\AbstractBlock">
+        <constraint name="Doctrine\Bundle\PHPCRBundle\Validator\Constraints\ValidPhpcrOdm" />
+        <constraint name="Callback">
+            <option name="methods">
+                <value>isSettingsValid</value>
+            </option>
+        </constraint>
+    </class>
+
+    <class name="Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\ActionBlock">
+        <property name="actionName">
+            <constraint name="NotBlank" />
+        </property>
+    </class>
+
+    <class name="Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\SimpleBlock">
+        <property name="title">
+            <constraint name="NotBlank" />
+        </property>
+
+        <property name="body">
+            <constraint name="NotBlank" />
+        </property>
+
+        <property name="locale">
+            <constraint name="Locale"/>
+        </property>
+    </class>
+
+    <class name="Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\StringBlock">
+        <property name="body">
+            <constraint name="NotBlank" />
+        </property>
+
+        <property name="locale">
+            <constraint name="Locale"/>
+        </property>
+    </class>
+
+    <class name="Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\ImagineBlock">
+        <property name="locale">
+            <constraint name="Locale"/>
+        </property>
+    </class>
+
+    <class name="Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\SlideshowBlock">
+        <property name="locale">
+            <constraint name="Locale"/>
+        </property>
+    </class>
+
+</constraint-mapping>

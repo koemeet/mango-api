@@ -1,0 +1,47 @@
+{
+    "name": "doctrine/phpcr-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony DoctrinePHPCRBundle",
+    "keywords": ["PHPCR", "ODM", "Database", "Persistence"],
+    "homepage": "http://www.doctrine-project.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name":"Lukas Kahwe Smith",
+            "email":"smith@pooteeweet.org"
+        },
+        {
+            "name": "Benjamin Eberlei",
+            "email": "kontakt@beberlei.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.1",
+        "symfony/doctrine-bridge": "~2.1",
+        "phpcr/phpcr-implementation": "2.1.*",
+        "phpcr/phpcr-utils": "~1.0.0"
+    },
+    "require-dev": {
+        "symfony/form": "~2.1",
+        "doctrine/phpcr-odm": "1.0.*",
+        "jackalope/jackalope-jackrabbit": "1.0.*"
+    },
+    "suggest": {
+        "doctrine/phpcr-odm": "if you want to use the odm as well. require version 1.0.*",
+        "jackalope/jackalope-jackrabbit": "if you want to connect to jackrabbit. require version 1.0.*",
+        "jackalope/jackalope-doctrine-dbal": "if you want to use jackalope-doctrine-dbal. require version 1.0.*",
+        "doctrine/data-fixtures": "if you want to use the fixture loading.",
+        "doctrine/doctrine-bundle": "when using jackalope-doctrine-dbal"
+    },
+    "autoload": {
+        "psr-0": { "Doctrine\\Bundle\\PHPCRBundle": "" }
+    },
+    "minimum-stability": "dev",
+    "target-dir": "Doctrine/Bundle/PHPCRBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

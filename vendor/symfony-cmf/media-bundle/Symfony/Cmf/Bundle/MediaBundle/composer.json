@@ -1,0 +1,44 @@
+{
+    "name": "symfony-cmf/media-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony CMF Media Bundle",
+    "keywords": ["Symfony CMF", "image", "media"],
+    "homepage": "http://cmf.symfony.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Symfony CMF Community",
+            "homepage": "https://github.com/symfony-cmf/MediaBundle/contributors"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.2"
+    },
+    "require-dev": {
+        "symfony-cmf/testing": "1.0.*",
+        "jms/serializer-bundle": "0.12.*",
+        "liip/imagine-bundle": "~0.12",
+        "mikey179/vfsStream": "~1.2"
+    },
+    "suggest": {
+        "symfony-cmf/core-bundle": "Simplifies configuration with other CMF bundles, use PHP >=5.3.9 with PHPCR",
+        "knplabs/gaufrette": "When using the Gaufrette adapter",
+        "phpcr/phpcr-utils": "When using the Gaufrette adapter",
+        "jms/serializer-bundle": "When using the serializer handler",
+        "liip/imagine-bundle": "To integrate with the Imagine library for processing images",
+        "helios-ag/fm-elfinder-bundle": "When using the elFinder media browser"
+    },
+    "autoload":{
+        "psr-0":{
+            "Symfony\\Cmf\\Bundle\\MediaBundle": ""
+        }
+    },
+    "target-dir": "Symfony/Cmf/Bundle/MediaBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

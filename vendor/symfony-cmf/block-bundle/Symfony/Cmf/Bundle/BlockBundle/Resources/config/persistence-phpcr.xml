@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="cmf_block.persistence.phpcr.manager_name">null</parameter>
+        <parameter key="cmf_block.persistence.phpcr.block_loader.class">Symfony\Cmf\Bundle\BlockBundle\Block\PhpcrBlockLoader</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="cmf.block.service" class="%cmf_block.persistence.phpcr.block_loader.class%">
+            <tag name="sonata.block.loader" />
+            <tag name="cmf_request_aware" />
+            <argument type="service" id="doctrine-phpcr" />
+            <argument type="service" id="cmf_core.publish_workflow.checker"/>
+            <argument type="service" id="logger" on-invalid="ignore" />
+            <argument>sonata.block.service.empty</argument>
+        </service>
+
+    </services>
+</container>
