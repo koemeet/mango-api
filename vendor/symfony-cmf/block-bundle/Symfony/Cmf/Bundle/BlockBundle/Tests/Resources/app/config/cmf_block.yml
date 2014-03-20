@@ -1,5 +1,0 @@
-cmf_block:
-    persistence:
-        phpcr:
-            enabled: true
-            block_basepath: /test

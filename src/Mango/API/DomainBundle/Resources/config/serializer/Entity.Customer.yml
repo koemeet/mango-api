@@ -1,6 +1,0 @@
-Mango\API\DomainBundle\Entity\Customer:
-    properties:
-        company:
-            serialized_name: ej
-        users:
-            maxDepth: 5

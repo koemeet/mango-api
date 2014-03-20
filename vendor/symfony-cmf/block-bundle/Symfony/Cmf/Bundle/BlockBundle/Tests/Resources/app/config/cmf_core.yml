@@ -1,3 +1,0 @@
-cmf_core:
-    publish_workflow:
-        request_listener: false
