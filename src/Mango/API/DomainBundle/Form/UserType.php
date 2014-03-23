@@ -18,7 +18,11 @@ class UserType extends AbstractType
             ->add('username')
             ->add('email')
             ->add('plainPassword', 'password')
-            ->add('customer')
+            ->add('customer', 'entity', array(
+                'class' => 'MangoAPIDomainBundle:Customer',
+                'property' => 'company',
+                'invalid_message' => "This is not a valid customer, please provide it's ID."
+            ))
         ;
     }
     

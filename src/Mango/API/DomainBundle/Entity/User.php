@@ -45,119 +45,114 @@ class User extends BaseUser
     /**
      * @var \Customer
      *
-     * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="users", cascade={"remove"})
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+     *  @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false)
      * })
      */
     protected $customer;
 
 
     /**
-     * @ORM\Column(name="first_name", type="string")
+     * @ORM\Column(name="first_name", type="string", nullable=true)
      */
     protected $firstname;
 
     /**
-     * @ORM\Column(name="inbetweener", type="string")
+     * @ORM\Column(name="inbetweener", type="string", nullable=true)
      */
     protected $inbetweener;
 
     /**
-     * @ORM\Column(name="middle_name", type="string")
+     * @ORM\Column(name="middle_name", type="string", nullable=true)
      */
     protected $middleName;
 
     /**
-     * @ORM\Column(name="last_name", type="string")
+     * @ORM\Column(name="last_name", type="string", nullable=true)
      */
     protected $lastName;
 
     /**
-     * @ORM\Column(name="phone_primair", type="integer")
+     * @ORM\Column(name="phone_primair", type="integer", nullable=true)
      */
     protected $phonePrimair;
 
     /**
-     * @ORM\Column(name="phone_secundair", type="integer")
+     * @ORM\Column(name="phone_secundair", type="integer", nullable=true)
      */
     protected $phoneSecundair;
 
     // Address
     /**
-     * @ORM\Column(name="street_address", type="string")
+     * @ORM\Column(name="street_address", type="string", nullable=true)
      */
     protected $streetAddress;
 
     /**
-     * @ORM\Column(name="street_number", type="integer")
+     * @ORM\Column(name="street_number", type="integer", nullable=true)
      */
     protected $streetNumber;
 
     /**
-     * @ORM\Column(name="street_number_suffix", type="string")
+     * @ORM\Column(name="street_number_suffix", type="string", nullable=true)
      */
     protected $streetNumberSuffix;
 
     /**
-     * @ORM\Column(name="city", type="string")
+     * @ORM\Column(name="city", type="string", nullable=true)
      */
     protected $city;
 
     /**
-     * @ORM\Column(name="zipcode", type="string")
+     * @ORM\Column(name="zipcode", type="string", nullable=true)
      */
     protected $zipcode;
 
     /**
-     * @ORM\Column(name="country", type="string")
+     * @ORM\Column(name="country", type="string", nullable=true)
      */
     protected $country;
 
-    // Billing address
     /**
-     * @ORM\Column(name="billing_street_address", type="string")
+     * @ORM\Column(name="billing_street_address", type="string", nullable=true)
      */
     protected $billingStreetAddress;
 
     /**
-     * @ORM\Column(name="billing_street_number", type="integer")
+     * @ORM\Column(name="billing_street_number", type="integer", nullable=true)
      */
     protected $billingStreetNumber;
 
     /**
-     * @ORM\Column(name="billing_street_number_suffix", type="string")
+     * @ORM\Column(name="billing_street_number_suffix", type="string", nullable=true)
      */
     protected $billingStreetNumberSuffix;
 
     /**
-     * @ORM\Column(name="billing_city", type="string")
+     * @ORM\Column(name="billing_city", type="string", nullable=true)
      */
     protected $billingCity;
 
     /**
-     * @ORM\Column(name="billing_zipcode", type="string")
+     * @ORM\Column(name="billing_zipcode", type="string", nullable=true)
      */
     protected $billingZipcode;
 
     /**
-     * @ORM\Column(name="billing_country", type="string")
+     * @ORM\Column(name="billing_country", type="string", nullable=true)
      */
     protected $billingCountry;
 
-
     /**
-     * @ORM\Column(name="marketing_mails", type="boolean")
+     * @ORM\Column(name="marketing_mails", type="boolean", nullable=true)
      */
     protected $marketingMails;
 
     /**
-     * @ORM\Column(name="notes", type="text")
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
     protected $notes;
-
-
-
 
     /**
      * Get id

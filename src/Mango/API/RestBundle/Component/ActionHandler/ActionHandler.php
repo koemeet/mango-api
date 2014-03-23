@@ -17,6 +17,7 @@ use
     Mango\API\RestBundle\Component\ActionHandler\Query\ParamQueryExtractor;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -132,11 +133,12 @@ class ActionHandler implements ActionHandlerInterface, ContainerAwareInterface
         /** @var Request $request */
         $request = $this->container->get('request');
 
+        /** @var Form $form */
         $form = $this->createForm($formType, $entity);
 
         $data = $request->request->all();
-        $data = array_intersect_key($data, $form->all());
-        $form->submit($data);
+        //$data = array_intersect_key($data, $form->all());
+        $form->submit($data, false);
 
         if ($form->isValid() && $persist) {
             $em->persist($entity);

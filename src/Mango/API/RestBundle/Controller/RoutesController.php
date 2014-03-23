@@ -27,9 +27,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
  */
 class RoutesController extends FOSRestController
 {
-    protected $idPrefix = '/cms/routes';
-    protected $className = 'Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route';
-
     /**
      * Get routes candidates by uri
      *
@@ -43,9 +40,8 @@ class RoutesController extends FOSRestController
         /** @var DocumentManager $dm */
         $dm = $this->get('doctrine_phpcr.odm.document_manager');
         $url = $paramFetcher->get('uri');
-        $candidates = $this->getCandidates($url);
 
-        $routes =  $dm->findMany($this->className, $candidates);
+        $routes =  $dm->find(null, '/cms/routes');
 
         return $routes;
 

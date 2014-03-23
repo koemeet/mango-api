@@ -15,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\UserBundle\Entity\UserManager;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Mango\API\DomainBundle\Entity\Customer;
 use Mango\API\DomainBundle\Entity\User;
 use Mango\API\DomainBundle\Form\UserType;
 use Mango\API\RestBundle\Common\ActionHandler;
@@ -75,10 +76,11 @@ class UsersController extends FOSRestController
      */
     public function postUsersAction()
     {
-        /** @var ActionHandler $handler */
+        /** @var \Mango\API\RestBundle\Component\ActionHandler\ActionHandler $handler */
         $handler = $this->get('mango_api_rest.action_handler');
 
         $user = new User();
+        $user->setCustomer($this->getUser()->getCustomer());
         return $handler->insert(new UserType(), $user);
     }
 

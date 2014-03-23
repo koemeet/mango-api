@@ -38,7 +38,12 @@ class CustomersController extends FOSRestController
         /** @var ActionHandlerInterface $handler */
         $handler = $this->get('mango_api_rest.action_handler');
         $qb = $handler->find("MangoAPIDomainBundle:Customer", $paramFetcher);
-        return $qb->getQuery()->getResult();
+
+        $customers = $qb->getQuery()->getResult();
+
+        return array(
+            'customers' => $customers
+        );
     }
 
     public function getCustomerAction($id)
@@ -48,7 +53,6 @@ class CustomersController extends FOSRestController
         $user = $handler->findOne("MangoAPIDomainBundle:Customer", $id);
         return $user;
     }
-
 
     public function newCustomersAction()
     {

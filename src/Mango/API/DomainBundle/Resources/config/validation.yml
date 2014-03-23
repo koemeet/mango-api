@@ -1,0 +1,16 @@
+Mango\API\DomainBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [username]
+            message: "The username you entered already exists."
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [email]
+            message: "This email is already in use."
+    properties:
+        username:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+            - Email: ~
+        customer:
+            - NotBlank: ~

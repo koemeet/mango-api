@@ -62,7 +62,7 @@ class Customer
     /**
      * @var \Customer
      *
-     * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\ManyToOne(targetEntity="Customer", cascade={"remove"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      * })

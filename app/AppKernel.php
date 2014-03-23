@@ -24,7 +24,6 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new FOS\UserBundle\FOSUserBundle(),
@@ -38,7 +37,10 @@ class AppKernel extends Kernel
             new \Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
             new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
             new \Symfony\Cmf\Bundle\ContentBundle\CmfContentBundle(),
-            new \Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle()
+            new \Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle(),
+
+//            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
+            new Mango\Bundle\JsonApiBundle\MangoJsonApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
