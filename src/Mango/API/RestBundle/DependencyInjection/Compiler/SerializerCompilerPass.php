@@ -29,9 +29,11 @@ class SerializerCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         // Replace the default json serializer from hateoas with ours.
-        if ($container->hasDefinition('hateoas.event_subscriber.json')) {
-            $container->getDefinition('hateoas.event_subscriber.json')->replaceArgument(0, new Reference('mango_api_rest.serializer.json_hal'));
-        }
+//        if ($container->hasDefinition('hateoas.event_subscriber.json')) {
+//            $container->getDefinition('hateoas.event_subscriber.json')->replaceArgument(0, new Reference('mango_api_rest.serializer.json_hal'));
+//        }
+
+        $container->setParameter('hateoas.serializer.json_hal.class', 'Mango\\API\\RestBundle\\Serializer\\JsonApiSerializer');
     }
 
 } 

@@ -39,8 +39,8 @@ class AppKernel extends Kernel
             new \Symfony\Cmf\Bundle\ContentBundle\CmfContentBundle(),
             new \Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle(),
 
-//            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
-            new Mango\Bundle\JsonApiBundle\MangoJsonApiBundle(),
+            // Serializer
+            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

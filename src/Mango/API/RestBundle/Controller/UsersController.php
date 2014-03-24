@@ -80,7 +80,7 @@ class UsersController extends FOSRestController
         $handler = $this->get('mango_api_rest.action_handler');
 
         $user = new User();
-        $user->setCustomer($this->getUser()->getCustomer());
+        //$user->setCustomer($this->getUser()->getCustomer());
         return $handler->insert(new UserType(), $user);
     }
 

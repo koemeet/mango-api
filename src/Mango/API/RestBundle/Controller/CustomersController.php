@@ -54,6 +54,11 @@ class CustomersController extends FOSRestController
         return $user;
     }
 
+    public function getCustomerUsersAction($id)
+    {
+        return array();
+    }
+
     public function newCustomersAction()
     {
 

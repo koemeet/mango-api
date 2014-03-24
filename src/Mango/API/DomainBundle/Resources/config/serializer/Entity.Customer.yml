@@ -1,6 +1,20 @@
 Mango\API\DomainBundle\Entity\Customer:
-    properties:
-        company:
-            serialized_name: ej
-        users:
-            maxDepth: 5
+    relations:
+        - rel: self
+          href:
+            route: get_user
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+        - rel: users
+          href:
+            route: get_customer_users
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+          embedded:
+            content: expr(object.getUsers())
+
+#    properties:
+#        users:
+#            exclude: true
