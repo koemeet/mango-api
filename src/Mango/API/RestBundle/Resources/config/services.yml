@@ -13,6 +13,7 @@ services:
         class: %mango_api_rest.result_fetcher.class%
         arguments: ["@doctrine.orm.entity_manager"]
 
+    # TODO: Remove this one, switching to JSON API spec
     mango_api_rest.serializer.json_hal:
         class: Mango\API\RestBundle\Serializer\JsonHalSerializer
         arguments: ["@request_stack"]

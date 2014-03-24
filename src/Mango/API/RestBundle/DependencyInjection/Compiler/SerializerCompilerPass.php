@@ -8,7 +8,6 @@
 
 namespace Mango\API\RestBundle\DependencyInjection\Compiler;
 
-
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -28,11 +27,7 @@ class SerializerCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        // Replace the default json serializer from hateoas with ours.
-//        if ($container->hasDefinition('hateoas.event_subscriber.json')) {
-//            $container->getDefinition('hateoas.event_subscriber.json')->replaceArgument(0, new Reference('mango_api_rest.serializer.json_hal'));
-//        }
-
+        // We want to use our JSON API spec serializer when serializing JSON
         $container->setParameter('hateoas.serializer.json_hal.class', 'Mango\\API\\RestBundle\\Serializer\\JsonApiSerializer');
     }
 

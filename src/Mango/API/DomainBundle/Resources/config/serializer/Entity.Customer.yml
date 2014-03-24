@@ -15,6 +15,6 @@ Mango\API\DomainBundle\Entity\Customer:
           embedded:
             content: expr(object.getUsers())
 
-#    properties:
-#        users:
-#            exclude: true
+    properties:
+        users:
+            exclude: true

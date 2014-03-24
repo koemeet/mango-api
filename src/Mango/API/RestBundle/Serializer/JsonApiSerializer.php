@@ -2,10 +2,13 @@
 
 namespace Mango\API\RestBundle\Serializer;
 
+use Doctrine\ORM\PersistentCollection;
 use Hateoas\Model\Embedded;
+use Hateoas\Model\Link;
 use Hateoas\Serializer\JsonSerializerInterface;
 use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\SerializationContext;
+use Mango\API\DomainBundle\Entity\Customer;
 
 /**
  * Class JsonApiSerializer
@@ -14,34 +17,28 @@ use JMS\Serializer\SerializationContext;
 class JsonApiSerializer implements JsonSerializerInterface
 {
     /**
-     * {@inheritdoc}
+     * @param Link[] $links
+     * @param JsonSerializationVisitor $visitor
+     * @param SerializationContext $context
      */
     public function serializeLinks(array $links, JsonSerializationVisitor $visitor, SerializationContext $context)
     {
         $serializedLinks = array();
-        $topLevelSerializedLinks = array();
 
         foreach ($links as $link) {
             $serializedLink = array_merge(array(
                 'href' => $link->getHref(),
             ), $link->getAttributes());
 
-            if (isset($serializedLink['topLevel']) && true === $serializedLink['topLevel']) {
-                unset($serializedLink['topLevel']);
-                $topLevelSerializedLinks[$link->getRel()] = $serializedLink;
-
-                continue;
-            }
-
+            // Support multiple relations of same type
             if (!isset($serializedLinks[$link->getRel()])) {
-                $serializedLinks[$link->getRel()] = $serializedLink['href'];
+                $serializedLinks[$link->getRel()] = $serializedLink;
             } else {
-                $serializedLinks[$link->getRel()][] = $serializedLink['href'];
+                $serializedLinks[$link->getRel()][] = $serializedLink;
             }
         }
 
         $visitor->addData('links', $serializedLinks);
-        $visitor->setRoot(array('links' => $topLevelSerializedLinks));
     }
 
     /**
@@ -49,13 +46,59 @@ class JsonApiSerializer implements JsonSerializerInterface
      * @param JsonSerializationVisitor $visitor
      * @param SerializationContext $context
      */
-    public function serializeEmbeddeds(array $embeddeds, JsonSerializationVisitor $visitor, SerializationContext $context)
-    {
-        $serializedEmbeds = array();
-        foreach ($embeddeds as $embed) {
-            $serializedEmbeds[$embed->getRel()] = $context->accept($embed->getData());
+public function serializeEmbeddeds(array $embeddeds, JsonSerializationVisitor $visitor, SerializationContext $context)
+{
+    $serializedEmbeds = array();
+
+    foreach ($embeddeds as $embed) {
+        $data = $embed->getData();
+        $ids = array();
+
+        // Can we iterate over the given data?
+        if ($data instanceof \Traversable) {
+            foreach ($data as $object) {
+                if (is_callable(array($object, 'getId'))) {
+                    $ids[] = $object->getId();
+                }
+            }
+        } else {
+            if (is_callable(array($data, 'getId'))) {
+                $ids = $data->getId();
+            }
         }
 
-        $visitor->setRoot(array('linked' => $serializedEmbeds));
+        if (count($ids) > 0) {
+            $visitor->addData($embed->getRel(), $ids);
+        }
+    }
+
+    $serializedEmbeds[$embed->getRel()] = $context->accept($embed->getData());
+    $visitor->setRoot(array('linked' => $serializedEmbeds));
+}
+
+    /**
+     * @param Embedded[] $embeddeds
+     * @param $object
+     * @param JsonSerializationVisitor $visitor
+     */
+    public function serializeRelations(array $embeddeds, $object, JsonSerializationVisitor $visitor)
+    {
+        foreach ($embeddeds as $embedded) {
+            $data = $embedded->getData();
+
+            $ids = array();
+            if ($data instanceof PersistentCollection) {
+                $values = $data->getValues();
+                foreach ($values as $value) {
+                    $ids[] = $value->getId();
+                }
+            } else {
+                $ids[] = $data->getId();
+            }
+
+            if (count($ids) > 0) {
+                //$visitor->addData($embedded->getRel(), $ids);
+            }
+        }
     }
 }
