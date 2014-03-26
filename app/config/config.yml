@@ -117,7 +117,7 @@ fos_rest:
     routing_loader:
         default_format: json
     serializer:
-        serialize_null: false
+        serialize_null: true
     exception:
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404

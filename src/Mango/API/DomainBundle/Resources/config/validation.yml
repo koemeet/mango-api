@@ -14,3 +14,9 @@ Mango\API\DomainBundle\Entity\User:
             - Email: ~
         customer:
             - NotBlank: ~
+
+
+Mango\API\DomainBundle\Entity\Customer:
+    properties:
+        company:
+            - NotBlank: ~

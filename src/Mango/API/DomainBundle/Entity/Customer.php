@@ -24,7 +24,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  * @ORM\Table(name="customers", indexes={@ORM\Index(name="fk_customers_customers_idx", columns={"parent_id"})})
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  */
 class Customer
 {
@@ -246,9 +246,10 @@ class Customer
     }
 
     /**
+     * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function onPreUpdate()
+    public function onPrePersist()
     {
         $this->setLastModified(new \DateTime());
     }

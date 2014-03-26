@@ -139,7 +139,7 @@ class UsersController extends FOSRestController
             throw new \Exception("Okee, doe maar weer normaal");
         }
 
-        $view = View::create(array('form' => $form->createView()));
+        $view = View::create(array('form' => $form->createView(), 'route' => 'post_users'));
         $view->setFormat('html');
         $view->setTemplate('MangoAPIRestBundle::new.html.twig');
 

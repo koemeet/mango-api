@@ -1,7 +1,4 @@
 parameters:
-#    mango_api_domain.example.class: Mango\API\DomainBundle\Example
+    mango_api_domain.subscriber.doctrine.lifecycle.class: Mango\API\DomainBundle\EventSubscriber\Doctrine\LifecycleSubscriber
 
 services:
-#    mango_api_domain.example:
-#        class: %mango_api_domain.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

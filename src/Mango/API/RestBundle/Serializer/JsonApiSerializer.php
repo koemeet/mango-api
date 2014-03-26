@@ -67,8 +67,8 @@ class JsonApiSerializer implements JsonSerializerInterface
                 }
             }
 
-            if (is_array($ids) && count($ids) > 0) {
-                $visitor->addData('users', $ids);
+            if (!empty($ids)) {
+                $visitor->addData($embed->getRel(), $ids);
             }
         }
 

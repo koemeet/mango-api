@@ -16,6 +16,13 @@ class CustomerType extends AbstractType
     {
         $builder
             ->add('company')
+            ->add('firstName')
+            ->add('lastName')
+            ->add('parent', 'entity', array(
+                'class' => 'MangoAPIDomainBundle:Customer',
+                'property' => 'company',
+                'invalid_message' => "Customer does not exist, please enter a valid customer."
+            ))
         ;
     }
     

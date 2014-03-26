@@ -3,7 +3,7 @@
 {% block title %}Create new user{% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" action="{{ url('post_users') }}" method="POST" {{ form_enctype(form) }}>
+    <form class="form-horizontal" action="{{ url(route) }}" method="POST" {{ form_enctype(form) }}>
         <div class="panel">
             <div class="panel-body">
                 {{ form_widget(form) }}

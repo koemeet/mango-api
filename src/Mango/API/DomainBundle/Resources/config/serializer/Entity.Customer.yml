@@ -15,6 +15,20 @@ Mango\API\DomainBundle\Entity\Customer:
           embedded:
             content: expr(object.getUsers())
 
+        # Parent customer
+        - rel: parent
+          href:
+            route: get_customer
+            parameters:
+                id: expr(object.getParent().getId())
+            absolute: true
+          exclusion:
+            exclude_if: expr(object.getParent() == null)
+          embedded:
+            content: expr(object.getParent())
+
     properties:
         users:
+            exclude: true
+        parent:
             exclude: true
