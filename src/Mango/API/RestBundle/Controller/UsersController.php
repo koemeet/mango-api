@@ -72,7 +72,7 @@ class UsersController extends FOSRestController
                 throw new ResourceNotFoundException("You do not exist for some reason.");
             }
 
-            return $this->getUser();
+            return array("user" => $this->getUser());
         }
 
         $user = $handler->findOne("MangoAPIDomainBundle:User", $id);

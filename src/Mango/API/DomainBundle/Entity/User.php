@@ -56,7 +56,7 @@ class User extends BaseUser
     /**
      * @ORM\Column(name="first_name", type="string", nullable=true)
      */
-    protected $firstname;
+    protected $firstName;
 
     /**
      * @ORM\Column(name="inbetweener", type="string", nullable=true)
@@ -187,26 +187,26 @@ class User extends BaseUser
     }
 
     /**
-     * Set firstname
+     * Set firstName
      *
-     * @param string $firstname
+     * @param string $firstName
      * @return User
      */
-    public function setFirstname($firstname)
+    public function setfirstName($firstName)
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     /**
-     * Get firstname
+     * Get firstName
      *
      * @return string 
      */
-    public function getFirstname()
+    public function getfirstName()
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
     /**
