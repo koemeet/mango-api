@@ -159,3 +159,9 @@ nelmio_api_doc:
         authentication:
             name: access_token
             delivery: query
+
+mopa_bootstrap:
+    form:
+        show_legend: false # default is true
+        show_child_legend: false # default is true
+        error_type: block # or inline which is default

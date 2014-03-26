@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class UserType extends AbstractType
+class CustomerType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,14 +15,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('email')
-            ->add('plainPassword', 'password')
-            ->add('customer', 'entity', array(
-                'class' => 'MangoAPIDomainBundle:Customer',
-                'property' => 'company',
-                'invalid_message' => "Customer does not exist, please enter a valid customer."
-            ))
+            ->add('company')
         ;
     }
     
@@ -32,7 +25,7 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Mango\API\DomainBundle\Entity\User',
+            'data_class' => 'Mango\API\DomainBundle\Entity\Customer',
             'csrf_protection'   => false
         ));
     }

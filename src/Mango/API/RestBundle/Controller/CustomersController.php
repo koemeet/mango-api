@@ -12,15 +12,19 @@ namespace Mango\API\RestBundle\Controller;
 use Doctrine\ORM\QueryBuilder;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
+use Mango\API\DomainBundle\Entity\Customer;
+use Mango\API\DomainBundle\Form\CustomerType;
 use Mango\API\RestBundle\Component\ActionHandler\ActionHandler;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class CustomersController
  * @package Mango\API\RestBundle\Controller
  */
-class CustomersController extends FOSRestController
+class CustomersController extends RestController
 {
     /**
      * Retrieve customers of Mango
@@ -36,8 +40,7 @@ class CustomersController extends FOSRestController
      */
     public function getCustomersAction(ParamFetcherInterface $paramFetcher)
     {
-        /** @var ActionHandlerInterface $handler */
-        $handler = $this->get('mango_api_rest.action_handler');
+        $handler = $this->getActionHandler();
         $customers = $handler->find("MangoAPIDomainBundle:Customer", $paramFetcher)->getQuery()->getResult();
 
         return array(
@@ -47,8 +50,7 @@ class CustomersController extends FOSRestController
 
     public function getCustomerAction($id)
     {
-        /** @var ActionHandlerInterface $handler */
-        $handler = $this->get('mango_api_rest.action_handler');
+        $handler = $this->getActionHandler();
         $user = $handler->findOne("MangoAPIDomainBundle:Customer", $id);
         return array("customer" => $user);
     }
@@ -68,19 +70,31 @@ class CustomersController extends FOSRestController
      */
     public function getCustomerUsersAction($id, ParamFetcherInterface $paramFetcher)
     {
-        /** @var ActionHandler $handler */
-        $handler = $this->get('mango_api_rest.action_handler');
-
         /** @var QueryBuilder $qb */
-        $qb = $handler->find("MangoAPIDomainBundle:User", $paramFetcher);
+        $qb = $this->getActionHandler()->find("MangoAPIDomainBundle:User", $paramFetcher);
         $qb->join('t.customer', 'c');
         $qb->andWhere('c.id = :customer')->setParameter('customer', $id);
 
         return array("users" => $qb->getQuery()->getResult());
     }
 
+    public function postCustomersAction()
+    {
+        return $this->getActionHandler()->insert(new CustomerType(), new Customer());
+    }
+
     public function newCustomersAction()
     {
+        $form = $this->postCustomersAction();
 
+        if (!$form instanceof FormInterface) {
+            throw new \Exception("Okee, doe maar weer normaal");
+        }
+
+        $view = View::create(array('form' => $form->createView()));
+        $view->setFormat('html');
+        $view->setTemplate('MangoAPIRestBundle::new.html.twig');
+
+        return $view;
     }
 }

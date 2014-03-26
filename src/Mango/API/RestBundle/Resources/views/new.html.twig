@@ -1,0 +1,16 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Create new user{% endblock %}
+
+{% block content %}
+    <form class="form-horizontal" action="{{ url('post_users') }}" method="POST" {{ form_enctype(form) }}>
+        <div class="panel">
+            <div class="panel-body">
+                {{ form_widget(form) }}
+            </div>
+            <div class="panel-footer">
+                <input type="submit" value="Save" class="btn btn-blue pull-right">
+            </div>
+        </div>
+    </form>
+{% endblock %}

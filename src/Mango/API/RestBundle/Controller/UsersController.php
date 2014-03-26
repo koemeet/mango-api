@@ -133,6 +133,16 @@ class UsersController extends FOSRestController
 
     public function newUsersAction()
     {
-        return "ksdjfksjdf";
+        $form = $this->postUsersAction();
+
+        if (!$form instanceof FormInterface) {
+            throw new \Exception("Okee, doe maar weer normaal");
+        }
+
+        $view = View::create(array('form' => $form->createView()));
+        $view->setFormat('html');
+        $view->setTemplate('MangoAPIRestBundle::new.html.twig');
+
+        return $view;
     }
 }
