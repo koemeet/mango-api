@@ -22,6 +22,7 @@ use Mango\API\RestBundle\Common\ActionHandler;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
  * Class UsersController
@@ -57,6 +58,7 @@ class UsersController extends FOSRestController
      *  section = "Users"
      * )
      * @param $id
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      * @return mixed
      */
     public function getUserAction($id)
@@ -64,7 +66,12 @@ class UsersController extends FOSRestController
         /** @var ActionHandlerInterface $handler */
         $handler = $this->get('mango_api_rest.action_handler');
 
-        if ($id == "me") {
+        // TODO: Make some generic functionality to handle dynamic identifiers
+        if ($id == '@me') {
+            if (!$this->getUser()) {
+                throw new ResourceNotFoundException("You do not exist for some reason.");
+            }
+
             return $this->getUser();
         }
 
@@ -85,7 +92,6 @@ class UsersController extends FOSRestController
         $handler = $this->get('mango_api_rest.action_handler');
 
         $user = new User();
-        //$user->setCustomer($this->getUser()->getCustomer());
         return $handler->insert(new UserType(), $user);
     }
 

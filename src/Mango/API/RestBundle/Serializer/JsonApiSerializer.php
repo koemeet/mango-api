@@ -38,7 +38,7 @@ class JsonApiSerializer implements JsonSerializerInterface
             }
         }
 
-        $visitor->addData('links', $serializedLinks);
+        $visitor->addData('_links', $serializedLinks);
     }
 
     /**
@@ -46,59 +46,40 @@ class JsonApiSerializer implements JsonSerializerInterface
      * @param JsonSerializationVisitor $visitor
      * @param SerializationContext $context
      */
-public function serializeEmbeddeds(array $embeddeds, JsonSerializationVisitor $visitor, SerializationContext $context)
-{
-    $serializedEmbeds = array();
-
-    foreach ($embeddeds as $embed) {
-        $data = $embed->getData();
-        $ids = array();
-
-        // Can we iterate over the given data?
-        if ($data instanceof \Traversable) {
-            foreach ($data as $object) {
-                if (is_callable(array($object, 'getId'))) {
-                    $ids[] = $object->getId();
-                }
-            }
-        } else {
-            if (is_callable(array($data, 'getId'))) {
-                $ids = $data->getId();
-            }
-        }
-
-        if (count($ids) > 0) {
-            $visitor->addData($embed->getRel(), $ids);
-        }
-    }
-
-    $serializedEmbeds[$embed->getRel()] = $context->accept($embed->getData());
-    $visitor->setRoot(array('linked' => $serializedEmbeds));
-}
-
-    /**
-     * @param Embedded[] $embeddeds
-     * @param $object
-     * @param JsonSerializationVisitor $visitor
-     */
-    public function serializeRelations(array $embeddeds, $object, JsonSerializationVisitor $visitor)
+    public function serializeEmbeddeds(array $embeddeds, JsonSerializationVisitor $visitor, SerializationContext $context)
     {
-        foreach ($embeddeds as $embedded) {
-            $data = $embedded->getData();
+        $serializedEmbeds = array();
 
+        foreach ($embeddeds as $embed) {
+            $data = $embed->getData();
             $ids = array();
-            if ($data instanceof PersistentCollection) {
-                $values = $data->getValues();
-                foreach ($values as $value) {
-                    $ids[] = $value->getId();
+
+            // Can we iterate over the given data?
+            if ($data instanceof \Traversable) {
+                foreach ($data as $object) {
+                    if (is_callable(array($object, 'getId'))) {
+                        $ids[] = $object->getId();
+                    }
                 }
             } else {
-                $ids[] = $data->getId();
+                if (is_callable(array($data, 'getId'))) {
+                    $ids = $data->getId();
+                }
             }
 
-            if (count($ids) > 0) {
-                //$visitor->addData($embedded->getRel(), $ids);
+            if (is_array($ids) && count($ids) > 0) {
+                $visitor->addData('users', $ids);
             }
+        }
+
+        // Visit every node and whe get a nice serialized array :)
+        $serializedEmbeds[$embed->getRel()] = $context->accept($embed->getData());
+
+        // We want to override existing root elements when adding embedded resources
+        if ($serializedEmbeds && is_array($visitor->getRoot())) {
+            $visitor->setRoot(array_replace_recursive($visitor->getRoot(), $serializedEmbeds));
+        } else {
+            $visitor->setRoot($serializedEmbeds);
         }
     }
 }

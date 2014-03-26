@@ -9,9 +9,10 @@
 namespace Mango\API\RestBundle\Controller;
 
 
+use Doctrine\ORM\QueryBuilder;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Mango\API\RestBundle\Common\ActionHandlerInterface;
+use Mango\API\RestBundle\Component\ActionHandler\ActionHandler;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 
@@ -37,12 +38,10 @@ class CustomersController extends FOSRestController
     {
         /** @var ActionHandlerInterface $handler */
         $handler = $this->get('mango_api_rest.action_handler');
-        $qb = $handler->find("MangoAPIDomainBundle:Customer", $paramFetcher);
-
-        $customers = $qb->getQuery()->getResult();
+        $customers = $handler->find("MangoAPIDomainBundle:Customer", $paramFetcher)->getQuery()->getResult();
 
         return array(
-            'customers' => $customers
+            "customers" => $customers
         );
     }
 
@@ -51,12 +50,33 @@ class CustomersController extends FOSRestController
         /** @var ActionHandlerInterface $handler */
         $handler = $this->get('mango_api_rest.action_handler');
         $user = $handler->findOne("MangoAPIDomainBundle:Customer", $id);
-        return $user;
+        return array("customer" => $user);
     }
 
-    public function getCustomerUsersAction($id)
+    /**
+     * Retrieve customers of Mango
+     *
+     * @Rest\QueryParam(name="orderBy", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
+     * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
+     * @Rest\QueryParam(name="limit", description="Number of results to fetch", default=10)
+     * @ApiDoc(
+     *  section="Customers"
+     * )
+     * @param $id
+     * @param ParamFetcherInterface $paramFetcher
+     * @return mixed
+     */
+    public function getCustomerUsersAction($id, ParamFetcherInterface $paramFetcher)
     {
-        return array();
+        /** @var ActionHandler $handler */
+        $handler = $this->get('mango_api_rest.action_handler');
+
+        /** @var QueryBuilder $qb */
+        $qb = $handler->find("MangoAPIDomainBundle:User", $paramFetcher);
+        $qb->join('t.customer', 'c');
+        $qb->andWhere('c.id = :customer')->setParameter('customer', $id);
+
+        return array("users" => $qb->getQuery()->getResult());
     }
 
     public function newCustomersAction()

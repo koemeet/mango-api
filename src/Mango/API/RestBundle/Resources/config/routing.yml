@@ -9,3 +9,8 @@ mango_api_rest_users:
 mango_api_rest_routes:
     type: rest
     resource: MangoAPIRestBundle:Routes
+
+
+mango_api_rest_posts:
+    type: rest
+    resource: MangoAPIRestBundle:Posts
