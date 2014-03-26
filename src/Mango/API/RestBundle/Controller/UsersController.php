@@ -9,6 +9,7 @@
 namespace Mango\API\RestBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -47,8 +48,17 @@ class UsersController extends FOSRestController
     {
         /** @var ActionHandlerInterface $handler */
         $handler = $this->get('mango_api_rest.action_handler');
+        /** @var QueryBuilder $qb */
         $qb = $handler->find("MangoAPIDomainBundle:User", $paramFetcher);
-        return array("users" => $qb->getQuery()->getResult());
+        $data = array("users" => $qb->getQuery()->useResultCache(true, 300)->getResult());
+
+        $response = new Response();
+        $response->setSharedMaxAge(3600);
+
+        $view = View::create($data);
+        $view->setResponse($response);
+
+        return $view;
     }
 
     /**
