@@ -74,12 +74,12 @@ class User extends BaseUser
     protected $lastName;
 
     /**
-     * @ORM\Column(name="phone_primair", type="integer", nullable=true)
+     * @ORM\Column(name="phone_primair", type="string", nullable=true)
      */
     protected $phonePrimair;
 
     /**
-     * @ORM\Column(name="phone_secundair", type="integer", nullable=true)
+     * @ORM\Column(name="phone_secundair", type="string", nullable=true)
      */
     protected $phoneSecundair;
 
