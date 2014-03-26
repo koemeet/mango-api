@@ -63,6 +63,11 @@ class UsersController extends FOSRestController
     {
         /** @var ActionHandlerInterface $handler */
         $handler = $this->get('mango_api_rest.action_handler');
+
+        if ($id == "me") {
+            return $this->getUser();
+        }
+
         $user = $handler->findOne("MangoAPIDomainBundle:User", $id);
         return $user;
     }
