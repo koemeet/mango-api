@@ -138,7 +138,11 @@ class ActionHandler implements ActionHandlerInterface, ContainerAwareInterface
 
         $data = $request->request->all();
         $data = array_intersect_key($data, $form->all());
-        $form->handleRequest($request);
+
+        $methods = array("POST", "PATCH", "PUT");
+        if (in_array($request->getMethod(), $methods)) {
+            $form->submit($data);
+        }
 
         if ($form->isValid() && $persist === true) {
             $em->persist($entity);
