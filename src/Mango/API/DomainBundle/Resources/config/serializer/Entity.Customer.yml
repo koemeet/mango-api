@@ -24,8 +24,8 @@ Mango\API\DomainBundle\Entity\Customer:
             absolute: true
           exclusion:
             exclude_if: expr(object.getParent() == null)
-          embedded:
-            content: expr(object.getParent())
+          #embedded:
+            #content: expr(object.getParent())
 
     properties:
         users:

@@ -42,6 +42,6 @@ class CustomerType extends AbstractType
      */
     public function getName()
     {
-        return '';
+        return 'customer';
     }
 }

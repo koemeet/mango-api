@@ -42,6 +42,6 @@ class UserType extends AbstractType
      */
     public function getName()
     {
-        return '';
+        return 'user';
     }
 }
