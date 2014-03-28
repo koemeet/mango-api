@@ -12,8 +12,8 @@ Mango\API\DomainBundle\Entity\Customer:
             parameters:
                 id: expr(object.getId())
             absolute: true
-#          embedded:
-#            content: expr(object.getUsers())
+          embedded:
+            content: expr(object.getUsers())
 
         # Parent customer
         - rel: parent
