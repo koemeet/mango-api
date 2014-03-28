@@ -1,6 +1,8 @@
 parameters:
     mango_api_rest.action_handler.class: Mango\API\RestBundle\Component\ActionHandler\ActionHandler
+    mango_api_rest.phpcr_action_handler.class: Mango\API\RestBundle\Component\ActionHandler\PHPCRActionHandler
     mango_api_rest.result_fetcher.class: Mango\API\RestBundle\Component\ActionHandler\Data\ResultFetcher
+    mango_api_rest.phpcr.result_fetcher.class: Mango\API\RestBundle\Component\ActionHandler\Data\PHPCR\ResultFetcher
 
 services:
     mango_api_rest.action_handler:
@@ -9,9 +11,18 @@ services:
         calls:
             - [ setContainer, [@service_container] ]
 
+    mango_api_rest.phpcr_action_handler:
+        class: %mango_api_rest.phpcr_action_handler.class%
+        arguments: ["@mango_api_rest.phpcr.result_fetcher"]
+
     mango_api_rest.result_fetcher:
         class: %mango_api_rest.result_fetcher.class%
         arguments: ["@doctrine.orm.entity_manager"]
+
+    # PHPCR Implementation
+    mango_api_rest.phpcr.result_fetcher:
+        class: %mango_api_rest.phpcr.result_fetcher.class%
+        arguments: ["@doctrine_phpcr.odm.document_manager"]
 
     # TODO: Remove this one, switching to JSON API spec
     mango_api_rest.serializer.json_hal:

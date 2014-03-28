@@ -26,6 +26,7 @@ class ParamQueryExtractor
         $query->setOrderBy($this->parseOrderBy($paramFetcher->get('orderBy')));
         $query->setPage($paramFetcher->get('page'));
         $query->setLimit($paramFetcher->get('limit'));
+        $query->setFields($this->parseFields($paramFetcher->get('fields')));
 
         return $query;
     }
@@ -57,5 +58,63 @@ class ParamQueryExtractor
         }
 
         return $orderBy;
+    }
+
+    /**
+     * Parses comma seperated string to multi dimensional array supported by
+     * the Query object.
+     *
+     * @param $fields
+     * @return array
+     */
+    protected function parseFields($fields)
+    {
+        $fields = array_map('trim', explode(',', $fields));
+        $fields = array_flip($fields);
+
+        foreach ($fields as $field => &$value) {
+            $mapping = $this->parseFieldMapping($field);
+            $root = $mapping['root'];
+            $fields[$root] = $mapping['values'];
+
+            if ($root != $field) {
+                unset($fields[$field]);
+            }
+        }
+
+        return $fields;
+    }
+
+    /**
+     * Parses a field like this: `comments.author.crack` to a multi dimensional array
+     *
+     *  To:
+     *  array(
+     *      "comments" => array(
+     *          "author" => array(
+     *              "crack" => array()
+     *          )
+     *      )
+     *  )
+     * @param $field
+     * @return array
+     */
+    protected function parseFieldMapping($field)
+    {
+        $fields = explode('.', $field);
+        $root = array_shift($fields);
+
+        $crack = array();
+        $tmp =& $crack;
+
+        foreach ($fields as $field) {
+            $tmp[$field] = array();
+            $tmp =& $tmp[$field];
+        }
+
+        return array(
+            'root' => $root,
+            'values' => $crack
+        );
     }
 } 

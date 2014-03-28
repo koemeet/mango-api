@@ -1641,14 +1641,10 @@ return null !== $this->headers->get('Vary');
 }
 public function getVary()
 {
-if (!$vary = $this->headers->get('Vary', null, false)) {
+if (!$vary = $this->headers->get('Vary')) {
 return array();
 }
-$ret = array();
-foreach ($vary as $item) {
-$ret = array_merge($ret, preg_split('/[\s,]+/', $item));
-}
-return $ret;
+return is_array($vary) ? $vary : preg_split('/[\s,]+/', $vary);
 }
 public function setVary($headers, $replace = true)
 {
@@ -2234,12 +2230,12 @@ protected $booted = false;
 protected $name;
 protected $startTime;
 protected $loadClassCache;
-const VERSION ='2.5.0-DEV';
-const VERSION_ID ='20500';
+const VERSION ='2.4.2';
+const VERSION_ID ='20402';
 const MAJOR_VERSION ='2';
-const MINOR_VERSION ='5';
-const RELEASE_VERSION ='0';
-const EXTRA_VERSION ='DEV';
+const MINOR_VERSION ='4';
+const RELEASE_VERSION ='2';
+const EXTRA_VERSION ='';
 public function __construct($environment, $debug)
 {
 $this->environment = $environment;
@@ -2602,33 +2598,21 @@ return $source;
 $rawChunk ='';
 $output ='';
 $tokens = token_get_all($source);
-$ignoreSpace = false;
 for (reset($tokens); false !== $token = current($tokens); next($tokens)) {
 if (is_string($token)) {
 $rawChunk .= $token;
 } elseif (T_START_HEREDOC === $token[0]) {
-$output .= $rawChunk.$token[1];
+$output .= preg_replace(array('/\s+$/Sm','/\n+/S'),"\n", $rawChunk).$token[1];
 do {
 $token = next($tokens);
 $output .= $token[1];
 } while ($token[0] !== T_END_HEREDOC);
 $rawChunk ='';
-} elseif (T_WHITESPACE === $token[0]) {
-if ($ignoreSpace) {
-$ignoreSpace = false;
-continue;
-}
-$rawChunk .= preg_replace(array('/\n{2,}/S'),"\n", $token[1]);
-} elseif (in_array($token[0], array(T_COMMENT, T_DOC_COMMENT))) {
-$ignoreSpace = true;
-} else {
+} elseif (!in_array($token[0], array(T_COMMENT, T_DOC_COMMENT))) {
 $rawChunk .= $token[1];
-if (T_OPEN_TAG === $token[0]) {
-$ignoreSpace = true;
 }
 }
-}
-$output .= $rawChunk;
+$output .= preg_replace(array('/\s+$/Sm','/\n+/S'),"\n", $rawChunk);
 return $output;
 }
 public function serialize()
@@ -2855,11 +2839,9 @@ public function write($content, array $metadata = null)
 {
 $mode = 0666 & ~umask();
 $filesystem = new Filesystem();
-$filesystem->dumpFile($this->file, $content, null);
-@chmod($this->file, $mode);
+$filesystem->dumpFile($this->file, $content, $mode);
 if (null !== $metadata && true === $this->debug) {
-$filesystem->dumpFile($this->getMetaFile(), serialize($metadata), null);
-@chmod($this->getMetaFile(), $mode);
+$filesystem->dumpFile($this->getMetaFile(), serialize($metadata), $mode);
 }
 }
 private function getMetaFile()

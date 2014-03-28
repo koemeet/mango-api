@@ -15,7 +15,7 @@ use Mango\API\RestBundle\Component\ActionHandler\Query\Query;
  * Class ResultFetcher
  * @package Mango\API\RestBundle\Component\ActionHandler\Data
  */
-class ResultFetcher
+class ResultFetcher implements ResultFetcherInterface
 {
     /**
      * @var EntityManager

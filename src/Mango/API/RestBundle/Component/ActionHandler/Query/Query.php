@@ -20,6 +20,7 @@ class Query
     protected $orderBy = array();
     protected $page = 1;
     protected $limit = 10;
+    protected $fields = array();
 
     /**
      * @param array $orderBy
@@ -67,5 +68,32 @@ class Query
     public function getLimit()
     {
         return $this->limit;
+    }
+
+    /**
+     * Fields are always based on the key in the array, where the value defines dependencies or properties
+     * of this field.
+     *
+     * Format example:
+     *  array(
+     *      "users" => array()
+     *      "comments" => array(
+     *          "author" => array()
+     *      )
+     *  )
+     *
+     * @param array $fields
+     */
+    public function setFields(array $fields)
+    {
+        $this->fields = $fields;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
     }
 } 
