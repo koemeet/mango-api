@@ -34,4 +34,6 @@ security:
 
     # Access Control Rules
     access_control:
-        #- { path: ^/v1, roles: IS_AUTHENTICATED_FULLY }
+
+        # Protect the whole API, we will always have security context
+        - { path: ^/v1, roles: IS_AUTHENTICATED_FULLY }

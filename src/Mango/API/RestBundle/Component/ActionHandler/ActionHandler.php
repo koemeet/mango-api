@@ -136,9 +136,13 @@ class ActionHandler implements ActionHandlerInterface, ContainerAwareInterface
         /** @var Form $form */
         $form = $this->createForm($formType, $entity);
 
-        $data = $request->request->all();
+        // Retrieve data for this entity
+        $data = $request->request->get($form->getName());
+
+        // Filter out unexpected data
         $data = array_intersect_key($data, $form->all());
 
+        // We only want to submit the data when method is POST, PATCH, PUT
         $methods = array("POST", "PATCH", "PUT");
         if (in_array($request->getMethod(), $methods)) {
             $form->submit($data);
