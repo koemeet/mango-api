@@ -19,7 +19,6 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use Mango\API\DomainBundle\Entity\Customer;
 use Mango\API\DomainBundle\Entity\User;
 use Mango\API\DomainBundle\Form\UserType;
-use Mango\API\RestBundle\Common\ActionHandler;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +28,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  * Class UsersController
  * @package Mango\API\RestBundle\Controller
  */
-class UsersController extends FOSRestController
+class UsersController extends RestController
 {
     /**
      * Retrieve customers of Mango
@@ -52,13 +51,7 @@ class UsersController extends FOSRestController
         $qb = $handler->find("MangoAPIDomainBundle:User", $paramFetcher);
         $data = array("users" => $qb->getQuery()->useResultCache(true, 300)->getResult());
 
-        $response = new Response();
-        $response->setSharedMaxAge(3600);
-
-        $view = View::create($data);
-        $view->setResponse($response);
-
-        return $view;
+        return $data;
     }
 
     /**

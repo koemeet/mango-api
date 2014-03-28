@@ -161,7 +161,7 @@ class ActionHandler implements ActionHandlerInterface, ContainerAwareInterface
             /** @var RouterInterface $router */
             $router = $this->container->get('router');
 
-            return View::create($entity, $statusCode, array(
+            return View::create(array($form->getName() => $entity), $statusCode, array(
                 "Location" => $router->generate("get_user", array("id" => $entity->getId()), true)
             ));
         }
