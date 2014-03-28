@@ -140,7 +140,9 @@ class ActionHandler implements ActionHandlerInterface, ContainerAwareInterface
         $data = $request->request->get($form->getName());
 
         // Filter out unexpected data
-        $data = array_intersect_key($data, $form->all());
+        if (is_array($data)) {
+            $data = array_intersect_key($data, $form->all());
+        }
 
         // We only want to submit the data when method is POST, PATCH, PUT
         $methods = array("POST", "PATCH", "PUT");
