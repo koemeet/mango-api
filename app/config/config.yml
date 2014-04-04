@@ -62,10 +62,20 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
         metadata_cache_driver: array
         query_cache_driver: array
         result_cache_driver: array
+
+        # We define our own mappings, so we are not bound to bundles etc.
+        mappings:
+            FOSOAuthServerBundle: ~
+            MangoAPISecurityBundle: ~
+            MangoCoreDomain:
+                type: yml
+                dir: %kernel.root_dir%/../src/Mango/CoreDomainBundle/Resources/config/doctrine
+                prefix: Mango\CoreDomain\Model
+                alias: MangoCoreDomain
+                is_bundle: false
 
 # Doctrine PHPCR Configuration
 doctrine_phpcr:
@@ -128,10 +138,10 @@ fos_rest:
 # FOS OAuth Server Configuration
 fos_oauth_server:
     db_driver: orm       # Driver availables: orm, mongodb, or propel
-    client_class:        Mango\API\DomainBundle\Entity\Client
-    access_token_class:  Mango\API\DomainBundle\Entity\AccessToken
-    refresh_token_class: Mango\API\DomainBundle\Entity\RefreshToken
-    auth_code_class:     Mango\API\DomainBundle\Entity\AuthCode
+    client_class:           Mango\API\SecurityBundle\Entity\Client
+    access_token_class:     Mango\API\SecurityBundle\Entity\AccessToken
+    refresh_token_class:    Mango\API\SecurityBundle\Entity\RefreshToken
+    auth_code_class:        Mango\API\SecurityBundle\Entity\AuthCode
     service:
         user_provider: fos_user.user_manager
         options:
@@ -141,7 +151,7 @@ fos_oauth_server:
 fos_user:
     db_driver: orm
     firewall_name: api
-    user_class: Mango\API\DomainBundle\Entity\User
+    user_class: Mango\CoreDomain\Model\User
 
 # Mango API Configuration
 mango_api_rest:
@@ -155,7 +165,12 @@ jms_serializer:
     metadata:
         auto_detection: true
         directories:
-            - { path: "@MangoAPIDomainBundle/Resources/config/serializer/FOSUser", namespace_prefix: 'FOS\UserBundle' }
+            FOSUserBundle:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "@MangoAPIRestBundle/Resources/config/serializer/FOSUser"
+            CoreDomain:
+                namespace_prefix: "Mango\\CoreDomain"
+                path: "@MangoAPIRestBundle/Resources/config/serializer/"
 
 nelmio_api_doc:
     sandbox:

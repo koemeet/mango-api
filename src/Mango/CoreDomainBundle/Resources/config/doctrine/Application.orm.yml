@@ -1,0 +1,37 @@
+Mango\CoreDomain\Model\Application:
+    type: entity
+    table: applications
+
+    fields:
+        id:
+            type: guid
+            id: true
+            generator:
+                strategy: UUID
+        name:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: false
+            precision: 0
+        syncWithAlias:
+            type: string
+            scale: 0
+            length: 45
+            unique: false
+            nullable: true
+            precision: 0
+            column: sync_with_alias
+    manyToOne:
+        alias:
+            targetEntity: Mango\CoreDomain\Model\Application
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                alias_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+
+    lifecycleCallbacks: {  }

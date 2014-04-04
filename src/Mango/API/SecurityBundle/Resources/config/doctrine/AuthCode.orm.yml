@@ -1,0 +1,18 @@
+Mango\API\SecurityBundle\Entity\AuthCode:
+    type: entity
+    table: auth_codes
+
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    manyToOne:
+        client:
+            targetEntity: Client
+            joinColumn:
+                nullable: false
+        user:
+            targetEntity: Mango\CoreDomain\Model\User

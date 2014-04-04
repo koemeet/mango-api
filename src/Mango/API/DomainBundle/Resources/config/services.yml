@@ -1,4 +1,0 @@
-parameters:
-    mango_api_domain.subscriber.doctrine.lifecycle.class: Mango\API\DomainBundle\EventSubscriber\Doctrine\LifecycleSubscriber
-
-services:

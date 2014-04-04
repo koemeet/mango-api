@@ -1,0 +1,20 @@
+parameters:
+    mango_core_domain.user_repository.doctrine.class: Mango\CoreDomainBundle\Repository\UserRepository
+    mango_core_domain.customer_repository.doctrine.class: Mango\CoreDomainBundle\Repository\CustomerRepository
+    mango_core_domain.application_repository.doctrine.class: Mango\CoreDomainBundle\Repository\ApplicationRepository
+
+services:
+    mango_core_domain.user_repository.doctrine:
+        class: %mango_core_domain.user_repository.doctrine.class%
+        public: false
+        arguments: ["@doctrine.orm.entity_manager", "@fos_user.user_manager"]
+
+    mango_core_domain.customer_repository.doctrine:
+        class: %mango_core_domain.customer_repository.doctrine.class%
+        public: false
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    mango_core_domain.application_repository.doctrine:
+        class: %mango_core_domain.application_repository.doctrine.class%
+        public: false
+        arguments: ["@doctrine.orm.entity_manager"]

@@ -1,0 +1,23 @@
+# We define the validation rules for our domain models in here
+
+Mango\CoreDomain\Model\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [username]
+            message: "The username you entered already exists."
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [email]
+            message: "This email is already in use."
+    properties:
+        username:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+            - Email: ~
+        plainPassword:
+            - NotBlank: ~
+
+Mango\CoreDomain\Model\Customer:
+    properties:
+        company:
+            - NotBlank: ~s

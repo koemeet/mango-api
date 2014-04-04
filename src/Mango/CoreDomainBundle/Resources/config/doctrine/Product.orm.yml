@@ -1,0 +1,56 @@
+Mango\CoreDomain\Model\Product:
+    type: entity
+    table: products
+    indexes:
+        fk_products_customers_idx:
+            columns:
+                - customer_id
+        fk_products_shop_categories_idx:
+            columns:
+                - category_id
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            scale: 0
+            length: 128
+            unique: false
+            nullable: false
+            precision: 0
+        stock:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    manyToOne:
+        customer:
+            targetEntity: Mango\CoreDomain\Model\Customer
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                customer_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        category:
+            targetEntity: Mango\CoreDomain\Model\ShopCategory
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

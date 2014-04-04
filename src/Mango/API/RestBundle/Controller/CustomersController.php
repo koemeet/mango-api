@@ -8,20 +8,25 @@
 
 namespace Mango\API\RestBundle\Controller;
 
-
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
-use Mango\API\DomainBundle\Entity\Customer;
-use Mango\API\DomainBundle\Form\CustomerType;
-use Mango\API\RestBundle\Component\ActionHandler\ActionHandler;
+use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Repository\CustomerRepositoryInterface;
+use Mango\CoreDomain\Repository\UserRepositoryInterface;
+use Mango\CoreDomain\Service\UserService;
+use Mango\CoreDomain\Model\Application;
+use Mango\CoreDomainBundle\Form\UserType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
  * Class CustomersController
+ *
+ * Reponsible for the representaion (Representation Layer)
+ *
  * @package Mango\API\RestBundle\Controller
  */
 class CustomersController extends RestController
@@ -42,18 +47,39 @@ class CustomersController extends RestController
      */
     public function getCustomersAction(ParamFetcherInterface $paramFetcher)
     {
-        $handler = $this->getActionHandler();
-        $customers = $handler->find("MangoAPIDomainBundle:Customer", $paramFetcher)->getQuery()->getResult();
+        /** @var CustomerRepositoryInterface $repository */
+        $repository = $this->get('mango_core_domain.customer_repository');
+        $users = $repository->find(1);
 
-        return array(
-            "customers" => $customers
-        );
+        $user = new User();
+
+        $em = $this->getDoctrine()->getManager();
+
+        return $this->processForm(new UserType(), $user);
+
+        return array(1, 2, 3);
+
+        /** @var UserService $service */
+        $service = $this->get('mango_core_domain.user_service');
+        $salary = $service->calculateSalary($users['0'], array());
+
+        // TODO: Some layer to fetch something from paramfetcher, this layer is part of the application layer
+        // So this belongs inside the RestBundle
+
+        return array('salary' => $salary, 'users' => $users);
+
+//        $handler = $this->getActionHandler();
+//        $customers = $handler->find("MangoAPIDomainBundle:Customer", $paramFetcher)->getQuery()->getResult();
+//
+//        return array(
+//            "customers" => $customers
+//        );
     }
 
     public function getCustomerAction($id)
     {
         $handler = $this->getActionHandler();
-        $user = $handler->findOne("MangoAPIDomainBundle:Customer", $id);
+        $user = $handler->findOne("MangoCoreDomain:Customer", $id);
         return array("customer" => $user);
     }
 
@@ -82,9 +108,15 @@ class CustomersController extends RestController
         return array("users" => $qb->getQuery()->getResult());
     }
 
+    /**
+     * @return Form
+     * @ApiDoc(
+     *  section="Customers"
+     * )
+     */
     public function postCustomersAction()
     {
-        return $this->getActionHandler()->insert(new CustomerType(), new Customer());
+        return $this->processForm(new UserType(), new User());
     }
 
     public function newCustomersAction()

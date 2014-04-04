@@ -1,0 +1,34 @@
+Mango\CoreDomain\Model\Company:
+    type: entity
+    table: companies
+
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            nullable: false
+        street:
+            type: string
+            nullable: true
+        town:
+            type: string
+            nullable: true
+        country:
+            type: string
+            nullable: true
+        zipCode:
+            type: string
+            nullable: true
+        phone:
+            type: string
+            nullable: true
+        fax:
+            type: string
+            nullable: true
+        website:
+            type: string
+            nullable: true

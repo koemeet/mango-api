@@ -1,0 +1,74 @@
+Mango\CoreDomain\Model\Customer:
+    type: entity
+    table: customers
+    indexes:
+        fk_customers_customers_idx:
+            columns:
+                - parent_id
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        company:
+            type: string
+            scale: 0
+            length: 128
+            unique: false
+            nullable: true
+            precision: 0
+        firstName:
+            type: string
+            scale: 0
+            length: 45
+            unique: false
+            nullable: true
+            precision: 0
+            column: first_name
+        lastName:
+            type: string
+            scale: 0
+            length: 45
+            unique: false
+            nullable: true
+            precision: 0
+            column: last_name
+        lastModified:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: last_modified
+    manyToOne:
+        parent:
+            targetEntity: Mango\CoreDomain\Model\Customer
+            cascade:
+                - remove
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                parent_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        users:
+            targetEntity: Mango\CoreDomain\Model\User
+            cascade: {  }
+            mappedBy: customer
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+#    lifecycleCallbacks:
+#        prePersist:
+#            - onPrePersist
+#        preUpdate:
+#            - onPrePersist

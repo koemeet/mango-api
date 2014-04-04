@@ -17,9 +17,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-            new Mango\API\RestBundle\MangoAPIRestBundle(),
-            new Mango\API\DomainBundle\MangoAPIDomainBundle(),
-
             // Dependencies
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
@@ -29,7 +26,6 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Problematic\AclManagerBundle\ProblematicAclManagerBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
-            new Mango\API\DocsBundle\MangoAPIDocsBundle(),
 
             // Doctrine PHPCR
             new Doctrine\Bundle\PHPCRBundle\DoctrinePHPCRBundle(),
@@ -40,7 +36,17 @@ class AppKernel extends Kernel
             new \Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle(),
 
             // Serializer
-            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle()
+            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
+
+            // ===================== MANGO ======================= //
+
+            // Core Bundles
+            new \Mango\CoreDomainBundle\MangoCoreDomainBundle(),
+
+            // Load API related bundles
+            new Mango\API\DocsBundle\MangoAPIDocsBundle(),
+            new Mango\API\RestBundle\MangoAPIRestBundle(),
+            new Mango\API\SecurityBundle\MangoAPISecurityBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

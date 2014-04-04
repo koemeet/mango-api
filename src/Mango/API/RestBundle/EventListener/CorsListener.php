@@ -24,6 +24,10 @@ class CorsListener
         if ($event->getRequest()->getMethod() == "OPTIONS") {
             $response = $event->getResponse();
 
+            // GG, cache this fck head
+            $response->setSharedMaxAge(86400);
+            $response->setMaxAge(86400);
+
             // If we get a method not allowed, we reset the response to 200 OK
             if ($response->getStatusCode() == 405) {
                 $response->setStatusCode(200);
@@ -36,7 +40,8 @@ class CorsListener
             "Access-Control-Allow-Origin" => "*",
             "Access-Control-Allow-Credentials" => false,
             "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers" => "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+            "Access-Control-Allow-Headers" => "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+            "Access-Control-Max-Age" => 86400
         ));
     }
 } 

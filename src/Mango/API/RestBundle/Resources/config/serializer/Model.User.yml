@@ -1,0 +1,15 @@
+Mango\CoreDomain\Model\User:
+    relations:
+        - rel: self
+          href:
+            route: get_user
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+
+        - rel: new
+          href:
+            route: new_users
+            absolute: true
+
+    properties: ~

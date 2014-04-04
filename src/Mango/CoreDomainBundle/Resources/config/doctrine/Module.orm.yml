@@ -1,0 +1,44 @@
+Mango\CoreDomain\Model\Module:
+    type: entity
+    table: modules
+    indexes:
+        fk_modules_modules_idx:
+            columns:
+                - parent_id
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        identifier:
+            type: string
+            scale: 0
+            length: 128
+            unique: false
+            nullable: false
+            precision: 0
+        name:
+            type: string
+            scale: 0
+            length: 128
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        parent:
+            targetEntity: Mango\CoreDomain\Model\Module
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                parent_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

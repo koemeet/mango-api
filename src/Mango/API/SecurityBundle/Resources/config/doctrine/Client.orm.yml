@@ -1,0 +1,10 @@
+Mango\API\SecurityBundle\Entity\Client:
+    type: entity
+    table: clients
+
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO

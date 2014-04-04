@@ -9,18 +9,17 @@
 namespace Mango\API\RestBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\UserBundle\Entity\UserManager;
-use FOS\UserBundle\Model\UserManagerInterface;
-use Mango\API\DomainBundle\Entity\Customer;
-use Mango\API\DomainBundle\Entity\User;
-use Mango\API\DomainBundle\Form\UserType;
+use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Repository\UserRepositoryInterface;
+use Mango\CoreDomainBundle\Form\UserType;
+use Mango\CoreDomainBundle\Service\UserService;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
@@ -46,13 +45,9 @@ class UsersController extends RestController
      */
     public function getUsersAction(ParamFetcherInterface $paramFetcher)
     {
-        /** @var ActionHandlerInterface $handler */
-        $handler = $this->get('mango_api_rest.action_handler');
-        /** @var QueryBuilder $qb */
-        $qb = $handler->find("MangoAPIDomainBundle:User", $paramFetcher);
-        $data = array("users" => $qb->getQuery()->useResultCache(true, 300)->getResult());
-
-        return $data;
+        /** @var UserRepositoryInterface $repository */
+        $repository = $this->get('mango_core_domain.user_repository');
+        return $repository->findAll();
     }
 
     /**
@@ -79,7 +74,7 @@ class UsersController extends RestController
             return array("user" => $this->getUser());
         }
 
-        $user = $handler->findOne("MangoAPIDomainBundle:User", $id);
+        $user = $handler->findOne("MangoCoreDomain:User", $id);
         return $user;
     }
 
@@ -92,11 +87,7 @@ class UsersController extends RestController
      */
     public function postUsersAction()
     {
-        /** @var \Mango\API\RestBundle\Component\ActionHandler\ActionHandler $handler */
-        $handler = $this->get('mango_api_rest.action_handler');
-
-        $user = new User();
-        return $handler->insert(new UserType(), $user);
+        return $this->processForm(new UserType(), new User());
     }
 
     /**

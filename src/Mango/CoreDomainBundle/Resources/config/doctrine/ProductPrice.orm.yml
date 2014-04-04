@@ -1,0 +1,44 @@
+Mango\CoreDomain\Model\ProductPrice:
+    type: entity
+    table: product_prices
+    indexes:
+        fk_product_prices_products_idx:
+            columns:
+                - product_id
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        price:
+            type: decimal
+            scale: 2
+            length: null
+            unique: false
+            nullable: false
+            precision: 32
+        currency:
+            type: string
+            scale: 0
+            length: 3
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        product:
+            targetEntity: Mango\CoreDomain\Model\Product
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                product_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

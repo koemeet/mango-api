@@ -29,6 +29,8 @@
         "problematic/acl-manager-bundle": "dev-master",
         "mopa/bootstrap-bundle": "v3.0.0-beta3",
 
+        "phpunit/phpunit": "4.0.*@dev",
+
         "jackalope/jackalope-doctrine-dbal": "*",
         "doctrine/phpcr-bundle": "1.0.*",
         "doctrine/phpcr-odm": "1.0.*",

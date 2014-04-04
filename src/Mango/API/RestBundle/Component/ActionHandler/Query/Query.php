@@ -23,11 +23,22 @@ class Query
     protected $fields = array();
 
     /**
+     * @return static
+     */
+    public static function create()
+    {
+        return new static();
+    }
+
+    /**
      * @param array $orderBy
+     * @return $this
      */
     public function setOrderBy(array $orderBy)
     {
         $this->orderBy = $orderBy;
+
+        return $this;
     }
 
     /**
@@ -40,10 +51,12 @@ class Query
 
     /**
      * @param int $page
+     * @return $this
      */
     public function setPage($page)
     {
         $this->page = $page;
+        return $this;
     }
 
     /**
@@ -56,10 +69,12 @@ class Query
 
     /**
      * @param int $limit
+     * @return $this
      */
     public function setLimit($limit)
     {
         $this->limit = $limit;
+        return $this;
     }
 
     /**
@@ -83,10 +98,12 @@ class Query
      *  )
      *
      * @param array $fields
+     * @return $this
      */
     public function setFields(array $fields)
     {
         $this->fields = $fields;
+        return $this;
     }
 
     /**
