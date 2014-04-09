@@ -141,19 +141,18 @@ class UsersController extends RestController
         return $form;
     }
 
+    /**
+     * Create a new user from a HTML form.
+     *
+     * @ApiDoc(
+     *  section = "Users"
+     * )
+     * @return View
+     */
     public function newUsersAction()
     {
         $form = $this->postUsersAction();
-
-        if (!$form instanceof FormInterface) {
-            throw new \Exception("Okee, doe maar weer normaal");
-        }
-
-        $view = View::create(array('form' => $form->createView(), 'route' => 'post_users'));
-        $view->setFormat('html');
-        $view->setTemplate('MangoAPIRestBundle::new.html.twig');
-
-        return $view;
+        return $this->generateNewView($form, 'post_users');
     }
 
     /**

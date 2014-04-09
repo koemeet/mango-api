@@ -24,6 +24,10 @@ Mango\CoreDomain\Model\Module:
             unique: false
             nullable: false
             precision: 0
+        color:
+            type: string
+            length: 6
+            nullable: false
     manyToOne:
         parent:
             targetEntity: Mango\CoreDomain\Model\Module

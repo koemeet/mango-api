@@ -34,6 +34,10 @@ class Module
      */
     protected $parent;
 
+    /**
+     * @var string
+     */
+    protected $color;
 
     /**
      * Get id
@@ -112,5 +116,21 @@ class Module
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * @param string $color
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
     }
 } 

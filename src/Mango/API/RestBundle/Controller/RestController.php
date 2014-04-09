@@ -13,6 +13,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Component\ActionHandler\ActionHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,6 +48,23 @@ class RestController extends FOSRestController
     public function getActionHandler()
     {
         return $this->get('mango_api_rest.action_handler');
+    }
+
+    /**
+     * Generate new view
+     *
+     * @param $form
+     * @param $route
+     * @return View
+     * @throws \Exception
+     */
+    protected function generateNewView(FormInterface $form, $route)
+    {
+        $view = View::create(array('form' => $form->createView(), 'route' => $route));
+        $view->setFormat('html');
+        $view->setTemplate('MangoAPIRestBundle::new.html.twig');
+
+        return $view;
     }
 
     /**

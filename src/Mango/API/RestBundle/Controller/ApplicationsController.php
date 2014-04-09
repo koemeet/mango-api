@@ -15,7 +15,11 @@ use Mango\API\RestBundle\Component\ActionHandler\Query\ParamQueryExtractor;
 use Mango\API\RestBundle\Component\ActionHandler\Query\Query;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Mango\API\RestBundle\Request\ParamFetcher\QueryExtractor;
+use Mango\CoreDomain\Model\Application;
+use Mango\CoreDomain\Model\User;
 use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
+use Mango\CoreDomainBundle\Form\ApplicationType;
+use Mango\CoreDomainBundle\Form\UserType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
@@ -91,5 +95,23 @@ class ApplicationsController extends RestController
         /** @var ActionHandlerInterface $handler */
         $handler = $this->get('mango_api_rest.phpcr_action_handler');
         return $handler->find('Mango\\API\\RestBundle\\Document\\Page', $paramFetcher);
+    }
+
+    /**
+     * @ApiDoc(
+     *  section = "Users",
+     *  input = "Mango\API\DomainBundle\Form\UserType"
+     * )
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function postApplicationsAction()
+    {
+        return $this->processForm(new ApplicationType(), new Application());
+    }
+
+    public function newApplicationsAction()
+    {
+        $form = $this->postApplicationsAction();
+        return $this->generateNewView($form, 'post_applications');
     }
 }
