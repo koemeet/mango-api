@@ -134,11 +134,12 @@ Mango\CoreDomain\Model\User:
             nullable: true
             column: billing_country
         marketingMails:
-            type: string
+            type: boolean
             nullable: true
             column: marketing_mails
         notes:
-            type: boolean
+            type: string
+            nullable: true
             column: notes
 
 

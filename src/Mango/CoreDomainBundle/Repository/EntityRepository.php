@@ -42,6 +42,11 @@ abstract class EntityRepository
                 $qb->addOrderBy(sprintf("t.%s", $field), $order);
             }
 
+            foreach ($query->getWhere() as $field => $value) {
+                $param = $field . uniqid();
+                $qb->andWhere(sprintf("t.%s = :%s", $field, $param))->setParameter($param, $value);
+            }
+
             $qb->setMaxResults($query->getLimit());
             $qb->setFirstResult($query->getOffset());
         }

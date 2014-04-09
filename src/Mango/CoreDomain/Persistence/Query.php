@@ -31,6 +31,11 @@ class Query
     protected $orderBy = array();
 
     /**
+     * @var array
+     */
+    protected $where = array();
+
+    /**
      * Create a new Query instance
      *
      * @return static
@@ -117,5 +122,34 @@ class Query
     {
         unset($this->orderBy[$field]);
         return $this;
+    }
+
+    /**
+     * @param array $where
+     * @return $this
+     */
+    public function setWhere($where)
+    {
+        $this->where = $where;
+        return $this;
+    }
+
+    /**
+     * @param $field
+     * @param $value
+     * @return $this
+     */
+    public function addWhere($field, $value)
+    {
+        $this->where[$field] = $value;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getWhere()
+    {
+        return $this->where;
     }
 } 
