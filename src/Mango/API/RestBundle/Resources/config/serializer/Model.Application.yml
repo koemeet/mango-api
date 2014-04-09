@@ -1,0 +1,15 @@
+Mango\CoreDomain\Model\Application:
+    relations:
+        - rel: self
+          href:
+            route: get_application
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+        - rel: modules
+          embedded:
+            content: expr(object.getModules())
+
+    properties:
+        modules:
+            exclude: true
