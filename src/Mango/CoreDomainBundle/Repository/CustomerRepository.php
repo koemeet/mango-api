@@ -8,6 +8,7 @@
 
 namespace Mango\CoreDomainBundle\Repository;
 
+use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\CustomerRepositoryInterface;
 
 /**
@@ -70,9 +71,8 @@ class CustomerRepository extends EntityRepository implements CustomerRepositoryI
      * @param $query
      * @return mixed
      */
-    public function findByQuery($query)
+    public function findByQuery(Query $query)
     {
         // TODO: Implement findByQuery() method.
     }
-
-} 
+}

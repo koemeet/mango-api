@@ -8,6 +8,7 @@ use Hateoas\Model\Link;
 use Hateoas\Serializer\JsonSerializerInterface;
 use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\SerializationContext;
+use JMS\Serializer\VisitorInterface;
 use Mango\API\DomainBundle\Entity\Customer;
 
 /**
@@ -42,28 +43,50 @@ class JsonApiSerializer implements JsonSerializerInterface
     }
 
     /**
+     * Called on every object that needs to be serialized.
+     *
      * @param Embedded[] $embeddeds
      * @param JsonSerializationVisitor $visitor
      * @param SerializationContext $context
      */
     public function serializeEmbeddeds(array $embeddeds, JsonSerializationVisitor $visitor, SerializationContext $context)
     {
-        $serializedEmbeds = array();
-
         foreach ($embeddeds as $embed) {
-            $data = $embed->getData();
+            // Fk off..
+            if (!$embed->getData()) {
+                continue;
+            }
+
+            // We need to serialize it right away, otherwise bad things will happen...
+            $data = $context->accept($embed->getData());
+
+            // Store current root array
+            $root = $visitor->getRoot();
+
+            if (!array_key_exists($embed->getRel(), $root)) {
+                $root[$embed->getRel()] = array();
+            }
+
             $ids = array();
 
-            // Can we iterate over the given data?
-            if ($data instanceof \Traversable) {
-                foreach ($data as $object) {
-                    if (is_callable(array($object, 'getId'))) {
-                        $ids[] = $object->getId();
+            if ($embed->getData() instanceof \Traversable) {
+                foreach ($data as $item) {
+                    if (array_key_exists('id', $item)) {
+                        $ids[] = $item['id'];
+                    }
+
+                    // Only add embedded object if it's not already inside the root
+                    if (!in_array($item, $root[$embed->getRel()])) {
+                        array_push($root[$embed->getRel()], $item);
                     }
                 }
             } else {
-                if (is_callable(array($data, 'getId'))) {
-                    $ids = $data->getId();
+                if (array_key_exists('id', $data)) {
+                    $ids = $data['id'];
+                }
+
+                if (!in_array($data, $root[$embed->getRel()])) {
+                    array_push($root[$embed->getRel()], $data);
                 }
             }
 
@@ -71,15 +94,7 @@ class JsonApiSerializer implements JsonSerializerInterface
                 $visitor->addData($embed->getRel(), $ids);
             }
 
-            // Visit every node and whe get a nice serialized array :)
-            $serializedEmbeds[$embed->getRel()] = $context->accept($embed->getData());
-        }
-
-        // We want to override existing root elements when adding embedded resources
-        if ($serializedEmbeds && is_array($visitor->getRoot())) {
-            $visitor->setRoot(array_replace_recursive($visitor->getRoot(), $serializedEmbeds));
-        } else {
-            $visitor->setRoot($serializedEmbeds);
+            $visitor->setRoot($root);
         }
     }
 }
