@@ -11,6 +11,11 @@ namespace Mango\CoreDomainBundle\Service;
 use Mango\CoreDomain\Model\User;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Class UserService
@@ -19,13 +24,16 @@ use Symfony\Component\HttpFoundation\Request;
 class UserService
 {
     protected $userRepository;
+    protected $securityContext;
 
     /**
      * @param UserRepositoryInterface $userRepository
+     * @param SecurityContextInterface $securityContext
      */
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository, SecurityContextInterface $securityContext)
     {
         $this->userRepository = $userRepository;
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -34,10 +42,19 @@ class UserService
      * This can contain the string "@me", which translates to the current logged in user.
      *
      * @param $id
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      * @return User
      */
     public function findByIdentifier($id)
     {
+        if ($id == '@me') {
+            if (!$this->securityContext->getToken()->getUser() instanceof User) {
+                throw new HttpException(401, "You are not authorized, please authorize yourself before using the '@me' parameter.");
+            }
+
+            return $this->securityContext->getToken()->getUser();
+        }
+
         return $this->userRepository->find($id);
     }
 

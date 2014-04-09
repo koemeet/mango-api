@@ -11,6 +11,7 @@ namespace Mango\CoreDomainBundle\Repository;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
 
 /**
@@ -136,8 +137,8 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
      * @param $query
      * @return mixed
      */
-    public function findByQuery($query)
+    public function findByQuery(Query $query)
     {
-        // TODO: Implement findByQuery() method.
+        return $this->getQueryBuilder($this->class, $query)->getQuery()->getResult();
     }
 } 

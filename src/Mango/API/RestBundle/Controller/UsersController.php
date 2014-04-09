@@ -37,18 +37,24 @@ class UsersController extends RestController
     protected $userService;
 
     /**
+     * @var UserRepositoryInterface
+     */
+    protected $userRepository;
+
+    /**
      * Setup neccessary attributes.
      */
     public function init()
     {
         $this->userService = $this->container->get('mango_core_domain.user_service');
+        $this->userRepository = $this->get('mango_core_domain.user_repository');
     }
 
     /**
-     * Retrieve customers of Mango
+     * Retrieve all users of Mango.
      *
      * @Rest\View
-     * @Rest\QueryParam(name="orderBy", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
+     * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
      * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
      * @Rest\QueryParam(name="limit", description="Number of results to fetch", default=10)
      * @Rest\QueryParam(name="fields", description="Filter fields to serialize")
@@ -60,9 +66,8 @@ class UsersController extends RestController
      */
     public function getUsersAction(ParamFetcherInterface $paramFetcher)
     {
-        /** @var UserRepositoryInterface $repository */
-        $repository = $this->get('mango_core_domain.user_repository');
-        return $repository->findAll();
+        $query = $this->queryExtractor->extract($paramFetcher);
+        return array('users' => $this->userRepository->findByQuery($query));
     }
 
     /**
@@ -72,25 +77,11 @@ class UsersController extends RestController
      *  section = "Users"
      * )
      * @param $id
-     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      * @return mixed
      */
     public function getUserAction($id)
     {
-        /** @var ActionHandlerInterface $handler */
-        $handler = $this->get('mango_api_rest.action_handler');
-
-        // TODO: Make some generic functionality to handle dynamic identifiers
-        if ($id == '@me') {
-            if (!$this->getUser()) {
-                throw new ResourceNotFoundException("You do not exist for some reason.");
-            }
-
-            return array("user" => $this->getUser());
-        }
-
-        $user = $handler->findOne("MangoCoreDomain:User", $id);
-        return $user;
+        return array('user' => $this->userService->findByIdentifier($id));
     }
 
     /**
@@ -116,29 +107,8 @@ class UsersController extends RestController
      */
     public function putUserAction($id)
     {
-        // TODO: Move fetching of domain model to the action handler, but leave the option open to pass a domain model.
-
-        /** @var EntityManager $em */
-        $em = $this->get("doctrine.orm.entity_manager");
-
-        /** @var User $user */
-        $user = $em->getRepository('MangoAPIDomainBundle:User')->find($id);
-
-        /** @var ActionHandler $handler */
-        $handler = $this->get('mango_api_rest.action_handler');
-
-        // We handle persisting of the user ourself
-        $form = $handler->update(new UserType(), $user, false);
-
-        if ($form->isValid()) {
-            /** @var UserManager $manager */
-            $manager = $this->get('fos_user.user_manager');
-            $manager->updateUser($user, true);
-
-            return View::create($user, 200);
-        }
-
-        return $form;
+        $user = $this->userService->findByIdentifier($id);
+        return $this->processForm(new UserType(), $user);
     }
 
     /**
@@ -151,8 +121,7 @@ class UsersController extends RestController
      */
     public function newUsersAction()
     {
-        $form = $this->postUsersAction();
-        return $this->generateNewView($form, 'post_users');
+        return $this->generateNewView($this->postUsersAction(), 'post_users');
     }
 
     /**

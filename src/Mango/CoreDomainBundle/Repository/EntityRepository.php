@@ -37,12 +37,14 @@ abstract class EntityRepository
     {
         $qb = $this->em->getRepository($entity)->createQueryBuilder('t');
 
-        foreach ($query->getOrderBy() as $field => $order) {
-            $qb->addOrderBy(sprintf("t.%s", $field), $order);
-        }
+        if ($query !== null) {
+            foreach ($query->getOrderBy() as $field => $order) {
+                $qb->addOrderBy(sprintf("t.%s", $field), $order);
+            }
 
-        $qb->setMaxResults($query->getLimit());
-        $qb->setFirstResult($query->getOffset());
+            $qb->setMaxResults($query->getLimit());
+            $qb->setFirstResult($query->getOffset());
+        }
 
         return $qb;
     }
