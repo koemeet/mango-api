@@ -15,13 +15,14 @@ use Mango\CoreDomain\Model\Application;
  */
 class ApplicationTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Tests that if you set the alias, it returns an Application instance
-     */
-    public function testApplicationAlias()
+    public function testApplicationRelated()
     {
+        $related = new Application();
+        $related->setName("Related");
+
         $application = new Application();
-        $application->setAlias(new Application());
-        $this->assertInstanceOf('Mango\CoreDomain\Model\Application', $application->getAlias());
+        $application->setRelatedTo($related);
+
+        $this->assertEquals("Related", $application->getRelatedTo()->getName());
     }
 }

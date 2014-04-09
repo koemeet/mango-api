@@ -27,7 +27,7 @@ class Application
     /**
      * @var Application
      */
-    protected $related;
+    protected $relatedTo;
 
     /**
      * @var \DateTime
@@ -110,19 +110,19 @@ class Application
     }
 
     /**
-     * @param Application $related
+     * @param Application $application
      */
-    public function setRelated(Application $related)
+    public function setRelatedTo(Application $application)
     {
-        $this->related = $related;
+        $this->relatedTo = $application;
     }
 
     /**
      * @return Application
      */
-    public function getRelated()
+    public function getRelatedTo()
     {
-        return $this->related;
+        return $this->relatedTo;
     }
 
     /**

@@ -16,11 +16,11 @@ Mango\CoreDomain\Model\Application:
             nullable: false
 
     oneToOne:
-        related:
+        relatedTo:
             targetEntity: Mango\CoreDomain\Model\Application
             cascade: ["remove"]
             joinColumns:
-                related_id:
+                related_to_id:
                     referencedColumnName: id
 
     manyToOne:
