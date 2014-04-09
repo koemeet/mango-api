@@ -9,6 +9,7 @@
 namespace Mango\CoreDomainBundle\Repository;
 
 use Doctrine\ORM\EntityManager;
+use Mango\CoreDomain\Persistence\Query;
 
 /**
  * Class EntityRepository
@@ -28,13 +29,21 @@ abstract class EntityRepository
 
     /**
      * @param $entity
-     * @param null $query
+     * @param \Mango\CoreDomain\Persistence\Query $query
      * @param string $alias
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilder($entity, $query = null, $alias = 't')
+    public function getQueryBuilder($entity, Query $query = null, $alias = 't')
     {
         $qb = $this->em->getRepository($entity)->createQueryBuilder('t');
+
+        foreach ($query->getOrderBy() as $field => $order) {
+            $qb->addOrderBy(sprintf("t.%s", $field), $order);
+        }
+
+        $qb->setMaxResults($query->getLimit());
+        $qb->setFirstResult($query->getOffset());
+
         return $qb;
     }
 } 

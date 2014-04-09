@@ -10,6 +10,7 @@ namespace Mango\CoreDomainBundle\Repository;
 
 use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
 
 /**
@@ -83,9 +84,9 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
      * @param $query
      * @return mixed
      */
-    public function findByQuery($query)
+    public function findByQuery(Query $query)
     {
-        return $this->getQueryBuilder($this->class, $query);
+        return $this->getQueryBuilder($this->class, $query)->getQuery()->getResult();
     }
 
 

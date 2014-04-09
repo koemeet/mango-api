@@ -29,6 +29,10 @@ services:
         class: Mango\API\RestBundle\Serializer\JsonHalSerializer
         arguments: ["@request_stack"]
 
+    # Query Extractor
+    mango_api_rest.query_extractor:
+        class: Mango\API\RestBundle\Request\ParamFetcher\QueryExtractor
+
     mango_api_rest.lisener.cors:
         class: Mango\API\RestBundle\EventListener\CorsListener
         tags:

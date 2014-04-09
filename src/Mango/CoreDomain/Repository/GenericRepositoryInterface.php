@@ -7,6 +7,7 @@
  */
 
 namespace Mango\CoreDomain\Repository;
+use Mango\CoreDomain\Persistence\Query;
 
 /**
  * Interface GenericRepositoryInterface
@@ -48,5 +49,5 @@ interface GenericRepositoryInterface
      * @param $query
      * @return mixed
      */
-    public function findByQuery($query);
+    public function findByQuery(Query $query);
 }

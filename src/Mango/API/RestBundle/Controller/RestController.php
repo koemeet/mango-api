@@ -12,6 +12,7 @@ use Doctrine\ORM\UnitOfWork;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Component\ActionHandler\ActionHandler;
+use Mango\API\RestBundle\Request\ParamFetcher\QueryExtractor;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -27,6 +28,11 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class RestController extends FOSRestController
 {
     /**
+     * @var QueryExtractor
+     */
+    protected $queryExtractor;
+
+    /**
      * Initialize controller
      */
     protected function init() {}
@@ -39,6 +45,7 @@ class RestController extends FOSRestController
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
+        $this->queryExtractor = $this->get('mango_api_rest.query_extractor');
         $this->init();
     }
 
