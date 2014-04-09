@@ -4,10 +4,11 @@ Mango\CoreDomain\Model\User:
 
     id:
         id:
-            type: integer
+            type: guid
             id: true
             generator:
-                strategy: AUTO
+                strategy: UUID
+
     fields:
         username:
             type: string
@@ -60,3 +61,15 @@ Mango\CoreDomain\Model\User:
             type: datetime
             nullable: true
             column: credentials_expire_at
+
+    manyToMany:
+        applications:
+            targetEntity: Application
+            joinTable:
+                name: user_applications
+                joinColumns:
+                    user_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    application_id:
+                        referencedColumnName: id

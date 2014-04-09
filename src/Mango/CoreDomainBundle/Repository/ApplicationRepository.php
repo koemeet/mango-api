@@ -9,6 +9,7 @@
 namespace Mango\CoreDomainBundle\Repository;
 
 use Mango\CoreDomain\Model\Application;
+use Mango\CoreDomain\Model\User;
 use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
 
 /**
@@ -67,6 +68,11 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
         $qb = $this->getQueryBuilder($this->class);
         $qb->setMaxResults($limit);
         $qb->setFirstResult($offset);
+
+        foreach ($criteria as $field => $value) {
+            $param = $field;
+            $qb->andWhere(sprintf('t.%s = :%s', $field, $param))->setParameter($param, $value);
+        }
 
         return $qb->getQuery()->getResult();
     }

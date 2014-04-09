@@ -1,21 +1,14 @@
 Mango\CoreDomain\Model\Module:
     type: entity
     table: modules
-    indexes:
-        fk_modules_modules_idx:
-            columns:
-                - parent_id
+
     id:
         id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
+            type: guid
             id: true
             generator:
-                strategy: IDENTITY
+                strategy: UUID
+
     fields:
         identifier:
             type: string
@@ -41,4 +34,5 @@ Mango\CoreDomain\Model\Module:
                 parent_id:
                     referencedColumnName: id
             orphanRemoval: false
+
     lifecycleCallbacks: {  }

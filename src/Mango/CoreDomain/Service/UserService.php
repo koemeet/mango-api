@@ -10,6 +10,7 @@ namespace Mango\CoreDomain\Service;
 
 use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
 
 /**
@@ -23,7 +24,9 @@ use Mango\CoreDomain\Repository\UserRepositoryInterface;
  */
 class UserService
 {
-    /** @var UserRepositoryInterface */
+    /**
+     * @var UserRepositoryInterface
+     */
     protected $repository;
 
     /**

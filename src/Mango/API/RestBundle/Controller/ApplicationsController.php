@@ -50,7 +50,7 @@ class ApplicationsController extends RestController
         // We need some kind of extractor to create a Query object out of a ParamFetcherInterface.
         // This needs to be a service ofcource, so we can replace it easily and that kind of shit.
         // Layer: Application Layer
-        $extractor = new QueryExtractor();
+        //$extractor = new QueryExtractor();
 
         // Or we can do this..
         // Create a service for the domain models and make it so, that it can accept an ParamFetcherInterface.
@@ -58,10 +58,10 @@ class ApplicationsController extends RestController
         // Cons: Extra service for every domain model. More complexity.
         // Pros: Only that it is one line shorter :P
         // Layer: Application Layer
-        $this->get('mango_api_rest.user_service')->findByParamFetcher($paramFetcher);
+        //$this->get('mango_api_rest.user_service')->findByParamFetcher($paramFetcher);
 
         // Repository::findByQuery can find domain models based of a Query object, which is part of the CoreDomain.
-        return array('applications' => $repository->findByQuery($extractor->extract($paramFetcher)));
+        return array('applications' => $repository->findAll());
     }
 
     /**

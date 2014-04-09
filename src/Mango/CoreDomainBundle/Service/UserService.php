@@ -8,6 +8,7 @@
 
 namespace Mango\CoreDomainBundle\Service;
 
+use Mango\CoreDomain\Model\User;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,6 +26,19 @@ class UserService
     public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
+    }
+
+    /**
+     * Find a user by identifier.
+     *
+     * This can contain the string "@me", which translates to the current logged in user.
+     *
+     * @param $id
+     * @return User
+     */
+    public function findByIdentifier($id)
+    {
+        return $this->userRepository->find($id);
     }
 
     /**

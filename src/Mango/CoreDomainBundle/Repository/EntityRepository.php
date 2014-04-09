@@ -29,9 +29,10 @@ abstract class EntityRepository
     /**
      * @param $entity
      * @param null $query
+     * @param string $alias
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilder($entity, $query = null)
+    public function getQueryBuilder($entity, $query = null, $alias = 't')
     {
         $qb = $this->em->getRepository($entity)->createQueryBuilder('t');
         return $qb;

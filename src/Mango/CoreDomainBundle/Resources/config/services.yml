@@ -14,5 +14,5 @@ services:
 
     # Infrasturcture Services
     mango_core_domain.user_service:
-        class: Mango\CoreDomain\Service\UserService
+        class: Mango\CoreDomainBundle\Service\UserService
         arguments: ["@mango_core_domain.user_repository"]

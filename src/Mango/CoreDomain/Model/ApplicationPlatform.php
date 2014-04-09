@@ -29,7 +29,6 @@ class ApplicationPlatform
      */
     protected $application;
 
-
     /**
      * Get id
      *

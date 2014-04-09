@@ -12,6 +12,7 @@ use Doctrine\ORM\UnitOfWork;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Component\ActionHandler\ActionHandler;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,22 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  */
 class RestController extends FOSRestController
 {
+    /**
+     * Initialize controller
+     */
+    protected function init() {}
+
+    /**
+     * Set container.
+     *
+     * @param ContainerInterface $container
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+        $this->init();
+    }
+
     /**
      * @return ActionHandler
      */

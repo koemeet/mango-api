@@ -25,14 +25,9 @@ class Application
     protected $name;
 
     /**
-     * @var string
-     */
-    protected $syncWithAlias;
-
-    /**
      * @var Application
      */
-    protected $alias;
+    protected $related;
 
     /**
      * @var \DateTime
@@ -40,18 +35,14 @@ class Application
     protected $createdOn;
 
     /**
-     * User which created this application
-     *
-     * @var User
-     */
-    protected $createdByUser;
-
-    /**
-     * Company who owns this application
-     *
      * @var Company
      */
     protected $company;
+
+    /**
+     * @var Module[]
+     */
+    protected $modules;
 
     /**
      * Get id
@@ -87,48 +78,76 @@ class Application
     }
 
     /**
-     * Set syncWithAlias
-     *
-     * @param string $syncWithAlias
-     * @return Application
+     * @param Company $company
      */
-    public function setSyncWithAlias($syncWithAlias)
+    public function setCompany($company)
     {
-        $this->syncWithAlias = $syncWithAlias;
-
-        return $this;
+        $this->company = $company;
     }
 
     /**
-     * Get syncWithAlias
-     *
-     * @return string
+     * @return Company
      */
-    public function getSyncWithAlias()
+    public function getCompany()
     {
-        return $this->syncWithAlias;
+        return $this->company;
     }
 
     /**
-     * Set alias
-     *
-     * @param Application $alias
-     * @return Application
+     * @param \DateTime $createdOn
      */
-    public function setAlias(Application $alias = null)
+    public function setCreatedOn(\DateTime $createdOn)
     {
-        $this->alias = $alias;
-
-        return $this;
+        $this->createdOn = $createdOn;
     }
 
     /**
-     * Get alias
-     *
+     * @return \DateTime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * @param Application $related
+     */
+    public function setRelated(Application $related)
+    {
+        $this->related = $related;
+    }
+
+    /**
      * @return Application
      */
-    public function getAlias()
+    public function getRelated()
     {
-        return $this->alias;
+        return $this->related;
     }
-} 
+
+    /**
+     * @param Module[] $modules
+     */
+    public function setModules($modules)
+    {
+        $this->modules = $modules;
+    }
+
+    /**
+     * Add module to application.
+     *
+     * @param Module $module
+     */
+    public function addModule(Module $module)
+    {
+        $this->modules[] = $module;
+    }
+
+    /**
+     * @return Module[]
+     */
+    public function getModules()
+    {
+        return $this->modules;
+    }
+}

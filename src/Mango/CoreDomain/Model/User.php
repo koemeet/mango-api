@@ -16,7 +16,15 @@ use FOS\UserBundle\Model\User as BaseUser;
  */
 class User extends BaseUser
 {
+    /**
+     * @var Customer
+     */
     protected $customer;
+
+    /**
+     * @var Application[]
+     */
+    protected $applications;
 
     /**
      * @param Customer $customer
@@ -34,8 +42,41 @@ class User extends BaseUser
         return $this->customer;
     }
 
-    public function slugify($slug)
+    /**
+     * @param Application[] $applications
+     */
+    public function setApplications($applications)
     {
-        return strtolower($slug);
+        $this->applications = $applications;
+    }
+
+    /**
+     * Add an application to the user
+     *
+     * @param Application $application
+     */
+    public function addApplication(Application $application)
+    {
+        $this->applications[] = $application;
+    }
+
+    /**
+     * Remove a single application from a user.
+     *
+     * @param Application $application
+     */
+    public function removeApplication(Application $application)
+    {
+        if (($key = array_search($application, $this->applications)) !== false) {
+            unset($this->applications[$key]);
+        }
+    }
+
+    /**
+     * @return Application[]
+     */
+    public function getApplications()
+    {
+        return $this->applications;
     }
 }

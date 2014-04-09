@@ -14,10 +14,12 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\UserBundle\Entity\UserManager;
 use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
 use Mango\CoreDomainBundle\Form\UserType;
 use Mango\CoreDomainBundle\Service\UserService;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +31,19 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  */
 class UsersController extends RestController
 {
+    /**
+     * @var UserService
+     */
+    protected $userService;
+
+    /**
+     * Setup neccessary attributes.
+     */
+    public function init()
+    {
+        $this->userService = $this->container->get('mango_core_domain.user_service');
+    }
+
     /**
      * Retrieve customers of Mango
      *
@@ -139,5 +154,26 @@ class UsersController extends RestController
         $view->setTemplate('MangoAPIRestBundle::new.html.twig');
 
         return $view;
+    }
+
+    /**
+     * Get applications for this user
+     *
+     * @ApiDoc(
+     *  section = "Users"
+     * )
+     * @param $id
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     * @return array
+     */
+    public function getUserApplicationsAction($id)
+    {
+        $user = $this->userService->findByIdentifier($id);
+
+        if (!$user) {
+            throw new ResourceNotFoundException(sprintf("Could not find user with identifier %s.", $id));
+        }
+
+        return array('applications' => $user->getApplications());
     }
 }

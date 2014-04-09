@@ -1,17 +1,14 @@
 Mango\CoreDomain\Model\ShopCategory:
     type: entity
     table: shop_categories
+
     id:
         id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
+            type: guid
             id: true
             generator:
-                strategy: IDENTITY
+                strategy: UUID
+
     fields:
         name:
             type: string

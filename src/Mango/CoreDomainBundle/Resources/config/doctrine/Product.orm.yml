@@ -10,15 +10,11 @@ Mango\CoreDomain\Model\Product:
                 - category_id
     id:
         id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
+            type: guid
             id: true
             generator:
-                strategy: IDENTITY
+                strategy: UUID
+
     fields:
         name:
             type: string

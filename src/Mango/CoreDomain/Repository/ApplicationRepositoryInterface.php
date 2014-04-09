@@ -9,6 +9,7 @@
 namespace Mango\CoreDomain\Repository;
 
 use Mango\CoreDomain\Model\Application;
+use Mango\CoreDomain\Model\User;
 
 /**
  * Interface ApplicationRepositoryInterface

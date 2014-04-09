@@ -2,12 +2,14 @@ Mango\CoreDomain\Model\Company:
     type: entity
     table: companies
 
-    fields:
+    id:
         id:
-            type: integer
+            type: guid
             id: true
             generator:
-                strategy: AUTO
+                strategy: UUID
+
+    fields:
         name:
             type: string
             nullable: false

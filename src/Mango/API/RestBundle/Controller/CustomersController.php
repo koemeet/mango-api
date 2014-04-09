@@ -14,7 +14,6 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Mango\CoreDomain\Model\User;
 use Mango\CoreDomain\Repository\CustomerRepositoryInterface;
-use Mango\CoreDomain\Repository\UserRepositoryInterface;
 use Mango\CoreDomain\Service\UserService;
 use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomainBundle\Form\UserType;
@@ -49,15 +48,9 @@ class CustomersController extends RestController
     {
         /** @var CustomerRepositoryInterface $repository */
         $repository = $this->get('mango_core_domain.customer_repository');
-        $users = $repository->find(1);
+        $users = $repository->findAll();
 
-        $user = new User();
-
-        $em = $this->getDoctrine()->getManager();
-
-        return $this->processForm(new UserType(), $user);
-
-        return array(1, 2, 3);
+        return $users;
 
         /** @var UserService $service */
         $service = $this->get('mango_core_domain.user_service');

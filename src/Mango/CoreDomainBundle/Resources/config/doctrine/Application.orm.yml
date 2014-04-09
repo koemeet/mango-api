@@ -2,36 +2,42 @@ Mango\CoreDomain\Model\Application:
     type: entity
     table: applications
 
-    fields:
+    id:
         id:
             type: guid
             id: true
             generator:
                 strategy: UUID
+
+    fields:
         name:
             type: string
-            scale: 0
             length: 255
-            unique: false
             nullable: false
-            precision: 0
-        syncWithAlias:
-            type: string
-            scale: 0
-            length: 45
-            unique: false
-            nullable: true
-            precision: 0
-            column: sync_with_alias
-    manyToOne:
-        alias:
+
+    oneToOne:
+        related:
             targetEntity: Mango\CoreDomain\Model\Application
-            cascade: {  }
-            mappedBy: null
-            inversedBy: null
+            cascade: ["remove"]
             joinColumns:
-                alias_id:
+                related_id:
                     referencedColumnName: id
-            orphanRemoval: false
+
+    manyToOne:
+        company:
+            targetEntity: Mango\CoreDomain\Model\Company
+            mappedBy: company
+
+    manyToMany:
+        modules:
+            targetEntity: Module
+            joinTable:
+                name: application_modules
+                joinColumns:
+                    application_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    module_id:
+                        referencedColumnName: id
 
     lifecycleCallbacks: {  }
