@@ -61,6 +61,88 @@ Mango\CoreDomain\Model\User:
             type: datetime
             nullable: true
             column: credentials_expire_at
+        firstName:
+            type: string
+            nullable: true
+            column: first_name
+        inbetweener:
+            type: string
+            nullable: true
+            column: inbetweener
+        middleName:
+            type: string
+            nullable: true
+            column: middle_name
+        lastName:
+            type: string
+            nullable: true
+            column: last_name
+        phonePrimair:
+            type: string
+            nullable: true
+            column: phone_primair
+        phoneSecundair:
+            type: string
+            nullable: true
+            column: phone_secundair
+        streetAddress:
+            type: string
+            nullable: true
+            column: street_address
+        streetNumber:
+            type: string
+            nullable: true
+            column: street_number
+        streetNumberSuffix:
+            type: string
+            nullable: true
+            column: street_number_suffix
+        city:
+            type: string
+            nullable: true
+            column: city
+        zipcode:
+            type: string
+            nullable: true
+            column: zipcode
+        country:
+            type: string
+            nullable: true
+            column: country
+        billingStreetAddress:
+            type: string
+            nullable: true
+            column: billing_street_address
+        billingStreetNumber:
+            type: string
+            nullable: true
+            column: billing_street_number
+        billingStreetNumberSuffix:
+            type: string
+            nullable: true
+            column: billing_street_number_suffix
+        billingCity:
+            type: string
+            nullable: true
+            column: billing_city
+        billingZipcode:
+            type: string
+            nullable: true
+            column: billing_cipcode
+        billingCountry:
+            type: string
+            nullable: true
+            column: billing_country
+        marketingMails:
+            type: string
+            nullable: true
+            column: marketing_mails
+        notes:
+            type: boolean
+            column: notes
+
+
+
 
     manyToMany:
         applications:
