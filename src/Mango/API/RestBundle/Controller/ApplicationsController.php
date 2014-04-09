@@ -9,6 +9,8 @@
 namespace Mango\API\RestBundle\Controller;
 
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerBuilder;
 use Mango\API\RestBundle\Component\ActionHandler\ActionHandlerInterface;
 use Mango\API\RestBundle\Component\ActionHandler\Data\ResultFetcherInterface;
 use Mango\API\RestBundle\Component\ActionHandler\Query\ParamQueryExtractor;
@@ -41,6 +43,7 @@ class ApplicationsController extends RestController
     /**
      * Retrieve all applications of all users and companies.
      *
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
      * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
      * @Rest\QueryParam(name="limit", description="Number of results to fetch", default=10)
@@ -48,7 +51,6 @@ class ApplicationsController extends RestController
      * @ApiDoc(
      *  section="Applications"
      * )
-     *
      * @param ParamFetcherInterface $paramFetcher
      * @return array
      */

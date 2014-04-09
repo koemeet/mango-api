@@ -15,18 +15,17 @@ Mango\CoreDomain\Model\Application:
             length: 255
             nullable: false
 
-    oneToOne:
-        relatedTo:
-            targetEntity: Mango\CoreDomain\Model\Application
-            cascade: ["remove"]
-            joinColumns:
-                related_to_id:
-                    referencedColumnName: id
-
     manyToOne:
         company:
             targetEntity: Mango\CoreDomain\Model\Company
             mappedBy: company
+        relatedTo:
+            targetEntity: Mango\CoreDomain\Model\Application
+            unique: false
+            cascade: ["remove"]
+            joinColumns:
+                related_to_id:
+                    referencedColumnName: id
 
     manyToMany:
         modules:

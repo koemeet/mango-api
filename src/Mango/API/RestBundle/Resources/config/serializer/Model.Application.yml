@@ -9,7 +9,12 @@ Mango\CoreDomain\Model\Application:
         - rel: modules
           embedded:
             content: expr(object.getModules())
+        - rel: relatedTo
+          embedded:
+            content: expr(object.getRelatedTo())
 
     properties:
+        relatedTo:
+            exclude: true
         modules:
             exclude: true

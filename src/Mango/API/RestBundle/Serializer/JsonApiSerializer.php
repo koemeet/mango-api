@@ -70,10 +70,10 @@ class JsonApiSerializer implements JsonSerializerInterface
             if (!empty($ids)) {
                 $visitor->addData($embed->getRel(), $ids);
             }
-        }
 
-        // Visit every node and whe get a nice serialized array :)
-        $serializedEmbeds[$embed->getRel()] = $context->accept($embed->getData());
+            // Visit every node and whe get a nice serialized array :)
+            $serializedEmbeds[$embed->getRel()] = $context->accept($embed->getData());
+        }
 
         // We want to override existing root elements when adding embedded resources
         if ($serializedEmbeds && is_array($visitor->getRoot())) {
