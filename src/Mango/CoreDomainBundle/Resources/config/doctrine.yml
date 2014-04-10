@@ -4,6 +4,7 @@ parameters:
     mango_core_domain.company_repository.doctrine.class: Mango\CoreDomainBundle\Repository\CompanyRepository
     mango_core_domain.application_repository.doctrine.class: Mango\CoreDomainBundle\Repository\ApplicationRepository
     mango_core_domain.workspace_repository.doctrine.class: Mango\CoreDomainBundle\Repository\WorkspaceRepository
+    mango_core_domain.page_repository.doctrine.class: Mango\CoreDomainBundle\Repository\PageRepository
 
 services:
     mango_core_domain.user_repository.doctrine:
@@ -27,6 +28,12 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
 
     mango_core_domain.workspace_repository.doctrine:
-            class: %mango_core_domain.workspace_repository.doctrine.class%
-            public: false
-            arguments: ["@doctrine.orm.entity_manager"]
+        class: %mango_core_domain.workspace_repository.doctrine.class%
+        public: false
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    # PHPCR
+    mango_core_domain.page_repository.doctrine:
+        class: %mango_core_domain.page_repository.doctrine.class%
+        public: false
+        arguments: ["@doctrine_phpcr.odm.document_manager"]

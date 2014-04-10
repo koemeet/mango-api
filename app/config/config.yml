@@ -86,7 +86,12 @@ doctrine_phpcr:
         username: admin
         password: admin
     odm:
-        auto_mapping: true
+        mappings:
+            MangoCmsBundle:
+                type: yml
+                dir: %kernel.root_dir%/../src/Mango/CoreDomainBundle/Resources/config/doctrine-phpcr
+                prefix: Mango\CoreDomainBundle\Document
+                alias: MangoCoreDomainBundle
 
 cmf_core:
     persistence:

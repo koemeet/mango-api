@@ -1,0 +1,19 @@
+Mango\CoreDomainBundle\Document\Page:
+    type: document
+
+    id:
+        fieldName: id
+        generator:
+            strategy: parent
+
+    parentdocument: parent
+    nodename: name
+
+    fields:
+        title:
+            type: string
+        description:
+            type: string
+            nullable: true
+        body:
+            type: string

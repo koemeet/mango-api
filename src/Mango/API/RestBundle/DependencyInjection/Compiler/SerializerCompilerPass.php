@@ -28,7 +28,7 @@ class SerializerCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         // We want to use our JSON API spec serializer when serializing JSON
-        $container->setParameter('hateoas.serializer.json_hal.class', 'Mango\\API\\RestBundle\\Serializer\\JsonApiSerializer');
+        //$container->setParameter('hateoas.serializer.json_hal.class', 'Mango\\API\\RestBundle\\Serializer\\JsonApiSerializer');
         $container->setParameter('jms_serializer.form_error_handler.class', 'Mango\\API\\RestBundle\\Serializer\\Form\\FormErrorHandler');
     }
 

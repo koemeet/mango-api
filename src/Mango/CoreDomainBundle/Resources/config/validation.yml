@@ -20,4 +20,15 @@ Mango\CoreDomain\Model\User:
 Mango\CoreDomain\Model\Customer:
     properties:
         company:
-            - NotBlank: ~s
+            - NotBlank: ~
+
+Mango\CoreDomain\Model\Page:
+    properties:
+        name:
+            - NotBlank: ~
+        uri:
+            - NotBlank: ~
+        title:
+            - NotBlank: ~
+        body:
+            - NotBlank: ~
