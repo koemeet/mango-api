@@ -156,3 +156,15 @@ Mango\CoreDomain\Model\User:
                 inverseJoinColumns:
                     application_id:
                         referencedColumnName: id
+
+        workspaces:
+            targetEntity: Workspace
+            inversedBy: users
+            joinTable:
+                name: users_workspaces
+                joinColumns:
+                  user_id:
+                    referencedColumnName: id
+                inverseJoinColumns:
+                  workspace_id:
+                    referencedColumnName: id

@@ -144,4 +144,17 @@ class UsersController extends RestController
 
         return array('applications' => $user->getApplications());
     }
+
+    /**
+     * Get workspaces for this user
+     *
+     * @param $id
+     * @return array
+     */
+    public function getUserWorkspacesAction($id)
+    {
+        $user = $this->userService->findByIdentifier($id);
+
+        return array('workspaces' => $user->getWorkspaces());
+    }
 }

@@ -21,14 +21,6 @@ Mango\CoreDomain\Model\Workspace:
     manyToMany:
         users:
             targetEntity: User
-            joinTable:
-                name: workspace_users
-                joinColumns:
-                    workspace_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    user_id:
-                        referencedColumnName: id
-
+            mappedBy: workspaces
 
     lifecycleCallbacks: {  }

@@ -26,6 +26,11 @@ class User extends BaseUser
      */
     protected $applications;
 
+    /**
+     * @var Workspace[]
+     */
+    protected $workspaces;
+
     protected $firstName;
 
     protected $inbetweener;
@@ -119,6 +124,22 @@ class User extends BaseUser
     public function getApplications()
     {
         return $this->applications;
+    }
+
+    /**
+     * @param Workspace[] $workspaces
+     */
+    public function setWorkspaces($workspaces)
+    {
+        $this->workspaces = $workspaces;
+    }
+
+    /**
+     * @return Workspace[]
+     */
+    public function getWorkspaces()
+    {
+        return $this->workspaces;
     }
 
     /**
