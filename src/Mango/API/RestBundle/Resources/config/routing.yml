@@ -21,3 +21,7 @@ mango_api_rest_posts:
 mango_api_rest_applications:
     type: rest
     resource: MangoAPIRestBundle:Applications
+
+mango_api_rest_workspaces:
+    type: rest
+    resource: MangoAPIRestBundle:Workspaces

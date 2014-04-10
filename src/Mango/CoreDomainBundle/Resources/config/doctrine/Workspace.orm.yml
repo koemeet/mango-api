@@ -1,0 +1,34 @@
+Mango\CoreDomain\Model\Workspace:
+    type: entity
+    table: workspaces
+
+    id:
+        id:
+            type: guid
+            id: true
+            generator:
+                strategy: UUID
+
+    fields:
+        name:
+            type: string
+            scale: 0
+            length: 128
+            unique: false
+            nullable: false
+            precision: 0
+
+    manyToMany:
+        users:
+            targetEntity: User
+            joinTable:
+                name: workspace_users
+                joinColumns:
+                    workspace_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    user_id:
+                        referencedColumnName: id
+
+
+    lifecycleCallbacks: {  }

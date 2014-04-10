@@ -28,6 +28,9 @@ abstract class EntityRepository
     }
 
     /**
+     * Get QueryBuilder of Doctrine. If you pass in a Query object, it will parse it and preload it in the returned
+     * QueryBuilder object.
+     *
      * @param $entity
      * @param \Mango\CoreDomain\Persistence\Query $query
      * @param string $alias
