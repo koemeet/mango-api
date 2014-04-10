@@ -9,9 +9,11 @@
 namespace Mango\API\RestBundle\Controller;
 
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Mango\CoreDomain\Model\Workspace;
 use Mango\CoreDomain\Repository\WorkspaceRepositoryInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 
 /**
@@ -52,11 +54,36 @@ class WorkspacesController extends RestController
     /**
      * Find a single workspace by id.
      *
+     * @ApiDoc(
+     *  section="Workspaces"
+     * )
      * @param $id
      * @return mixed
      */
     public function getWorkspaceAction($id)
     {
         return array('workspace' => $this->workspacesRepository->find($id));
+    }
+
+    /**
+     * Get all users for a workspace.
+     *
+     * @ApiDoc(
+     *  section="Workspaces"
+     * )
+     * @param $id
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     * @return array
+     */
+    public function getWorkspaceUsersAction($id)
+    {
+        /** @var Workspace $workspace */
+        $workspace = $this->workspacesRepository->find($id);
+
+        if (!$workspace) {
+            throw new ResourceNotFoundException(sprintf("Workspace with id %s could not be found.", $id));
+        }
+
+        return array('users' => $workspace->getUsers());
     }
 } 
