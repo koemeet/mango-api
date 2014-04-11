@@ -8,10 +8,14 @@
 
 namespace Mango\CoreDomainBundle\Repository;
 
+use Doctrine\ODM\PHPCR\DocumentManager;
+use Doctrine\ORM\EntityManager;
 use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Model\User;
 use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
+use PHPCR\Util\NodeHelper;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Class ApplicationRepository
@@ -23,10 +27,35 @@ use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
  */
 class ApplicationRepository extends EntityRepository implements ApplicationRepositoryInterface
 {
-    protected $class = 'MangoCoreDomain:Application';
+    protected $class = 'Mango\CoreDomain\Model\Application';
+
+    /**
+     * @var DocumentManager
+     */
+    protected $dm;
+
+    /**
+     * @param EntityManager $entityManager
+     * @param \Doctrine\ODM\PHPCR\DocumentManager $documentManager
+     */
+    public function __construct(EntityManager $entityManager, DocumentManager $documentManager)
+    {
+        parent::__construct($entityManager);
+        $this->dm = $documentManager;
+    }
+
+    /**
+     * @return Application
+     */
+    public function createApplication()
+    {
+        return new $this->class;
+    }
 
     /**
      * Add an Application.
+     *
+     * When we add an application, we create PHPCR nodes for it, so we can store its content in it.
      *
      * @param Application $application
      * @return bool
@@ -35,6 +64,21 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
     {
         $this->em->persist($application);
         $this->em->flush();
+
+        $session = $this->dm->getPhpcrSession();
+
+        $root = '/applications/' . $application->getId();
+
+        if (!$this->dm->find(null, '/applications')) {
+            NodeHelper::createPath($session, '/applications');
+        }
+
+        // Create PHPCR nodes
+        foreach (array('routes', 'content', 'menu') as $node) {
+            NodeHelper::createPath($session, $root . '/' . $node);
+        }
+
+        $this->dm->flush();
     }
 
     /**

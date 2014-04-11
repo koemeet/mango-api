@@ -25,7 +25,7 @@ services:
     mango_core_domain.application_repository.doctrine:
         class: %mango_core_domain.application_repository.doctrine.class%
         public: false
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", "@doctrine_phpcr.odm.document_manager"]
 
     mango_core_domain.workspace_repository.doctrine:
         class: %mango_core_domain.workspace_repository.doctrine.class%

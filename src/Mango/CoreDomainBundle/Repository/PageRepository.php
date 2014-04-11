@@ -19,6 +19,9 @@ use Mango\CoreDomainBundle\Document\Page;
  */
 class PageRepository extends DocumentRepository implements PageRepositoryInterface
 {
+    protected $rootPath = '/applications/%s/cms/pages';
+
+
     /**
      * Find records by identifier.
      *

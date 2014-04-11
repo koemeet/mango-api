@@ -32,4 +32,9 @@ interface ApplicationRepositoryInterface extends GenericRepositoryInterface
      * @return bool
      */
     public function remove(Application $application);
+
+    /**
+     * @return Application
+     */
+    public function createApplication();
 }

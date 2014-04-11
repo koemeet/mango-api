@@ -39,7 +39,8 @@ class ClientCreateCommand extends ContainerAwareCommand
         $dialog = $this->getHelperSet()->get('dialog');
 
         $clientCredentials  = $dialog->askConfirmation($output, "Allow client credentials [yes]? ", true);
-        $userCredentials    = $dialog->askConfirmation($output, "Allow user credentials [no]? ", false);
+        $userCredentials    = $dialog->askConfirmation($output, "Allow user credentials [yes]? ", true);
+        $refreshToken       = $dialog->askConfirmation($output, "Allow refresh token [yes]?", true);
 
         $conf = $dialog->askConfirmation($output, "Are you sure you want to create a new client [yes]? ", true);
 
@@ -55,6 +56,10 @@ class ClientCreateCommand extends ContainerAwareCommand
 
         if ($userCredentials) {
             $grantTypes[] = "password";
+        }
+
+        if ($refreshToken) {
+            $grantTypes[] = "refresh_token";
         }
 
         $grantTypes = array_replace($input->getOption('grant-type'), $grantTypes);
