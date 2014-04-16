@@ -66,19 +66,15 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
         $this->em->flush();
 
         $session = $this->dm->getPhpcrSession();
-
-        $root = '/applications/' . $application->getId();
-
-        if (!$this->dm->find(null, '/applications')) {
-            NodeHelper::createPath($session, '/applications');
-        }
+        $root = 'applications/' . $application->getId();
 
         // Create PHPCR nodes
         foreach (array('routes', 'content', 'menu') as $node) {
-            NodeHelper::createPath($session, $root . '/' . $node);
+            $path = $root . '/' . $node;
+            NodeHelper::createPath($session, $path);
         }
 
-        $this->dm->flush();
+        $session->save();
     }
 
     /**
@@ -130,7 +126,12 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
      */
     public function findByQuery(Query $query)
     {
-        return $this->getQueryBuilder($this->class, $query)->getQuery()->getResult();
+        $qb = $this->getQueryBuilder($this->class, $query);
+
+        foreach ($query->getWhere() as $field => $value) {
+            $param = $field . uniqid();
+            $qb->andWhere(sprintf("t.%s = :%s", $field, $param))->setParameter($param, $value);
+        }
     }
 
 

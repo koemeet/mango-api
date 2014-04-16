@@ -19,6 +19,8 @@ Mango\CoreDomain\Model\Application:
         company:
             targetEntity: Mango\CoreDomain\Model\Company
             mappedBy: company
+        workspace:
+            targetEntity: Mango\CoreDomain\Model\Workspace
         relatedTo:
             targetEntity: Mango\CoreDomain\Model\Application
             unique: false

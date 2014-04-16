@@ -57,5 +57,7 @@ class ApplicationCreateCommand extends ContainerAwareCommand
 
         // Add application to our database
         $repository->add($application);
+
+        $output->writeln(sprintf('Application ID: <info>%s</info>', $application->getId()));
     }
 } 

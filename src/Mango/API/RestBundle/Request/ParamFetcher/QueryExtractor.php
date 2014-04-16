@@ -24,10 +24,23 @@ class QueryExtractor
      */
     public function extract(ParamFetcherInterface $paramFetcher)
     {
+        $reserved = array('sort', 'count', 'page', 'filter', 'limit');
+
         $query = new Query();
         $query->setOrderBy($this->parseOrderBy($paramFetcher->get('sort')));
         $query->setLimit($paramFetcher->get('limit'));
         $query->setOffset(($paramFetcher->get('page') - 1) * $query->getLimit());
+        $query->setFilters($paramFetcher->get('filter'));
+
+        $params = $paramFetcher->all();
+
+        // Process fields that are needed in for example a WHERE statement.
+        foreach ($params as $field => $value) {
+            if (in_array($field, $reserved)) {
+                continue;
+            }
+            $query->addWhere($field, $value);
+        }
 
         return $query;
     }

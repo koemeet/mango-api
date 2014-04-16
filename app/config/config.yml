@@ -99,7 +99,7 @@ cmf_core:
             enabled: true
             basepath: /cms
     publish_workflow:
-            enabled: false
+        enabled: false
 
 # Swiftmailer Configuration
 swiftmailer:

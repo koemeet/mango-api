@@ -33,6 +33,11 @@ class Query
     /**
      * @var array
      */
+    protected $filters = array();
+
+    /**
+     * @var array
+     */
     protected $where = array();
 
     /**
@@ -61,6 +66,30 @@ class Query
     public function getLimit()
     {
         return $this->limit;
+    }
+
+    /**
+     * @param array $filter
+     */
+    public function setFilters($filter)
+    {
+        $this->filters = $filter;
+    }
+
+    /**
+     * @param $name
+     */
+    public function addFilter($name)
+    {
+        $this->filters[] = $name;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFilters()
+    {
+        return $this->filters;
     }
 
     /**

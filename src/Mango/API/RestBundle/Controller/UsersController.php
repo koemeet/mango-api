@@ -125,22 +125,46 @@ class UsersController extends RestController
     }
 
     /**
-     * Get applications for this user
+     * Get applications for this user.
      *
+     * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", requirements="(foo|bar) ASC|DESC")
+     * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
+     * @Rest\QueryParam(name="limit", description="Number of results to fetch", default=10)
+     * @Rest\QueryParam(name="filter", description="Filter fields to serialize")
+     * @Rest\QueryParam(name="workspace", description="Filter on a specific workspace")
      * @ApiDoc(
-     *  section = "Users"
+     *  section = "Users",
+     *  resource=true,
+     *  description="This is a description of your API method",
+     *  filters={
+     *      {"name"="filter", "hot"="Select all hot applications", "cold"="Select all cold applications"}
+     *  },
+     *  statusCodes={
+     *      200="Returned when successful.",
+     *      403="Returned when the user is not authorized.",
+     *      404={
+     *          "Returned when the user is not found."
+     *      }
+     *  }
      * )
      * @param $id
+     * @param \FOS\RestBundle\Request\ParamFetcherInterface $paramFetcher
      * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      * @return array
      */
-    public function getUserApplicationsAction($id)
+    public function getUserApplicationsAction($id, ParamFetcherInterface $paramFetcher)
     {
         $user = $this->userService->findByIdentifier($id);
 
         if (!$user) {
             throw new ResourceNotFoundException(sprintf("Could not find user with identifier %s.", $id));
         }
+
+        /** @var ApplicationRepositoryInterface $applicationRepository */
+        $applicationRepository = $this->get('mango_core_domain.application_repository');
+        $query = $this->queryExtractor->extract($paramFetcher);
+
+        $applicationRepository->findByQuery($query);
 
         return array('applications' => $user->getApplications());
     }

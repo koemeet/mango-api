@@ -45,6 +45,11 @@ class Application
     protected $modules;
 
     /**
+     * @var Workspace
+     */
+    protected $workspace;
+
+    /**
      * Get id
      *
      * @return integer
@@ -52,6 +57,22 @@ class Application
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param Workspace $workspace
+     */
+    public function setWorkspace(Workspace $workspace)
+    {
+        $this->workspace = $workspace;
+    }
+
+    /**
+     * @return Workspace
+     */
+    public function getWorkspace()
+    {
+        return $this->workspace;
     }
 
     /**
