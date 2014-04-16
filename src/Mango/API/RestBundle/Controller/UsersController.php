@@ -134,7 +134,7 @@ class UsersController extends RestController
      *
      * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", requirements="(foo|bar) ASC|DESC")
      * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
-     * @Rest\QueryParam(name="limit", description="Number of results to fetch", default=10)
+     * @Rest\QueryParam(name="count", description="Number of results to fetch", default=10)
      * @Rest\QueryParam(name="filter", description="Filter fields to serialize")
      * @Rest\QueryParam(name="workspace", description="Filter on a specific workspace")
      * @ApiDoc(

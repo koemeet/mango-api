@@ -19,17 +19,15 @@ class PageController extends RestController
     /**
      * @param ResultFetcherInterface $resultFetcher
      */
-    public function getPages(ResultFetcherInterface $resultFetcher)
+    public function getPagesAction(ResultFetcherInterface $resultFetcher)
     {
         /** @var ResultFetcherInterface $resultFetcher */
         $resultFetcher = $this->get('mango_api_rest.phpcr.result_fetcher');
 
         $query = new Query();
-
         $root = '/cms/applications/1';
 
         // Find all pages for this application
         $resultFetcher->find($root . '/pages', $query);
-
     }
 }

@@ -24,11 +24,11 @@ class QueryExtractor
      */
     public function extract(ParamFetcherInterface $paramFetcher)
     {
-        $reserved = array('sort', 'count', 'page', 'filter', 'limit');
+        $reserved = array('sort', 'count', 'page', 'filter');
 
         $query = new Query();
         $query->setOrderBy($this->parseOrderBy($paramFetcher->get('sort')));
-        $query->setLimit($paramFetcher->get('limit'));
+        $query->setLimit($paramFetcher->get('count'));
         $query->setOffset(($paramFetcher->get('page') - 1) * $query->getLimit());
         $query->setFilters($paramFetcher->get('filter'));
 
