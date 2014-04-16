@@ -97,7 +97,7 @@ class ApplicationsController extends RestController
         /** @var PageRepositoryInterface $repository */
         $repository = $this->get('mango_core_domain.page_repository');
         $query = $this->queryExtractor->extract($paramFetcher);
-        return $repository->findByQuery($query);
+        return array('pages' => $repository->findByQuery($query));
     }
 
     /**
@@ -125,15 +125,22 @@ class ApplicationsController extends RestController
     }
 
     /**
+     * Add a page to application.
+     *
+     * @ApiDoc(
+     *  section = "Applications",
+     *  input = "Mango\CoreDomainBundle\Form\PageType"
+     * )
      * @param $id
      * @param Request $request
+     * @return mixed
      */
     public function postApplicationPagesAction($id, Request $request)
     {
-        /** @var PageService $service */
+        /** @var PageService $pageService */
         $pageService = $this->get('mango_core_domain.page_service');
 
         // Try to create a page, based of a request.
-        return $pageService->create($request);
+        return $pageService->createByApplicationId($id, $request);
     }
 }

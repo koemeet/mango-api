@@ -19,15 +19,16 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class CoreService
 {
     /**
+     * Processes a form based of a request.
+     *
      * @param FormTypeInterface $formType
      * @param $model
      * @param Request $request
      * @return FormInterface
      */
-    protected function validate(FormTypeInterface $formType, $model, Request $request)
+    protected function processForm(FormTypeInterface $formType, $model, Request $request)
     {
         $form = $this->formFactory->create($formType, $model);
-
         $data = $request->request->get($form->getName()) ?: $request->request->all();
 
         if (is_array($data)) {

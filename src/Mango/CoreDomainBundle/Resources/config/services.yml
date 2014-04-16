@@ -28,4 +28,4 @@ services:
 
     mango_core_domain.page_service:
         class: Mango\CoreDomainBundle\Service\PageService
-        arguments: ["@mango_core_domain.page_repository", "@form.factory"]
+        arguments: ["@mango_core_domain.page_repository", "@mango_core_domain.application_repository", "@form.factory"]

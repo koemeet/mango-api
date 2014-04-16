@@ -7,6 +7,8 @@
  */
 
 namespace Mango\CoreDomain\Repository;
+
+use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Model\Page;
 
 /**
@@ -24,10 +26,11 @@ interface PageRepositoryInterface extends GenericRepositoryInterface
     public function createPage();
 
     /**
-     * Add page.
+     * Add page. The application that it belongs to is also passed, so we can create a reference to the application.
      *
+     * @param \Mango\CoreDomain\Model\Application $application
      * @param $page
      * @return mixed
      */
-    public function add($page);
+    public function add(Application $application, $page);
 }

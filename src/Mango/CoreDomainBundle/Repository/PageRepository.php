@@ -9,6 +9,7 @@
 namespace Mango\CoreDomainBundle\Repository;
 
 
+use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\PageRepositoryInterface;
 use Mango\CoreDomainBundle\Document\Page;
@@ -19,7 +20,7 @@ use Mango\CoreDomainBundle\Document\Page;
  */
 class PageRepository extends DocumentRepository implements PageRepositoryInterface
 {
-    protected $rootPath = '/applications/%s/cms/pages';
+    protected $rootPath = '/applications';
 
 
     /**
@@ -82,17 +83,18 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
     /**
      * Add page.
      *
+     * @param \Mango\CoreDomain\Model\Application $application
      * @param $page
-     * @return void
      * @throws \Exception
+     * @return void
      */
-    public function add($page)
+    public function add(Application $application, $page)
     {
         if (!$page instanceof Page) {
             throw new \Exception("G, doe normaal, geef mij die page document.");
         }
 
-        $parent = $this->dm->find(null, '/cms/content');
+        $parent = $this->dm->find(null, $this->rootPath . '/' . $application->getId() . '/content');
         $page->setParent($parent);
 
         $this->dm->persist($page);
