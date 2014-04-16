@@ -46,7 +46,7 @@ class ApplicationsController extends RestController
     }
 
     /**
-     * Retrieve all applications of all users and companies.
+     * Retrieve applications in the widest scope possible. You will most probably never use this.
      *
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
@@ -54,7 +54,8 @@ class ApplicationsController extends RestController
      * @Rest\QueryParam(name="limit", description="Number of results to fetch", default=10)
      * @Rest\QueryParam(name="fields", description="Filter fields to serialize")
      * @ApiDoc(
-     *  section="Applications"
+     *  section="Applications",
+     *  description="Retrieve applications in the widest scope possible."
      * )
      * @param ParamFetcherInterface $paramFetcher
      * @return array
@@ -66,10 +67,12 @@ class ApplicationsController extends RestController
     }
 
     /**
-     * Get a single application
+     * Retrieve an application by its identifier. This can come in handy in many cases, for example on a detail page
+     * of an application. This URL is the <strong>only</strong> one capable of retrieving applications by its identifier.
      *
      * @ApiDoc(
-     *  section="Applications"
+     *  section = "Applications",
+     *  description = "Retrieve an application by it's identifier."
      * )
      */
     public function getApplicationAction($id)
@@ -78,12 +81,16 @@ class ApplicationsController extends RestController
     }
 
     /**
-     * Get the pages for a specific application
+     * Retrieve a collection of <code>pages</code> for the given application. Pages have content and do have a
+     * route connected to it. If you want to retrieve all the available routes, look for the <code>routes</code> resource.
      *
      * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
      * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
      * @Rest\QueryParam(name="count", description="Number of results to fetch", default=10)
      * @Rest\QueryParam(name="filter", description="Filter results")
+     * @ApiDoc(
+     *  section = "Applications"
+     * )
      */
     public function getApplicationPagesAction($id, ParamFetcherInterface $paramFetcher)
     {
@@ -94,11 +101,11 @@ class ApplicationsController extends RestController
     }
 
     /**
-     * Create a new application.
+     * Create a new application
      *
      * @ApiDoc(
-     *  section = "Users",
-     *  input = "Mango\API\DomainBundle\Form\UserType"
+     *  section = "Applications",
+     *  input = "Mango\CoreDomainBundle\Form\ApplicationType"
      * )
      * @return \Symfony\Component\Form\FormInterface
      */

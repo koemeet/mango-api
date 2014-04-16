@@ -125,7 +125,12 @@ class UsersController extends RestController
     }
 
     /**
-     * Get applications for this user.
+     * Retrieve a collection of applications for the given user. This can be used in order to list all the applications
+     * that this user has access to. You can also filter on workspace, which you almost always need.
+     *
+     * <strong>NOTE:</strong> When displaying applications of a user IN a workspace, specify the <code>workspace</code> filter.
+     *
+     * <small>TODO: Document how you can retrieve the users permissions for the applications.</small>
      *
      * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", requirements="(foo|bar) ASC|DESC")
      * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
@@ -135,7 +140,7 @@ class UsersController extends RestController
      * @ApiDoc(
      *  section = "Users",
      *  resource=true,
-     *  description="This is a description of your API method",
+     *  description="Retrieve a collection of applications for the given user",
      *  filters={
      *      {"name"="filter", "hot"="Select all hot applications", "cold"="Select all cold applications"}
      *  },
