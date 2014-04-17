@@ -7,9 +7,12 @@
  */
 
 namespace Mango\CoreDomainBundle\Service;
+
 use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Document\Page;
+use Mango\CoreDomain\DataTransformer\DTO\PageDTO;
 use Mango\CoreDomain\Model\Application;
+use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
 use Mango\CoreDomain\Repository\PageRepositoryInterface;
 use Mango\CoreDomainBundle\Form\PageType;
@@ -64,5 +67,14 @@ class PageService extends CoreService
         }
 
         return $form;
+    }
+
+    /**
+     * @param Query $query
+     * @return array
+     */
+    public function find(Query $query)
+    {
+        return $this->pageRepository->findByQuery($query);
     }
 }

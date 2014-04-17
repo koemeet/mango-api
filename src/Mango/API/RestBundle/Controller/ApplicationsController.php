@@ -8,6 +8,7 @@
 
 namespace Mango\API\RestBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\PHPCR\DocumentManager;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use JMS\Serializer\Serializer;
@@ -40,9 +41,15 @@ class ApplicationsController extends RestController
      */
     protected $applicationRepository;
 
+    /**
+     * @var PageService
+     */
+    protected $pageService;
+
     public function init()
     {
         $this->applicationRepository = $this->get('mango_core_domain.application_repository');
+        $this->pageService = $this->get('mango_core_domain.page_service');
     }
 
     /**
@@ -97,7 +104,9 @@ class ApplicationsController extends RestController
         /** @var PageRepositoryInterface $repository */
         $repository = $this->get('mango_core_domain.page_repository');
         $query = $this->queryExtractor->extract($paramFetcher);
-        return array('pages' => $repository->findByQuery($query));
+        $pages = $this->pageService->find($query);
+
+        return array('pages' => $pages);
     }
 
     /**

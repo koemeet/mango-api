@@ -60,23 +60,11 @@ class PagesController extends RestController
      *  section = "Pages"
      * )
      * @param $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
     public function getPageAction($id, Request $request)
     {
-        $image = new \Imagick('http://www.nasa.gov/images/content/711375main_grail20121205_4x3_946-710.jpg');
-        $image->cropthumbnailimage(100, 300);
-        $image->setimagecolorspace(\Imagick::COLORSPACE_GRAY);
-
-        $filename = md5($request->getRequestUri());
-        echo $filename . '.jpg';
-        die;
-
-        header("Content-Type: image/jpeg");
-        echo $image;
-        die;
-
-
         return array('page' => $this->pageRepository->find($id));
     }
 

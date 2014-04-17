@@ -8,6 +8,7 @@
 
 namespace Mango\CoreDomainBundle\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\PageRepositoryInterface;
@@ -68,7 +69,8 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
      */
     public function findByQuery(Query $query)
     {
-        return $this->dm->getRepository('Mango\CoreDomainBundle\Document\Page')->findAll();
+        $pages = $this->dm->getRepository('Mango\CoreDomainBundle\Document\Page')->findAll()->toArray();
+        return $this->normalizeArray($pages);
     }
 
     /**
@@ -105,9 +107,10 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
         $image->setName('my-image-4');
         $image->setContent(fopen($url, "r"));
 
-//        $this->dm->persist($image);
-//
-//        $page->setImage($image);
+        $this->dm->persist($image);
+
+        $page->setImage($image);
+
 
 
         // Doei, we zetten deze in zijn parent path towk
@@ -115,5 +118,24 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
 
         $this->dm->persist($page);
         $this->dm->flush();
+    }
+
+    /**
+     * @param $data
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    private function normalizeArray($data)
+    {
+        if ($data instanceof ArrayCollection) {
+            $data = $data->toArray();
+        }
+
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException('$data needs to be an array.');
+        }
+
+        sort($data);
+        return $data;
     }
 }
