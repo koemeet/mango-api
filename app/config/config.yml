@@ -82,7 +82,7 @@ doctrine_phpcr:
     session:
         backend:
             type: doctrinedbal
-        workspace: default
+        workspace: mango
         username: admin
         password: admin
     odm:

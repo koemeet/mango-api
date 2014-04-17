@@ -1,3 +1,7 @@
+mango_api_image:
+    resource: "@MangoAPIImageBundle/Resources/config/routing.yml"
+    prefix:   /
+
 mango_api_docs:
     resource: "@MangoAPIDocsBundle/Resources/config/routing.yml"
     prefix:   /
