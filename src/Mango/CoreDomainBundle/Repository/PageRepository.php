@@ -105,10 +105,9 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
         $image->setName('my-image-4');
         $image->setContent(fopen($url, "r"));
 
-        $this->dm->persist($image);
-
-        $page->setImage($image);
-
+//        $this->dm->persist($image);
+//
+//        $page->setImage($image);
 
 
         // Doei, we zetten deze in zijn parent path towk
