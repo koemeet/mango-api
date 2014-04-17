@@ -32,3 +32,5 @@ Mango\CoreDomain\Model\Page:
             - NotBlank: ~
         body:
             - NotBlank: ~
+        application:
+            - NotBlank: ~

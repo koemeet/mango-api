@@ -21,7 +21,7 @@ Mango\CoreDomain\Model\Customer:
 #            route: get_customer
 #            parameters:
 #                id: expr(object.getParent().getId())
-#            absolute: true
+#            absolute: truew
 #          exclusion:
 #            exclude_if: expr(object.getParent() == null)
           #embedded:

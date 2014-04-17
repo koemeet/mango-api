@@ -8,6 +8,8 @@
 
 namespace Mango\CoreDomain\Model;
 
+use Mango\CoreDomain\Model\Image;
+
 /**
  * Class Page
  *
@@ -19,6 +21,11 @@ class Page
      * @var string
      */
     protected $id;
+
+    /**
+     * @var Application
+     */
+    protected $application;
 
     /**
      * @var string
@@ -46,6 +53,27 @@ class Page
     protected $body;
 
     /**
+     * @var Image
+     */
+    protected $image;
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
      * @return string
      */
     public function getId()
@@ -53,6 +81,22 @@ class Page
         return $this->id;
     }
 
+    /**
+     * @param Application $application
+     */
+    public function setApplication(Application $application = null)
+    {
+        $this->application = $application;
+    }
+
+    /**
+     * @return Application
+     */
+    public function getApplication()
+    {
+        return $this->application;
+    }
+    
     /**
      * @param string $name
      */

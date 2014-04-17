@@ -26,7 +26,7 @@ abstract class CoreService
      * @param Request $request
      * @return FormInterface
      */
-    protected function processForm(FormTypeInterface $formType, $model, Request $request)
+    public function processForm(FormTypeInterface $formType, $model, Request $request)
     {
         $form = $this->formFactory->create($formType, $model);
         $data = $request->request->get($form->getName()) ?: $request->request->all();
@@ -35,7 +35,11 @@ abstract class CoreService
             $data = array_intersect_key($data, $form->all());
         }
 
-        $form->submit($data);
+        // Only submit form data if we use one of the following HTTP verbs.
+        if (in_array($request->getMethod(), array("POST", "PUT", "PATCH"))) {
+            // $clearMissing needs to be false, is belangrijk..
+            $form->submit($data);
+        }
 
         return $form;
     }

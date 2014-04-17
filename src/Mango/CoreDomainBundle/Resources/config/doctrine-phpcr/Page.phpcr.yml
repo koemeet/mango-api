@@ -17,3 +17,7 @@ Mango\CoreDomainBundle\Document\Page:
             nullable: true
         body:
             type: string
+
+    referenceOne:
+        image:
+            targetEntity: Image

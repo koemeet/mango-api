@@ -140,7 +140,7 @@ class ApplicationsController extends RestController
         /** @var PageService $pageService */
         $pageService = $this->get('mango_core_domain.page_service');
 
-        // Try to create a page, based of a request.
-        return $pageService->createByApplicationId($id, $request);
+        $request->request->set('application', $id);
+        return $pageService->create($request);
     }
 }

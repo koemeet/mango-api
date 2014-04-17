@@ -19,6 +19,11 @@ class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            // TODO: Make this independent of Doctrine
+            ->add('application', 'entity', array(
+                'class' => 'Mango\CoreDomain\Model\Application',
+                'property' => 'name'
+            ))
             ->add('name')
             ->add('uri')
             ->add('title')

@@ -1,0 +1,12 @@
+Mango\CoreDomain\Model\Image:
+    access_type: public
+
+    virtual_properties:
+        getURL:
+            serialized_name: url
+
+    properties:
+        id:
+            exclude: true
+        content:
+            exclude: true

@@ -7,6 +7,7 @@
  */
 
 namespace Mango\CoreDomainBundle\Service;
+use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Document\Page;
 use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
@@ -15,6 +16,8 @@ use Mango\CoreDomainBundle\Form\PageType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class PageService
@@ -25,6 +28,7 @@ class PageService extends CoreService
     protected $pageRepository;
     protected $applicationRepository;
     protected $formFactory;
+    protected $router;
 
     /**
      * Constructor.
@@ -32,43 +36,33 @@ class PageService extends CoreService
      * @param PageRepositoryInterface $pageRepository
      * @param ApplicationRepositoryInterface $applicationRepository
      * @param FormFactoryInterface $formFactory
+     * @param \Symfony\Component\Routing\RouterInterface $router
      */
-    public function __construct(PageRepositoryInterface $pageRepository, ApplicationRepositoryInterface $applicationRepository, FormFactoryInterface $formFactory)
+    public function __construct(PageRepositoryInterface $pageRepository, ApplicationRepositoryInterface $applicationRepository, FormFactoryInterface $formFactory, RouterInterface $router)
     {
         $this->pageRepository = $pageRepository;
         $this->applicationRepository = $applicationRepository;
         $this->formFactory = $formFactory;
+        $this->router = $router;
     }
 
     /**
-     * Try to create a new page by application
-     *
-     * @param \Mango\CoreDomain\Model\Application $application
      * @param Request $request
-     * @return mixed
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createByApplication(Application $application, Request $request)
+    public function create(Request $request)
     {
         $page = $this->pageRepository->createPage();
         $form = $this->processForm(new PageType(), $page, $request);
 
         if ($form->isValid()) {
-            $this->pageRepository->add($application, $page);
+            $this->pageRepository->add($page);
+
+//            return View::create(array($form->getName() => $page), 201, array(
+//                "Location" => $this->router->generate("get_page", array("id" => $page->getId()), true)
+//            ));
         }
 
         return $form;
-    }
-
-    /**
-     * Create page by application id and request.
-     *
-     * @param $id
-     * @param Request $request
-     * @return mixed
-     */
-    public function createByApplicationId($id, Request $request)
-    {
-        $application = $this->applicationRepository->find($id);
-        return $this->createByApplication($application, $request);
     }
 }

@@ -8,11 +8,12 @@
 
 namespace Mango\CoreDomainBundle\Repository;
 
-
 use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\PageRepositoryInterface;
+use Mango\CoreDomainBundle\Document\Image;
 use Mango\CoreDomainBundle\Document\Page;
+use PHPCR\Util\NodeHelper;
 
 /**
  * Class PageRepository
@@ -31,7 +32,7 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
      */
     public function find($id)
     {
-        // TODO: Implement find() method.
+        return $this->dm->find(null, 'd1b73235-261f-4fbb-84fd-614948ea4924');
     }
 
     /**
@@ -83,19 +84,35 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
     /**
      * Add page.
      *
-     * @param \Mango\CoreDomain\Model\Application $application
-     * @param $page
+     * @param \Mango\CoreDomain\Model\Application $page
      * @throws \Exception
      * @return void
      */
-    public function add(Application $application, $page)
+    public function add($page)
     {
         if (!$page instanceof Page) {
             throw new \Exception("G, doe normaal, geef mij die page document.");
         }
 
-        $parent = $this->dm->find(null, $this->rootPath . '/' . $application->getId() . '/content');
+        $parent = $this->dm->find(null, $this->rootPath . '/' . $page->getApplication()->getId() . '/content');
         $page->setParent($parent);
+
+        NodeHelper::createPath($this->dm->getPhpcrSession(), $this->rootPath . '/'  . $page->getApplication()->getId() . '/images');
+
+        $url = 'http://upload.wikimedia.org/wikipedia/commons/1/18/My_Son.jpg';
+        $image = new Image();
+        $image->setParent($this->dm->find(null, $this->rootPath . '/'  . $page->getApplication()->getId() . '/images'));
+        $image->setName('my-image-4');
+        $image->setContent(fopen($url, "r"));
+
+        $this->dm->persist($image);
+
+        $page->setImage($image);
+
+
+
+        // Doei, we zetten deze in zijn parent path towk
+        $page->setApplication(null);
 
         $this->dm->persist($page);
         $this->dm->flush();
