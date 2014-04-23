@@ -94,6 +94,16 @@ class PagesController extends RestController
         return $form;
     }
 
+    /**
+     * Update an existing page.
+     *
+     * @ApiDoc(
+     *  section = "Pages"
+     * )
+     * @param $id
+     * @param Request $request
+     * @return View|\Symfony\Component\Form\FormInterface
+     */
     public function putPageAction($id, Request $request)
     {
         $form = $this->pageService->update($id, $request);
