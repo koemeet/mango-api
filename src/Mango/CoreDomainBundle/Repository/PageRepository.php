@@ -14,6 +14,7 @@ use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\PageRepositoryInterface;
 use Mango\CoreDomainBundle\Document\Image;
 use Mango\CoreDomainBundle\Document\Page;
+use Mango\CoreDomain\Model\Page as PageModel;
 use PHPCR\Util\NodeHelper;
 
 /**
@@ -33,7 +34,7 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
      */
     public function find($id)
     {
-        return $this->dm->find(null, $id);
+        return $this->dm->getRepository('Mango\CoreDomainBundle\Document\Page')->find($id);
     }
 
     /**
@@ -117,6 +118,22 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
 
         $this->dm->persist($page);
         $this->dm->flush();
+    }
+
+    /**
+     * Handle the update process of a page.
+     *
+     * @param \Mango\CoreDomain\Model\Page $page
+     * @throws \Exception
+     * @return mixed
+     */
+    public function update(PageModel $page)
+    {
+        if (!$page instanceof Page) {
+            throw new \Exception('$page is not an instance of Mango\CoreDomainBundle\Document\Page.');
+        }
+
+        $this->dm->flush($page);
     }
 
     /**

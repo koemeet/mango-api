@@ -66,6 +66,31 @@ class PageService extends CoreService
     }
 
     /**
+     * Update page object.
+     *
+     * @param $id
+     * @param Request $request
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function update($id, Request $request)
+    {
+        $page = $this->pageRepository->find($id);
+
+        if (!$page) {
+            throw new ResourceNotFoundException(sprintf("Could not find page with the id: %s", $id));
+        }
+
+        $form = $this->processForm(new PageType(), $page, $request);
+
+        if ($form->isValid()) {
+            $this->pageRepository->update($page);
+        }
+
+        return $form;
+    }
+
+    /**
      * @param Query $query
      * @return array
      */

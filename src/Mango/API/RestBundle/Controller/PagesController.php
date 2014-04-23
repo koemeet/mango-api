@@ -94,6 +94,17 @@ class PagesController extends RestController
         return $form;
     }
 
+    public function putPageAction($id, Request $request)
+    {
+        $form = $this->pageService->update($id, $request);
+
+        if ($form->isValid()) {
+            return View::create(array($form->getName() => $form->getData()), 200);
+        }
+
+        return $form;
+    }
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \FOS\RestBundle\View\View

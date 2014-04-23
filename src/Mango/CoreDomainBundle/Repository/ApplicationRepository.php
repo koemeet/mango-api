@@ -132,6 +132,8 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
             $param = $field . uniqid();
             $qb->andWhere(sprintf("t.%s = :%s", $field, $param))->setParameter($param, $value);
         }
+
+        return $qb->getQuery()->getResult();
     }
 
 
