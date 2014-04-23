@@ -56,8 +56,8 @@ class UsersController extends RestController
      * @Rest\View
      * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
      * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
-     * @Rest\QueryParam(name="limit", description="Number of results to fetch", default=10)
-     * @Rest\QueryParam(name="fields", description="Filter fields to serialize")
+     * @Rest\QueryParam(name="count", description="Number of results to fetch", default=10)
+     * @Rest\QueryParam(name="filter", description="Filter fields to serialize")
      * @ApiDoc(
      *  section="Users"
      * )
@@ -67,7 +67,9 @@ class UsersController extends RestController
     public function getUsersAction(ParamFetcherInterface $paramFetcher)
     {
         $query = $this->queryExtractor->extract($paramFetcher);
-        return array('users' => $this->userRepository->findByQuery($query));
+        return array(
+            'meta' => array('total' => 8),
+            'users' => $this->userRepository->findByQuery($query));
     }
 
     /**

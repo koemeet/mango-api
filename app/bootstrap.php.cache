@@ -897,7 +897,6 @@ if (in_array($mimeType, (array) $mimeTypes)) {
 return $format;
 }
 }
-return null;
 }
 public function setFormat($format, $mimeTypes)
 {
@@ -1373,22 +1372,7 @@ $this->sendContent();
 if (function_exists('fastcgi_finish_request')) {
 fastcgi_finish_request();
 } elseif ('cli'!== PHP_SAPI) {
-$previous = null;
-$obStatus = ob_get_status(1);
-while (($level = ob_get_level()) > 0 && $level !== $previous) {
-$previous = $level;
-if ($obStatus[$level - 1]) {
-if (version_compare(PHP_VERSION,'5.4','>=')) {
-if (isset($obStatus[$level - 1]['flags']) && ($obStatus[$level - 1]['flags'] & PHP_OUTPUT_HANDLER_REMOVABLE)) {
-ob_end_flush();
-}
-} else {
-if (isset($obStatus[$level - 1]['del']) && $obStatus[$level - 1]['del']) {
-ob_end_flush();
-}
-}
-}
-}
+static::closeOutputBuffers(0, true);
 flush();
 }
 return $this;
@@ -1532,7 +1516,6 @@ return (int) $this->headers->getCacheControlDirective('max-age');
 if (null !== $this->getExpires()) {
 return $this->getExpires()->format('U') - $this->getDate()->format('U');
 }
-return null;
 }
 public function setMaxAge($value)
 {
@@ -1550,7 +1533,6 @@ public function getTtl()
 if (null !== $maxAge = $this->getMaxAge()) {
 return $maxAge - $this->getAge();
 }
-return null;
 }
 public function setTtl($seconds)
 {
@@ -1714,7 +1696,26 @@ return in_array($this->statusCode, array(201, 301, 302, 303, 307, 308)) && (null
 }
 public function isEmpty()
 {
-return in_array($this->statusCode, array(201, 204, 304));
+return in_array($this->statusCode, array(204, 304));
+}
+public static function closeOutputBuffers($targetLevel, $flush)
+{
+$status = ob_get_status(true);
+$level = count($status);
+while ($level-- > $targetLevel
+&& (!empty($status[$level]['del'])
+|| (isset($status[$level]['flags'])
+&& ($status[$level]['flags'] & PHP_OUTPUT_HANDLER_REMOVABLE)
+&& ($status[$level]['flags'] & ($flush ? PHP_OUTPUT_HANDLER_FLUSHABLE : PHP_OUTPUT_HANDLER_CLEANABLE))
+)
+)
+) {
+if ($flush) {
+ob_end_flush();
+} else {
+ob_end_clean();
+}
+}
 }
 protected function ensureIEOverSSLCompatibility(Request $request)
 {
@@ -2030,7 +2031,7 @@ $alternatives[] = $key;
 }
 throw new ServiceNotFoundException($id, null, null, $alternatives);
 }
-return null;
+return;
 }
 $this->loading[$id] = true;
 try {
@@ -2041,7 +2042,7 @@ if (array_key_exists($id, $this->services)) {
 unset($this->services[$id]);
 }
 if ($e instanceof InactiveScopeException && self::EXCEPTION_ON_INVALID_REFERENCE !== $invalidBehavior) {
-return null;
+return;
 }
 throw $e;
 }
@@ -2774,7 +2775,6 @@ return $this->path;
 }
 public function getParent()
 {
-return null;
 }
 final public function getName()
 {
@@ -2892,6 +2892,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Debug\Exception\HandledErrorException;
+use Symfony\Component\Debug\Exception\FatalErrorException;
 class HttpKernel implements HttpKernelInterface, TerminableInterface
 {
 protected $dispatcher;
@@ -2912,12 +2914,24 @@ if (false === $catch) {
 $this->finishRequest($request, $type);
 throw $e;
 }
+if ($e instanceof HandledErrorException) {
+$e->cleanOutput();
+}
 return $this->handleException($e, $request, $type);
 }
 }
 public function terminate(Request $request, Response $response)
 {
 $this->dispatcher->dispatch(KernelEvents::TERMINATE, new PostResponseEvent($this, $request, $response));
+}
+public function handleFatalErrorException(FatalErrorException $exception)
+{
+$request = $this->requestStack->getMasterRequest();
+$response = $this->handleException($exception, $request, self::MASTER_REQUEST);
+$response->sendHeaders();
+$response->sendContent();
+$this->terminate($request, $response);
+$exception->cleanOutput();
 }
 private function handleRaw(Request $request, $type = self::MASTER_REQUEST)
 {
