@@ -33,7 +33,7 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
      */
     public function find($id)
     {
-        return $this->dm->find(null, 'd1b73235-261f-4fbb-84fd-614948ea4924');
+        return $this->dm->find(null, $id);
     }
 
     /**
