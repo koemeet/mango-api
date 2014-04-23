@@ -45,7 +45,8 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
      */
     public function findAll($limit = 10, $offset = 0)
     {
-        // TODO: Implement findAll() method.
+        $pages = $this->dm->getRepository('Mango\CoreDomainBundle\Document\Page')->findAll()->toArray();
+        return $this->normalizeArray($pages);
     }
 
     /**
@@ -99,19 +100,17 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
         $parent = $this->dm->find(null, $this->rootPath . '/' . $page->getApplication()->getId() . '/content');
         $page->setParent($parent);
 
-        NodeHelper::createPath($this->dm->getPhpcrSession(), $this->rootPath . '/'  . $page->getApplication()->getId() . '/images');
-
-        $url = 'http://upload.wikimedia.org/wikipedia/commons/1/18/My_Son.jpg';
-        $image = new Image();
-        $image->setParent($this->dm->find(null, $this->rootPath . '/'  . $page->getApplication()->getId() . '/images'));
-        $image->setName('my-image-4');
-        $image->setContent(fopen($url, "r"));
-
-        $this->dm->persist($image);
-
-        $page->setImage($image);
-
-
+//        NodeHelper::createPath($this->dm->getPhpcrSession(), $this->rootPath . '/'  . $page->getApplication()->getId() . '/images');
+//
+//        $url = 'http://upload.wikimedia.org/wikipedia/commons/1/18/My_Son.jpg';
+//        $image = new Image();
+//        $image->setParent($this->dm->find(null, $this->rootPath . '/'  . $page->getApplication()->getId() . '/images'));
+//        $image->setName('my-image-4');
+//        $image->setContent(fopen($url, "r"));
+//
+//        $this->dm->persist($image);
+//
+//        $page->setImage($image);
 
         // Doei, we zetten deze in zijn parent path towk
         $page->setApplication(null);

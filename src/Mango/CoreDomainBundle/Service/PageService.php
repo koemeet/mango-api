@@ -60,10 +60,6 @@ class PageService extends CoreService
 
         if ($form->isValid()) {
             $this->pageRepository->add($page);
-
-//            return View::create(array($form->getName() => $page), 201, array(
-//                "Location" => $this->router->generate("get_page", array("id" => $page->getId()), true)
-//            ));
         }
 
         return $form;

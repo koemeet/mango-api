@@ -8,6 +8,7 @@
 
 namespace Mango\API\RestBundle\Controller;
 
+use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Component\ActionHandler\Data\ResultFetcherInterface;
 use Mango\API\RestBundle\Component\ActionHandler\Query\Query;
 use Mango\CoreDomain\Repository\PageRepositoryInterface;
@@ -53,6 +54,11 @@ class PagesController extends RestController
 //        $resultFetcher->find($root . '/pages', $query);
 //    }
 
+    public function getPagesAction()
+    {
+        return $this->pageRepository->findAll();
+    }
+
     /**
      * Retrieve a single page by its identifier.
      *
@@ -77,7 +83,15 @@ class PagesController extends RestController
      */
     public function postPagesAction(Request $request)
     {
-        return $this->pageService->create($request);
+        $form = $this->pageService->create($request);
+
+        if ($form->isValid()) {
+            return View::create(array($form->getName() => $form->getViewData()), 201, array(
+                "Location" => $this->router->generate("get_page", array("id" => $form->getViewData()->getId()), true)
+            ));
+        }
+
+        return $form;
     }
 
     /**
