@@ -93,6 +93,14 @@ doctrine_phpcr:
                 prefix: Mango\CoreDomainBundle\Document
                 alias: MangoCoreDomainBundle
 
+
+#mango_odm_bridge:
+#    metadata:
+#        directories:
+#            somename:
+#                namespace_prefix: 'Mango\CoreDomain\Model'
+#                path: %kernel.root_dir%/../src/Mango/CoreDomainBundle/Resources/config/doctrine
+
 cmf_core:
     persistence:
         phpcr:

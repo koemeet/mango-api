@@ -7,6 +7,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use Mango\CoreDomain\Media\ImageProcessor;
 use Mango\CoreDomain\Model\Image;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;

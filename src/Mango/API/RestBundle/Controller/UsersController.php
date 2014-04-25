@@ -11,6 +11,7 @@ namespace Mango\API\RestBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 use FOS\UserBundle\Entity\UserManager;
 use Mango\CoreDomain\Model\User;
@@ -18,6 +19,8 @@ use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
 use Mango\CoreDomainBundle\Form\UserType;
 use Mango\CoreDomainBundle\Service\UserService;
+use Metadata\Driver\DriverChain;
+use Metadata\MetadataFactory;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
@@ -42,7 +45,7 @@ class UsersController extends RestController
     protected $userRepository;
 
     /**
-     * Setup neccessary attributes.
+     * Set commonly used services and repositories.
      */
     public function init()
     {
@@ -51,7 +54,7 @@ class UsersController extends RestController
     }
 
     /**
-     * Retrieve all users of Mango.
+     * Retrieve all the users that uses Mango.
      *
      * @Rest\View
      * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
@@ -66,10 +69,17 @@ class UsersController extends RestController
      */
     public function getUsersAction(ParamFetcherInterface $paramFetcher)
     {
-        $query = $this->queryExtractor->extract($paramFetcher);
+        // Find users by a query object, which is extracted from a paramfetcher object.
+        $data = $this->userRepository->findByQuery($this->extract($paramFetcher));
+
         return array(
-            'meta' => array('total' => 8),
-            'users' => $this->userRepository->findByQuery($query));
+            'meta' => array(
+                'count' => $data->getCount(),
+                'limit' => $data->getLimit(),
+                'offset' => $data->getOffset()
+            ),
+            'users' => $data
+        );
     }
 
     /**
@@ -91,11 +101,16 @@ class UsersController extends RestController
      *  section = "Users",
      *  input = "Mango\API\DomainBundle\Form\UserType"
      * )
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function postUsersAction()
+    public function postUsersAction(Request $request)
     {
-        return $this->processForm(new UserType(), new User());
+        $form = $this->userService->add($request);
+        if ($form->isValid()) {
+            return $this->createView($form, Codes::HTTP_CREATED, 'get_user');
+        }
+        return $form;
     }
 
     /**
@@ -105,12 +120,16 @@ class UsersController extends RestController
      *  input = "Mango\API\DomainBundle\Form\UserType"
      * )
      * @param $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function putUserAction($id)
+    public function putUserAction($id, Request $request)
     {
-        $user = $this->userService->findByIdentifier($id);
-        return $this->processForm(new UserType(), $user);
+        $form = $this->userService->update($id, $request);
+        if ($form->isValid()) {
+            return $this->createView($form, Codes::HTTP_OK);
+        }
+        return $form;
     }
 
     /**
@@ -119,11 +138,12 @@ class UsersController extends RestController
      * @ApiDoc(
      *  section = "Users"
      * )
+     * @param Request $request
      * @return View
      */
-    public function newUsersAction()
+    public function newUsersAction(Request $request)
     {
-        return $this->generateNewView($this->postUsersAction(), 'post_users');
+        return $this->generateNewView($this->postUsersAction($request), 'post_users');
     }
 
     /**

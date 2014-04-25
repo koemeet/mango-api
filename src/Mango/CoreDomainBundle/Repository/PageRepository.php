@@ -76,6 +76,17 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
     }
 
     /**
+     * @param Application $application
+     * @param Query $query
+     * @return mixed
+     */
+    public function findByApplication(Application $application, Query $query = null)
+    {
+        // TODO: Implement findByApplication() method.
+    }
+
+
+    /**
      * Create a Page instance.
      *
      * @return Page

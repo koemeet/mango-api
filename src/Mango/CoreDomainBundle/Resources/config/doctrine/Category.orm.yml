@@ -1,6 +1,6 @@
-Mango\CoreDomain\Model\ShopCategory:
+Mango\CoreDomain\Model\Category:
     type: entity
-    table: shop_categories
+    table: categories
 
     id:
         id:
@@ -12,16 +12,10 @@ Mango\CoreDomain\Model\ShopCategory:
     fields:
         name:
             type: string
-            scale: 0
             length: 128
-            unique: false
             nullable: false
-            precision: 0
         description:
             type: text
-            scale: 0
-            length: null
-            unique: false
             nullable: true
-            precision: 0
+
     lifecycleCallbacks: {  }

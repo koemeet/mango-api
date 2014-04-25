@@ -1,0 +1,8 @@
+parameters:
+    mango_api_rest.serializer.array_object_handler.class: Mango\API\RestBundle\Serializer\Handler\ArrayObjectHandler
+
+services:
+    mango_api_rest.serializer.array_object_handler:
+        class: %mango_api_rest.serializer.array_object_handler.class%
+        tags:
+            - { name: jms_serializer.subscribing_handler }

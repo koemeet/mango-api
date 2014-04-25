@@ -10,12 +10,14 @@ namespace Mango\CoreDomainBundle\Repository;
 
 use Doctrine\ORM\EntityManager;
 use Mango\CoreDomain\Persistence\Query;
+use Mango\CoreDomain\Repository\ObjectRepository;
+use Mango\CoreDomainBundle\ORM\Result\PaginatedResult;
 
 /**
  * Class EntityRepository
  * @package Mango\CoreDomainBundle\Repository
  */
-abstract class EntityRepository
+abstract class EntityRepository implements ObjectRepository
 {
     protected $em;
 
@@ -25,6 +27,23 @@ abstract class EntityRepository
     public function __construct(EntityManager $entityManager)
     {
         $this->em = $entityManager;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function find($id)
+    {
+        return $this->em->find($this->class, $id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findByQuery(Query $query)
+    {
+        $wrapper = new PaginatedResult($this->getQueryBuilder($this->class, $query));
+        return $wrapper;
     }
 
     /**

@@ -7,6 +7,7 @@
  */
 
 namespace Mango\CoreDomain\Repository;
+use Mango\CoreDomain\Data\PaginatedResult;
 use Mango\CoreDomain\Persistence\Query;
 
 /**
@@ -47,7 +48,7 @@ interface GenericRepositoryInterface
      * Find records with the provided Query context.
      *
      * @param $query
-     * @return mixed
+     * @return PaginatedResult
      */
     public function findByQuery(Query $query);
 }

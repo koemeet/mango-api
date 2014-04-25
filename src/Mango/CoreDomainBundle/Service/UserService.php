@@ -10,6 +10,9 @@ namespace Mango\CoreDomainBundle\Service;
 
 use Mango\CoreDomain\Model\User;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
+use Mango\CoreDomainBundle\Form\UserType;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -21,19 +24,22 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  * Class UserService
  * @package Mango\CoreDomainBundle\Service
  */
-class UserService
+class UserService extends CoreService
 {
     protected $userRepository;
     protected $securityContext;
 
     /**
-     * @param UserRepositoryInterface $userRepository
-     * @param SecurityContextInterface $securityContext
+     * @param UserRepositoryInterface   $userRepository
+     * @param SecurityContextInterface  $securityContext
+     * @param FormFactoryInterface      $formFactory
      */
-    public function __construct(UserRepositoryInterface $userRepository, SecurityContextInterface $securityContext)
+    public function __construct(UserRepositoryInterface $userRepository, SecurityContextInterface $securityContext, FormFactoryInterface $formFactory)
     {
         $this->userRepository = $userRepository;
         $this->securityContext = $securityContext;
+
+        parent::__construct($formFactory);
     }
 
     /**
@@ -62,14 +68,34 @@ class UserService
      * Add a user.
      *
      * @param Request $request
-     * @return \Mango\CoreDomain\Model\User
+     * @return FormInterface
      */
-    public function addUser(Request $request)
+    public function add(Request $request)
     {
-        // We create our user
-        $user = $this->userRepository->create();
+        $user = $this->userRepository->createUser();
+        $form = $this->processForm(new UserType(), $user, $request);
 
-        // Validate it
-        return $user;
+        if ($form->isValid()) {
+            $this->userRepository->add($user);
+        }
+
+        return $form;
+    }
+
+    /**
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function update($id, Request $request)
+    {
+        $user = $this->findByIdentifier($id);
+        $form = $this->processForm(new UserType(), $user, $request);
+
+        if ($form->isValid()) {
+            $this->userRepository->update($user);
+        }
+
+        return $form;
     }
 } 

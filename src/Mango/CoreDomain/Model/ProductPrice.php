@@ -13,7 +13,7 @@ class ProductPrice
     protected $id;
 
     /**
-     * @var string
+     * @var float
      */
     protected $price;
 

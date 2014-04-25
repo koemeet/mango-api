@@ -30,15 +30,9 @@ class Product
     protected $stock;
 
     /**
-     * @var Customer
-     */
-    protected $customer;
-
-    /**
-     * @var ShopCategory
+     * @var Category
      */
     protected $category;
-
 
     /**
      * Get id
@@ -105,7 +99,6 @@ class Product
     public function setCustomer(Customer $customer = null)
     {
         $this->customer = $customer;
-
         return $this;
     }
 
@@ -120,22 +113,15 @@ class Product
     }
 
     /**
-     * Set category
-     *
-     * @param ShopCategory $category
-     * @return Product
+     * @param Category $category
      */
-    public function setCategory(ShopCategory $category = null)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
-
-        return $this;
     }
 
     /**
-     * Get category
-     *
-     * @return ShopCategory
+     * @return Category
      */
     public function getCategory()
     {

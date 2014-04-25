@@ -30,7 +30,6 @@ class PageService extends CoreService
 {
     protected $pageRepository;
     protected $applicationRepository;
-    protected $formFactory;
     protected $router;
 
     /**
@@ -41,12 +40,13 @@ class PageService extends CoreService
      * @param FormFactoryInterface $formFactory
      * @param \Symfony\Component\Routing\RouterInterface $router
      */
-    public function __construct(PageRepositoryInterface $pageRepository, ApplicationRepositoryInterface $applicationRepository, FormFactoryInterface $formFactory, RouterInterface $router)
+    public function __construct(PageRepositoryInterface $pageRepository, ApplicationRepositoryInterface $applicationRepository, RouterInterface $router, FormFactoryInterface $formFactory)
     {
         $this->pageRepository = $pageRepository;
         $this->applicationRepository = $applicationRepository;
-        $this->formFactory = $formFactory;
         $this->router = $router;
+
+        parent::__construct($formFactory);
     }
 
     /**

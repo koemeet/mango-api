@@ -1,0 +1,17 @@
+Mango\CoreDomainBundle\Document\Product:
+    type: document
+    referenceable: true
+
+    id:
+        fieldName: path
+        generator:
+            strategy: parent
+
+    parentdocument: parent
+    nodename: name
+
+    fields:
+        id:
+            uuid: true
+        stock:
+            type: long

@@ -8,6 +8,7 @@
 
 namespace Mango\CoreDomainBundle\Service;
 
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,16 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class CoreService
 {
+    protected $formFactory;
+
+    /**
+     * @param FormFactoryInterface $formFactory
+     */
+    public function __construct(FormFactoryInterface $formFactory)
+    {
+        $this->formFactory = $formFactory;
+    }
+
     /**
      * Processes a form based of a request.
      *

@@ -84,13 +84,9 @@ class PagesController extends RestController
     public function postPagesAction(Request $request)
     {
         $form = $this->pageService->create($request);
-
         if ($form->isValid()) {
-            return View::create(array($form->getName() => $form->getViewData()), 201, array(
-                "Location" => $this->router->generate("get_page", array("id" => $form->getViewData()->getId()), true)
-            ));
+            return $this->createView($form, 201, 'get_page');
         }
-
         return $form;
     }
 
@@ -107,11 +103,9 @@ class PagesController extends RestController
     public function putPageAction($id, Request $request)
     {
         $form = $this->pageService->update($id, $request);
-
         if ($form->isValid()) {
-            return View::create(array($form->getName() => $form->getData()), 200);
+            return $this->createView($form, 200);
         }
-
         return $form;
     }
 

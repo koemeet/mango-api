@@ -11,7 +11,6 @@ namespace Mango\CoreDomainBundle\Repository;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Mango\CoreDomain\Model\User;
-use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
 
 /**
@@ -20,11 +19,6 @@ use Mango\CoreDomain\Repository\UserRepositoryInterface;
  */
 class UserRepository extends EntityRepository implements UserRepositoryInterface
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
     protected $class = "MangoCoreDomain:User";
 
     /**
@@ -38,8 +32,8 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
      */
     public function __construct(EntityManager $entityManager, UserManagerInterface $userManager)
     {
-        $this->em = $entityManager;
         $this->userManager = $userManager;
+        parent::__construct($entityManager);
     }
 
     /**
@@ -47,9 +41,21 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
      *
      * @return User
      */
-    public function create()
+    public function createUser()
     {
         return $this->userManager->createUser();
+    }
+
+    /**
+     * Adds a new user.
+     *
+     * @param User $user
+     * @return mixed
+     */
+    public function add(User $user)
+    {
+        $this->em->persist($user);
+        $this->em->flush($user);
     }
 
     /**
@@ -60,7 +66,8 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
      */
     public function update(User $user)
     {
-        // TODO: Implement update() method.
+        $this->em->persist($user);
+        $this->em->flush($user);
     }
 
     /**
@@ -71,74 +78,18 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
      */
     public function remove(User $user)
     {
-        // TODO: Implement remove() method.
-    }
-
-
-    /**
-     * Find a user by it's identifier
-     *
-     * @param $id
-     * @return User
-     */
-    public function find($id)
-    {
-        return $this->em->find($this->class, $id);
+        $this->em->remove($user);
+        $this->em->flush($user);
     }
 
     /**
-     * Find a user by it's email
+     * Find a user by it's email.
      *
      * @param $email
-     * @param int $limit
-     * @param int $offset
-     * @param bool $paginated
      * @return User
      */
-    public function findByEmail($email, $limit = 10, $offset = 0, $paginated = false)
+    public function findByEmail($email)
     {
         return $this->userManager->findUserByEmail($email);
     }
-
-    /**
-     * Find users by criteria.
-     *
-     * @param array $criteria
-     * @param int $limit
-     * @param int $offset
-     * @param bool $paginated If true, it will return a paginated result, which can be used for the UI layer
-     * @return User[]
-     */
-    public function findBy(array $criteria = array(), $limit = 10, $offset = 0, $paginated = false)
-    {
-        // TODO: Implement findBy() method.
-    }
-
-    /**
-     * Find all users.
-     *
-     * @param int $limit
-     * @param int $offset
-     * @param bool $paginated If true, it will return a paginated result, which can be used for the UI layer
-     * @return User[]
-     */
-    public function findAll($limit = 10, $offset = 0, $paginated = false)
-    {
-        $qb = $this->em->getRepository($this->class)->createQueryBuilder('u');
-        $qb->setMaxResults($limit);
-        $qb->setFirstResult($offset);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Find records with the provided Query context.
-     *
-     * @param $query
-     * @return mixed
-     */
-    public function findByQuery(Query $query)
-    {
-        return $this->getQueryBuilder($this->class, $query)->getQuery()->getResult();
-    }
-} 
+}

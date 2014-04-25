@@ -9,19 +9,44 @@
 namespace Mango\CoreDomain\Repository;
 
 use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Persistence\Query;
 
 /**
  * Interface UserRepositoryInterface
  * @package Mango\API\DomainBundle\Repository
  */
-interface UserRepositoryInterface extends GenericRepositoryInterface
+interface UserRepositoryInterface
 {
     /**
      * Creata and return a new user
      *
      * @return User
      */
-    public function create();
+    public function createUser();
+
+    /**
+     * Find records by identifier.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function find($id);
+
+    /**
+     * Find records with the provided Query context.
+     *
+     * @param $query
+     * @return PaginatedResult
+     */
+    public function findByQuery(Query $query);
+
+    /**
+     * Adds a new user.
+     *
+     * @param User $user
+     * @return mixed
+     */
+    public function add(User $user);
 
     /**
      * Update a user.

@@ -10,6 +10,7 @@ namespace Mango\API\RestBundle\Controller;
 
 use Doctrine\ORM\UnitOfWork;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Component\ActionHandler\ActionHandler;
 use Mango\API\RestBundle\Request\ParamFetcher\QueryExtractor;
@@ -50,11 +51,31 @@ class RestController extends FOSRestController
     }
 
     /**
-     * @return ActionHandler
+     * Shortcut for extracting a query from a paramfetcher instance.
+     *
+     * @param ParamFetcherInterface $paramFetcher
+     * @return \Mango\CoreDomain\Persistence\Query
      */
-    public function getActionHandler()
+    public function extract(ParamFetcherInterface $paramFetcher)
     {
-        return $this->get('mango_api_rest.action_handler');
+        return $this->queryExtractor->extract($paramFetcher);
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param $statusCode
+     * @param null $locationRoute
+     * @return View
+     */
+    public function createView(FormInterface $form, $statusCode, $locationRoute = null)
+    {
+        $view = View::create(array($form->getName() => $form->getViewData()), $statusCode);
+
+        if ($locationRoute !== null) {
+            $view->setHeader("Location", $this->generateUrl($locationRoute, array("id" => $form->getData()->getId()), true));
+        }
+
+        return $view;
     }
 
     /**
@@ -65,72 +86,16 @@ class RestController extends FOSRestController
      * @return View
      * @throws \Exception
      */
-    protected function generateNewView(FormInterface $form, $route)
+    protected function generateNewView($form, $route)
     {
+        if (!$form instanceof FormInterface) {
+            return $form;
+        }
+
         $view = View::create(array('form' => $form->createView(), 'route' => $route));
         $view->setFormat('html');
         $view->setTemplate('MangoAPIRestBundle::new.html.twig');
 
         return $view;
-    }
-
-    /**
-     * @param FormTypeInterface $formType
-     * @param $entity
-     * @param bool $persist
-     * @return Form
-     * @throws ResourceNotFoundException
-     */
-    protected function processForm(FormTypeInterface $formType, $entity, $persist = true)
-    {
-        if (!$entity) {
-            throw new ResourceNotFoundException("Could not find resource.");
-        }
-
-        /** @var EntityManager $em */
-        $em = $this->container->get('doctrine.orm.entity_manager');
-
-        $statusCode = 200;
-
-        // We are dealing with a new entity
-        // TODO: Create an universal solution for this, now it's tight to Doctrine
-        if (UnitOfWork::STATE_NEW === $em->getUnitOfWork()->getEntityState($entity)) {
-            $statusCode = 201;
-        }
-
-        /** @var Request $request */
-        $request = $this->get('request');
-
-        /** @var Form $form */
-        $form = $this->createForm($formType, $entity);
-        $data = $request->request->get($form->getName()) ?: $request->request->all();
-
-        if (is_array($data)) {
-            // Filter out data that does not conform this form type
-            $data = array_intersect_key($data, $form->all());
-        }
-
-        // Only submit the data when we have an idempotent resource action
-        if (in_array($request->getMethod(), array("POST", "PATCH", "PUT"))) {
-            $form->submit($data);
-        }
-
-        if ($form->isValid() && $persist === true) {
-            $em->persist($entity);
-            $em->flush();
-            $em->refresh($entity);
-
-            $response = new Response();
-            $response->setStatusCode($statusCode);
-
-            /** @var RouterInterface $router */
-            $router = $this->container->get('router');
-
-            return View::create(array($form->getName() => $entity), $statusCode, array(
-                "Location" => $router->generate("get_user", array("id" => $entity->getId()), true)
-            ));
-        }
-
-        return $form;
     }
 }

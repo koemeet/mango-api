@@ -48,7 +48,7 @@ class AppKernel extends Kernel
             new Mango\API\DocsBundle\MangoAPIDocsBundle(),
             new Mango\API\RestBundle\MangoAPIRestBundle(),
             new Mango\API\SecurityBundle\MangoAPISecurityBundle(),
-            new Mango\API\ImageBundle\MangoAPIImageBundle(),
+            new Mango\API\ImageBundle\MangoAPIImageBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
