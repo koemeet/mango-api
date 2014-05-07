@@ -2892,7 +2892,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Debug\Exception\HandledErrorException;
 use Symfony\Component\Debug\Exception\FatalErrorException;
 class HttpKernel implements HttpKernelInterface, TerminableInterface
 {
@@ -2914,9 +2913,6 @@ if (false === $catch) {
 $this->finishRequest($request, $type);
 throw $e;
 }
-if ($e instanceof HandledErrorException) {
-$e->cleanOutput();
-}
 return $this->handleException($e, $request, $type);
 }
 }
@@ -2931,7 +2927,6 @@ $response = $this->handleException($exception, $request, self::MASTER_REQUEST);
 $response->sendHeaders();
 $response->sendContent();
 $this->terminate($request, $response);
-$exception->cleanOutput();
 }
 private function handleRaw(Request $request, $type = self::MASTER_REQUEST)
 {

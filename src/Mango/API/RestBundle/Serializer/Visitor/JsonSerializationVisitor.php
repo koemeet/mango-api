@@ -31,15 +31,12 @@ class JsonSerializationVisitor extends \JMS\Serializer\JsonSerializationVisitor
         $rootName = $this->rootName;
         $root = $this->getRoot();
 
-        // TODO: Good way to get the root element name
-        $rootName = 'applications';
-
         // Check if there are relations that belong to the primary resource
         if (isset($root['linked']) && isset($root['linked'][$rootName])) {
             $primary = $root['linked'][$rootName];
             foreach ($primary as $item) {
                 // If they are not already inside the primary root, append it :)
-                if (!in_array($item, $root[$rootName])) {
+                if (isset($root[$rootName]) && !in_array($item, $root[$rootName])) {
                     $root[$rootName][] = $item;
                 }
             }
@@ -52,15 +49,13 @@ class JsonSerializationVisitor extends \JMS\Serializer\JsonSerializationVisitor
         return parent::getResult();
     }
 
-    public function endVisitingObject(ClassMetadata $metadata, $data, array $type, Context $context)
+    public function startVisitingObject(ClassMetadata $metadata, $data, array $type, Context $context)
     {
-        $rs = parent::endVisitingObject($metadata, $data, $type, $context);
-
         if (!$this->rootName) {
             $this->rootName = $this->getCollectionName($data);
         }
 
-        return $rs;
+        return parent::startVisitingObject($metadata, $data, $type, $context);
     }
 
     protected function getCollectionName($object) {
