@@ -71,18 +71,29 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
      */
     public function findByQuery(Query $query)
     {
-        $pages = $this->dm->getRepository('Mango\CoreDomainBundle\Document\Page')->findAll()->toArray();
+        $qb = $this->dm->getRepository('Mango\CoreDomainBundle\Document\Page')->createQueryBuilder('page');
+        $qb->where()->descendant('/applications/f1cd0360-d11c-11e3-89b3-a8b38a9a6428', 'page');
+
+        print_r($qb->getQuery()->execute());
+        die;
         return $this->normalizeArray($pages);
     }
 
     /**
+     * Find all pages for an application.
+     *
      * @param Application $application
      * @param Query $query
      * @return mixed
      */
     public function findByApplication(Application $application, Query $query = null)
     {
-        // TODO: Implement findByApplication() method.
+        $qb = $this->dm->getRepository('Mango\CoreDomainBundle\Document\Page')->createQueryBuilder('page');
+        $qb->where()->descendant('/applications/' . $application->getId(), 'page');
+
+        $pages = $qb->getQuery()->execute();
+
+        return $this->normalizeArray($pages);
     }
 
 

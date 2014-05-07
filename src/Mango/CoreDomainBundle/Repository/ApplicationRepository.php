@@ -14,6 +14,7 @@ use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Model\User;
 use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
+use Mango\CoreDomainBundle\ORM\Result\PaginatedResult;
 use PHPCR\Util\NodeHelper;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -133,7 +134,7 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
             $qb->andWhere(sprintf("t.%s = :%s", $field, $param))->setParameter($param, $value);
         }
 
-        return $qb->getQuery()->getResult();
+        return new PaginatedResult($qb);
     }
 
 

@@ -29,3 +29,7 @@ mango_api_rest_workspaces:
 mango_api_rest_pages:
     type: rest
     resource: MangoAPIRestBundle:Pages
+
+mango_api_rest_modules:
+    type: rest
+    resource: MangoAPIRestBundle:Modules

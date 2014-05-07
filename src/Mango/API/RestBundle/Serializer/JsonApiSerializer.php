@@ -2,14 +2,10 @@
 
 namespace Mango\API\RestBundle\Serializer;
 
-use Doctrine\ORM\PersistentCollection;
-use Hateoas\Model\Embedded;
-use Hateoas\Model\Link;
+use Doctrine\Common\Util\Inflector;
 use Hateoas\Serializer\JsonSerializerInterface;
 use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\SerializationContext;
-use JMS\Serializer\VisitorInterface;
-use Mango\API\DomainBundle\Entity\Customer;
 
 /**
  * Class JsonApiSerializer
@@ -18,83 +14,168 @@ use Mango\API\DomainBundle\Entity\Customer;
 class JsonApiSerializer implements JsonSerializerInterface
 {
     /**
+     * @var Link[]
+     */
+    protected $links = array();
+    protected $relations = array();
+
+    /**
      * @param Link[] $links
      * @param JsonSerializationVisitor $visitor
      * @param SerializationContext $context
      */
     public function serializeLinks(array $links, JsonSerializationVisitor $visitor, SerializationContext $context)
     {
+        if (!is_array($visitor->getRoot())) {
+            $visitor->setRoot(array());
+        }
+
         $serializedLinks = array();
+        $topLevelLinks = array();
 
         foreach ($links as $link) {
             $serializedLink = array_merge(array(
                 'href' => $link->getHref(),
             ), $link->getAttributes());
 
-            // Support multiple relations of same type
-            if (!isset($serializedLinks[$link->getRel()])) {
+            if (isset($serializedLink['topLevel']) && true === $serializedLink['topLevel']) {
+                unset($serializedLink['topLevel']);
+                unset($serializedLink['href']);
+
+                // Set href to the path/pattern for this link
+                $serializedLink['href'] = $link->getPath();
+
+                // Top level links need the resource that this relation belongs to prefixed.
+                $rel = $link->getRel();
+
+                $this->links[$rel] = $link;
+                $topLevelLinks[$rel] = $serializedLink;
+
+                continue;
+            }
+
+            if (!isset($serializedLinks[$link->getRel()]) && 'curies' !== $link->getRel()) {
                 $serializedLinks[$link->getRel()] = $serializedLink;
+            } elseif (isset($serializedLinks[$link->getRel()]['href'])) {
+                $serializedLinks[$link->getRel()] = array(
+                    $serializedLinks[$link->getRel()],
+                    $serializedLink
+                );
             } else {
                 $serializedLinks[$link->getRel()][] = $serializedLink;
             }
         }
 
-        $visitor->addData('_links', $serializedLinks);
+        $visitor->setRoot(
+            array_replace_recursive($visitor->getRoot(), array(
+                'links' => $topLevelLinks
+            ))
+        );
+
+        $visitor->addData('links', $serializedLinks);
     }
 
     /**
-     * Called on every object that needs to be serialized.
+     * Called when the visited object has one or more embedded relations. Here we can define how we process those
+     * embedded relations. In this case, we build an array out of it.
      *
-     * @param Embedded[] $embeddeds
+     * @param array $embeddeds
      * @param JsonSerializationVisitor $visitor
      * @param SerializationContext $context
      */
     public function serializeEmbeddeds(array $embeddeds, JsonSerializationVisitor $visitor, SerializationContext $context)
     {
-        foreach ($embeddeds as $embed) {
-            // Fk off..
-            if (!$embed->getData()) {
-                continue;
-            }
-
-            // We need to serialize it right away, otherwise bad things will happen...
-            $data = $context->accept($embed->getData());
-
-            // Store current root array
-            $root = $visitor->getRoot();
-
-            if (!array_key_exists($embed->getRel(), $root)) {
-                $root[$embed->getRel()] = array();
-            }
-
+        // Slowly build "linked" to a full stacked relation hierarchy.
+        foreach ($embeddeds as $embedded) {
             $ids = array();
 
-            if ($embed->getData() instanceof \Traversable) {
-                foreach ($data as $item) {
-                    if (array_key_exists('id', $item)) {
-                        $ids[] = $item['id'];
-                    }
+            // Is this a single embedded resource?
+            $single = false;
 
-                    // Only add embedded object if it's not already inside the root
-                    if (!in_array($item, $root[$embed->getRel()])) {
-                        array_push($root[$embed->getRel()], $item);
-                    }
+            if ($embedded->getData() instanceof \Traversable) {
+                foreach ($embedded->getData() as $data) {
+                    $this->appendId($ids, $data);
+                    $rel = $this->getRelationKey($embedded->getRel());
+                    $this->addRelation($rel, $context->accept($data));
                 }
             } else {
-                if (array_key_exists('id', $data)) {
-                    $ids = $data['id'];
-                }
-
-                if (!in_array($data, $root[$embed->getRel()])) {
-                    array_push($root[$embed->getRel()], $data);
-                }
+                $single = true;
+                $this->appendId($ids, $embedded->getData());
+                $rel = $this->getRelationKey($embedded->getRel());
+                $this->addRelation($rel, $context->accept($embedded->getData()));
             }
 
             if (!empty($ids)) {
-                $visitor->addData($embed->getRel(), $ids);
+                $visitor->addData($embedded->getRel(), ($single) ? reset($ids) : $ids);
             }
-
-            $visitor->setRoot($root);
         }
+
+        $root = $visitor->getRoot();
+        $root['linked'] = $this->getRelations();
+
+        $visitor->setRoot($root);
+    }
+
+    protected function appendId(&$ids, $object)
+    {
+        $id = null;
+        if (is_callable(array($object, 'getId'))) {
+            $id = $object->getId();
+        }
+
+        if ($id && !in_array($id, $ids)) {
+            $ids[] = $id;
+        }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getRelations()
+    {
+        return $this->relations;
+    }
+
+    /**
+     * Add linked relation
+     *
+     * @param $rel
+     * @param $data
+     */
+    protected function addRelation($rel, $data)
+    {
+        if (!$data) {
+            return;
+        }
+
+        if (!isset($this->relations[$rel])) {
+            $this->relations[$rel] = array();
+        }
+
+        if (!in_array($data, $this->relations[$rel])) {
+            $this->relations[$rel][] = $data;
+        }
+    }
+
+    /**
+     * Get the name of the relation key. We use the links that where defined in order to determine the correct type.
+     *
+     * @param $rel
+     * @return mixed
+     */
+    protected function getRelationKey($rel)
+    {
+        // Search for any links that may be defined for this relation.
+        if (isset($this->links[$rel])) {
+            $link = $this->links[$rel];
+            $attributes = $link->getAttributes();
+
+            // We have a type defined for this relation, this means we override the $resourceKey
+            if (isset($attributes['type'])) {
+                return $attributes['type'];
+            }
+        }
+
+        return $rel;
     }
 }

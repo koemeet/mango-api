@@ -31,17 +31,8 @@ Mango\CoreDomain\Model\Product:
             nullable: true
             precision: 0
     manyToOne:
-        customer:
-            targetEntity: Mango\CoreDomain\Model\Customer
-            cascade: {  }
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                customer_id:
-                    referencedColumnName: id
-            orphanRemoval: false
         category:
-            targetEntity: Mango\CoreDomain\Model\ShopCategory
+            targetEntity: Mango\CoreDomain\Model\Category
             cascade: {  }
             mappedBy: null
             inversedBy: null

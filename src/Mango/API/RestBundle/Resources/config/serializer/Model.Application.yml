@@ -1,17 +1,40 @@
 Mango\CoreDomain\Model\Application:
     relations:
+        # The application himself
         - rel: self
           href:
             route: get_application
             parameters:
                 id: expr(object.getId())
             absolute: true
+
+        # Modules of an application
         - rel: modules
           embedded:
             content: expr(object.getModules())
+
+        # Related applications
         - rel: relatedTo
+          href:
+            route: get_application_related
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+          attributes:
+            topLevel: true
+            type: applications
           embedded:
             content: expr(object.getRelatedTo())
+
+        # Pages of an application
+        - rel: pages
+          href:
+            route: get_application_pages
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+          attributes:
+            topLevel: true
 
     properties:
         relatedTo:

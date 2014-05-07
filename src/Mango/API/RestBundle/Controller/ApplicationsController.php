@@ -19,6 +19,7 @@ use Mango\API\RestBundle\Component\ActionHandler\Query\ParamQueryExtractor;
 use Mango\API\RestBundle\Component\ActionHandler\Query\Query;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Mango\API\RestBundle\Request\ParamFetcher\QueryExtractor;
+use Mango\API\RestBundle\Serializer\View;
 use Mango\Bundle\CmsBundle\Document\Page;
 use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Model\User;
@@ -29,6 +30,7 @@ use Mango\CoreDomainBundle\Form\UserType;
 use Mango\CoreDomainBundle\Service\PageService;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
  * Class ApplicationsController
@@ -70,7 +72,15 @@ class ApplicationsController extends RestController
     public function getApplicationsAction(ParamFetcherInterface $paramFetcher)
     {
         $query = $this->queryExtractor->extract($paramFetcher);
-        return array('applications' => $this->applicationRepository->findByQuery($query));
+        $applications = $this->applicationRepository->findByQuery($query)->getArrayCopy();
+
+        // This view is handled by JMS serializer.
+        return array(
+            'meta' => array(
+                'total' => 345
+            ),
+            'applications' => $applications
+        );
     }
 
     /**
@@ -84,7 +94,15 @@ class ApplicationsController extends RestController
      */
     public function getApplicationAction($id)
     {
-        return array('application' => $this->applicationRepository->find($id));
+        $results = $this->applicationRepository->find($id);
+
+        // TODO: Nice way to do this shit
+        return array(
+            'meta' => array(
+                'page' => 5
+            ),
+            'applications' => array($results)
+        );
     }
 
     /**
@@ -102,11 +120,22 @@ class ApplicationsController extends RestController
     public function getApplicationPagesAction($id, ParamFetcherInterface $paramFetcher)
     {
         /** @var PageRepositoryInterface $repository */
-        $repository = $this->get('mango_core_domain.page_repository');
-        $query = $this->queryExtractor->extract($paramFetcher);
-        $pages = $this->pageService->find($query);
+        //$repository = $this->get('mango_core_domain.page_repository');
+        //$query = $this->queryExtractor->extract($paramFetcher);
 
-        return array('pages' => $pages);
+        $application = $this->applicationRepository->find($id);
+        $pages = $this->get('mango_core_domain.page_repository')->findByApplication($application);
+
+        return View::create($pages);
+    }
+
+    /**
+     * @param $id
+     * @param ParamFetcherInterface $paramFetcher
+     */
+    public function getApplicationRelatedAction($id, ParamFetcherInterface $paramFetcher)
+    {
+        throw new ResourceNotFoundException("Not implemented");
     }
 
     /**

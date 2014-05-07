@@ -21,6 +21,9 @@ services:
     mango_core_domain.page_repository:
         alias: mango_core_domain.page_repository.doctrine
 
+    mango_core_domain.module_repository:
+        alias: mango_core_domain.module_repository.doctrine
+
     # Infrasturcture Services
     mango_core_domain.user_service:
         class: Mango\CoreDomainBundle\Service\UserService

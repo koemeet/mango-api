@@ -1,8 +1,26 @@
 parameters:
     mango_api_rest.serializer.array_object_handler.class: Mango\API\RestBundle\Serializer\Handler\ArrayObjectHandler
+    mango_api_rest.serializer.subscriber.json_api.class: Mango\API\RestBundle\Serializer\EventSubscriber\JsonApiSubscriber
+    mango_api_rest.serializer.view_handler.class: Mango\API\RestBundle\Serializer\Handler\ArrayObjectHandler
+    mango_api_rest.serializer.link_factory.class: Mango\API\RestBundle\Serializer\Factory\LinkFactory
 
 services:
     mango_api_rest.serializer.array_object_handler:
         class: %mango_api_rest.serializer.array_object_handler.class%
         tags:
             - { name: jms_serializer.subscribing_handler }
+
+    mango_api_rest.serializer.view_handler:
+        class: %mango_api_rest.serializer.view_handler.class%
+        tags:
+            - { name: jms_serializer.subscribing_handler }
+
+    mango_api_rest.serializer.link_factory:
+        class: %mango_api_rest.serializer.link_factory.class%
+        arguments: [@hateoas.expression.evaluator, @hateoas.generator.registry, @router]
+
+
+#    mango_api_rest.serializer.subscriber.json_api:
+#            class: %mango_api_rest.serializer.subscriber.json_api.class%
+#            tags:
+#                - { name: jms_serializer.event_subscriber }
