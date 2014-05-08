@@ -10,9 +10,11 @@ namespace Mango\CoreDomain\Repository;
 
 use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Persistence\Query;
 
 /**
  * Interface ApplicationRepositoryInterface
+ *
  * @package Mango\CoreDomain\Repository
  */
 interface ApplicationRepositoryInterface extends GenericRepositoryInterface
@@ -37,4 +39,13 @@ interface ApplicationRepositoryInterface extends GenericRepositoryInterface
      * @return Application
      */
     public function createApplication();
+
+    /**
+     * Find applications by user.
+     *
+     * @param User  $user
+     * @param Query $query
+     * @return mixed
+     */
+    public function findByUser(User $user, Query $query);
 }

@@ -15,6 +15,7 @@ use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 use FOS\UserBundle\Entity\UserManager;
 use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
 use Mango\CoreDomainBundle\Form\UserType;
@@ -189,9 +190,7 @@ class UsersController extends RestController
 
         /** @var ApplicationRepositoryInterface $applicationRepository */
         $applicationRepository = $this->get('mango_core_domain.application_repository');
-        $query = $this->queryExtractor->extract($paramFetcher);
-
-        $applicationRepository->findByQuery($query);
+        $applicationRepository->findByQuery($this->extract($paramFetcher));
 
         return array('applications' => $user->getApplications());
     }

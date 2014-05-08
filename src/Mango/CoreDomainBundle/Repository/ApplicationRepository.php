@@ -147,4 +147,17 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
     {
         return $this->findBy(array(), $limit, $offset);
     }
+
+    /**
+     * Find applications by user.
+     *
+     * @param User  $user
+     * @param Query $query
+     * @return mixed
+     */
+    public function findByUser(User $user, Query $query)
+    {
+        $qb = $this->getQueryBuilder($this->class, $query);
+        //$qb->join('t.
+    }
 } 
