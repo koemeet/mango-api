@@ -7,9 +7,31 @@ Mango\CoreDomain\Model\User:
                 id: expr(object.getId())
             absolute: true
 
+#        - rel: applications
+#          href:
+#            route: get_user_applications
+#            parameters:
+#                id: expr(object.getId())
+#            absolute: true
+#          embedded:
+#            content: expr(object.getApplications())
+
+        - rel: workspaces
+          href:
+            route: get_user_workspaces
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+          embedded:
+            content: expr(object.getWorkspaces())
+
         - rel: new
           href:
             route: new_users
             absolute: true
 
-    properties: ~
+    properties:
+#        applications:
+#            exclude: true
+        workspaces:
+            exclude: true

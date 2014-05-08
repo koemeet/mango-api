@@ -184,6 +184,9 @@ jms_serializer:
             CoreDomain:
                 namespace_prefix: "Mango\\CoreDomain"
                 path: "@MangoAPIRestBundle/Resources/config/serializer/"
+            CoreDomainBundle:
+                namespace_prefix: "Mango\\CoreDomainBundle"
+                path: "@MangoAPIRestBundle/Resources/config/serializer/"
 
 nelmio_api_doc:
     sandbox:

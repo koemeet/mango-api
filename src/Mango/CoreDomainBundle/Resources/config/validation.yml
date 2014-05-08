@@ -34,3 +34,20 @@ Mango\CoreDomain\Model\Page:
             - NotBlank: ~
         application:
             - NotBlank: ~
+
+Mango\CoreDomain\Model\Product:
+    properties:
+        workspace:
+            - NotBlank: ~
+        productType:
+            - NotBlank: ~
+        title:
+            - NotBlank: ~
+        description:
+            - NotBlank: ~
+        price:
+            - NotBlank: ~
+        stock:
+            - NotBlank: ~
+        category:
+            - NotBlank: ~

@@ -14,15 +14,55 @@ namespace Mango\CoreDomain\Model;
  */
 class Product
 {
+    const TYPE_SIMPLE = 0;
+    const TYPE_BUNDLE = 1;
+    const TYPE_DOWNLOAD = 2;
+    const TYPE_SERVICE = 3;
+
     /**
      * @var integer
      */
     protected $id;
 
     /**
+     * @var Workspace
+     */
+    protected $workspace;
+
+    /**
+     * @var integer
+     */
+    protected $productType;
+
+    /**
      * @var string
      */
-    protected $name;
+    protected $title;
+
+    /**
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var ProductPrice
+     */
+    protected $price;
+
+    /**
+     * @var ProductPrice
+     */
+    protected $retailPrice;
+
+    /**
+     * @var Brand
+     */
+    protected $brand;
+
+    /**
+     * @var string
+     */
+    protected $type;
 
     /**
      * @var integer
@@ -35,6 +75,16 @@ class Product
     protected $category;
 
     /**
+     * @var array
+     */
+    protected $tags = array();
+
+    /**
+     * @var Image[]
+     */
+    protected $images = array();
+
+    /**
      * Get id
      *
      * @return integer
@@ -45,26 +95,131 @@ class Product
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Product
+     * @param int $productType
      */
-    public function setName($name)
+    public function setProductType($productType)
     {
-        $this->name = $name;
-
-        return $this;
+        $this->productType = $productType;
     }
 
     /**
-     * Get name
-     *
+     * @return int
+     */
+    public function getProductType()
+    {
+        return $this->productType;
+    }
+
+    /**
+     * @param Workspace $workspace
+     */
+    public function setWorkspace(Workspace $workspace)
+    {
+        $this->workspace = $workspace;
+    }
+
+    /**
+     * @return Workspace
+     */
+    public function getWorkspace()
+    {
+        return $this->workspace;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param Brand $brand
+     */
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+    }
+
+    /**
+     * @return Brand
+     */
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param ProductPrice $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @return ProductPrice
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param ProductPrice $retailPrice
+     */
+    public function setRetailPrice($retailPrice)
+    {
+        $this->retailPrice = $retailPrice;
+    }
+
+    /**
+     * @return ProductPrice
+     */
+    public function getRetailPrice()
+    {
+        return $this->retailPrice;
     }
 
     /**
@@ -126,5 +281,37 @@ class Product
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * @param array $tags
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param Image[] $images
+     */
+    public function setImages($images)
+    {
+        $this->images = $images;
+    }
+
+    /**
+     * @return Image[]
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 } 

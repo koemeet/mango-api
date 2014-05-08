@@ -9,6 +9,7 @@
 namespace Mango\CoreDomainBundle\Repository;
 
 use Doctrine\ORM\EntityManager;
+use Mango\CoreDomain\Model\User;
 use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\ObjectRepository;
 use Mango\CoreDomainBundle\ORM\Result\PaginatedResult;

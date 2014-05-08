@@ -119,19 +119,16 @@ class ApplicationsController extends RestController
      */
     public function getApplicationPagesAction($id, ParamFetcherInterface $paramFetcher)
     {
-        /** @var PageRepositoryInterface $repository */
-        //$repository = $this->get('mango_core_domain.page_repository');
-        //$query = $this->queryExtractor->extract($paramFetcher);
-
         $application = $this->applicationRepository->find($id);
         $pages = $this->get('mango_core_domain.page_repository')->findByApplication($application);
 
-        return View::create($pages);
+        return array('pages' => $pages);
     }
 
     /**
-     * @param $id
+     * @param int                   $id
      * @param ParamFetcherInterface $paramFetcher
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */
     public function getApplicationRelatedAction($id, ParamFetcherInterface $paramFetcher)
     {

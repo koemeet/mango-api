@@ -120,7 +120,13 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
             throw new \Exception("G, doe normaal, geef mij die page document.");
         }
 
-        $parent = $this->dm->find(null, $this->rootPath . '/' . $page->getApplication()->getId() . '/content');
+        $rootPath = $this->rootPath . '/' . $page->getApplication()->getId() . '/content';
+
+        $session = $this->dm->getPhpcrSession();
+        NodeHelper::createPath($session, $rootPath);
+        $session->save();
+
+        $parent = $this->dm->find(null, $rootPath);
         $page->setParent($parent);
 
 //        NodeHelper::createPath($this->dm->getPhpcrSession(), $this->rootPath . '/'  . $page->getApplication()->getId() . '/images');
@@ -156,24 +162,5 @@ class PageRepository extends DocumentRepository implements PageRepositoryInterfa
         }
 
         $this->dm->flush($page);
-    }
-
-    /**
-     * @param $data
-     * @return array
-     * @throws \InvalidArgumentException
-     */
-    private function normalizeArray($data)
-    {
-        if ($data instanceof ArrayCollection) {
-            $data = $data->toArray();
-        }
-
-        if (!is_array($data)) {
-            throw new \InvalidArgumentException('$data needs to be an array.');
-        }
-
-        sort($data);
-        return $data;
     }
 }

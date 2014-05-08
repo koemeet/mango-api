@@ -33,3 +33,7 @@ mango_api_rest_pages:
 mango_api_rest_modules:
     type: rest
     resource: MangoAPIRestBundle:Modules
+
+mango_api_rest_products:
+    type: rest
+    resource: MangoAPIRestBundle:Products

@@ -15,6 +15,11 @@ Mango\CoreDomain\Model\Application:
             length: 255
             nullable: false
 
+    oneToMany:
+        users:
+            targetEntity: Mango\CoreDomain\Model\UserApplication
+            mappedBy: application
+
     manyToOne:
         company:
             targetEntity: Mango\CoreDomain\Model\Company

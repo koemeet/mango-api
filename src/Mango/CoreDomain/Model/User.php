@@ -22,7 +22,7 @@ class User extends BaseUser
     protected $customer;
 
     /**
-     * @var Application[]
+     * @var UserApplication[]
      */
     protected $applications;
 
@@ -89,7 +89,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param Application[] $applications
+     * @param UserApplication[] $applications
      */
     public function setApplications($applications)
     {
@@ -99,9 +99,9 @@ class User extends BaseUser
     /**
      * Add an application to the user
      *
-     * @param Application $application
+     * @param UserApplication $application
      */
-    public function addApplication(Application $application)
+    public function addApplication(UserApplication $application)
     {
         $this->applications[] = $application;
     }
@@ -109,9 +109,9 @@ class User extends BaseUser
     /**
      * Remove a single application from a user.
      *
-     * @param Application $application
+     * @param UserApplication $application
      */
-    public function removeApplication(Application $application)
+    public function removeApplication(UserApplication $application)
     {
         if (($key = array_search($application, $this->applications)) !== false) {
             unset($this->applications[$key]);
@@ -119,7 +119,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return Application[]
+     * @return UserApplication[]
      */
     public function getApplications()
     {

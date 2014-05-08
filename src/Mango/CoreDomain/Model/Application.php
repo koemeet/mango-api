@@ -50,6 +50,11 @@ class Application
     protected $workspace;
 
     /**
+     * @var User[]
+     */
+    protected $users;
+
+    /**
      * Get id
      *
      * @return integer
@@ -170,5 +175,21 @@ class Application
     public function getModules()
     {
         return $this->modules;
+    }
+
+    /**
+     * @param User[] $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

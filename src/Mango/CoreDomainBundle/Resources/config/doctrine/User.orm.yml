@@ -142,20 +142,22 @@ Mango\CoreDomain\Model\User:
             nullable: true
             column: notes
 
-
-
+    oneToMany:
+        applications:
+            targetEntity: Mango\CoreDomain\Model\UserApplication
+            mappedBy: user
 
     manyToMany:
-        applications:
-            targetEntity: Application
-            joinTable:
-                name: user_applications
-                joinColumns:
-                    user_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    application_id:
-                        referencedColumnName: id
+#        applications:
+#            targetEntity: Application
+#            joinTable:
+#                name: user_applications
+#                joinColumns:
+#                    user_id:
+#                        referencedColumnName: id
+#                inverseJoinColumns:
+#                    application_id:
+#                        referencedColumnName: id
 
         workspaces:
             targetEntity: Workspace

@@ -120,25 +120,6 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
     }
 
     /**
-     * Find records by query
-     *
-     * @param $query
-     * @return mixed
-     */
-    public function findByQuery(Query $query)
-    {
-        $qb = $this->getQueryBuilder($this->class, $query);
-
-        foreach ($query->getWhere() as $field => $value) {
-            $param = $field . uniqid();
-            $qb->andWhere(sprintf("t.%s = :%s", $field, $param))->setParameter($param, $value);
-        }
-
-        return new PaginatedResult($qb);
-    }
-
-
-    /**
      * @param int $limit
      * @param int $offset
      * @return mixed
@@ -158,6 +139,11 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
     public function findByUser(User $user, Query $query)
     {
         $qb = $this->getQueryBuilder($this->class, $query);
+        $qb->join('Mango\CoreDomain\Model\UserApplication', 'ua', 'WITH', 'ua.user = :user')
+            ->setParameter('user', $user);
+
+        return $qb->getQuery()->getResult();
+
         //$qb->join('t.
     }
 } 

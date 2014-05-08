@@ -17,8 +17,8 @@ use Mango\CoreDomain\Model\Product as BaseProduct;
 class Product extends BaseProduct
 {
     protected $parent;
-
     protected $path;
+    protected $name;
 
     /**
      * @param mixed $parent
@@ -50,5 +50,21 @@ class Product extends BaseProduct
     public function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

@@ -74,11 +74,11 @@ class UsersController extends RestController
         $data = $this->userRepository->findByQuery($this->extract($paramFetcher));
 
         return array(
-            'meta' => array(
-                'count' => $data->getCount(),
-                'limit' => $data->getLimit(),
-                'offset' => $data->getOffset()
-            ),
+//            'meta' => array(
+//                'count' => $data->getCount(),
+//                'limit' => $data->getLimit(),
+//                'offset' => $data->getOffset()
+//            ),
             'users' => $data
         );
     }
@@ -191,6 +191,9 @@ class UsersController extends RestController
         /** @var ApplicationRepositoryInterface $applicationRepository */
         $applicationRepository = $this->get('mango_core_domain.application_repository');
         $applicationRepository->findByQuery($this->extract($paramFetcher));
+
+        // Find applications for the given user
+        $applications = $applicationRepository->findByUser($user, $this->extract($paramFetcher));
 
         return array('applications' => $user->getApplications());
     }

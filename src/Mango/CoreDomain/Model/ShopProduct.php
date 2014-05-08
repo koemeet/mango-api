@@ -15,14 +15,45 @@ namespace Mango\CoreDomain\Model;
 class ShopProduct extends Product
 {
     /**
+     * @var string
+     */
+    protected $uri;
+
+    /**
      * @var Application
      */
     protected $application;
 
     /**
-     * @var Image[]
+     * @var string
      */
-    protected $images = array();
+    protected $pageTitle;
+
+    /**
+     * @var string
+     */
+    protected $metaDescription;
+
+    /**
+     * @var string
+     */
+    protected $metaKeywords;
+
+    /**
+     * @param string $uri
+     */
+    public function setUri($uri)
+    {
+        $this->uri = $uri;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
 
     /**
      * @param Application $application
@@ -41,18 +72,50 @@ class ShopProduct extends Product
     }
 
     /**
-     * @param Image[] $images
+     * @param string $metaDescription
      */
-    public function setImages($images)
+    public function setMetaDescription($metaDescription)
     {
-        $this->images = $images;
+        $this->metaDescription = $metaDescription;
     }
 
     /**
-     * @return Image[]
+     * @return string
      */
-    public function getImages()
+    public function getMetaDescription()
     {
-        return $this->images;
+        return $this->metaDescription;
+    }
+
+    /**
+     * @param string $metaKeywords
+     */
+    public function setMetaKeywords($metaKeywords)
+    {
+        $this->metaKeywords = $metaKeywords;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaKeywords()
+    {
+        return $this->metaKeywords;
+    }
+
+    /**
+     * @param string $pageTitle
+     */
+    public function setPageTitle($pageTitle)
+    {
+        $this->pageTitle = $pageTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPageTitle()
+    {
+        return $this->pageTitle;
     }
 }

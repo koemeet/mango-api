@@ -6,6 +6,7 @@ parameters:
     mango_core_domain.workspace_repository.doctrine.class: Mango\CoreDomainBundle\Repository\WorkspaceRepository
     mango_core_domain.page_repository.doctrine.class: Mango\CoreDomainBundle\Repository\PageRepository
     mango_core_domain.module_repository.doctrine.class: Mango\CoreDomainBundle\Repository\ModuleRepository
+    mango_core_domain.product_repository.doctrine.class: Mango\CoreDomainBundle\Repository\ProductRepository
 
 services:
     mango_core_domain.user_repository.doctrine:
@@ -43,3 +44,8 @@ services:
         class: %mango_core_domain.page_repository.doctrine.class%
         public: false
         arguments: ["@doctrine_phpcr.odm.document_manager"]
+
+    mango_core_domain.product_repository.doctrine:
+            class: %mango_core_domain.product_repository.doctrine.class%
+            public: false
+            arguments: ["@doctrine_phpcr.odm.document_manager"]

@@ -8,6 +8,7 @@
 
 namespace Mango\CoreDomainBundle\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\PHPCR\DocumentManager;
 
 /**
@@ -24,5 +25,24 @@ abstract class DocumentRepository
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
+    }
+
+    /**
+     * @param $data
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    public function normalizeArray($data)
+    {
+        if ($data instanceof ArrayCollection) {
+            $data = $data->toArray();
+        }
+
+        if (!is_array($data)) {
+            throw new \InvalidArgumentException('$data needs to be an array.');
+        }
+
+        sort($data);
+        return $data;
     }
 } 
