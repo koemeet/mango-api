@@ -146,6 +146,7 @@ class ApplicationsController extends RestController
      */
     public function postApplicationsAction()
     {
+        // TODO: Create application service class
         return $this->processForm(new ApplicationType(), new Application());
     }
 

@@ -56,4 +56,10 @@ class ProductsController extends RestController
 
         return $form;
     }
+
+    public function newProductsAction(Request $request)
+    {
+        $form = $this->postProductsAction($request);
+        return $this->generateNewView($form, 'post_products');
+    }
 }

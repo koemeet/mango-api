@@ -2,6 +2,7 @@
 
 namespace Mango\CoreDomainBundle\Form;
 
+use Doctrine\Bundle\PHPCRBundle\Form\DataTransformer\DocumentToPathTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -19,6 +20,7 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // TODO: Create our own form type that uses repositories.
         $builder
             ->add('workspace', 'entity', array(
                 'class' => 'Mango\CoreDomain\Model\Workspace',
@@ -31,9 +33,9 @@ class ProductType extends AbstractType
             ->add('brand')
             ->add('type')
             ->add('stock')
-            ->add('category', 'entity', array(
-                'class' => 'Mango\CoreDomain\Model\Category',
-                'property' => 'name'
+            ->add('category', 'phpcr_document', array(
+                'class' => 'Mango\CoreDomainBundle\Document\Category',
+                'property' => 'name',
             ))
             ->add('tags', 'collection')
             ->add('images', 'collection')

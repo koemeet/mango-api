@@ -1,0 +1,11 @@
+Mango\CoreDomainBundle\Document\Category:
+    type: document
+    referenceable: true
+
+    id:
+        fieldName: path
+        generator:
+            strategy: parent
+
+    parentdocument: parent
+    nodename: name

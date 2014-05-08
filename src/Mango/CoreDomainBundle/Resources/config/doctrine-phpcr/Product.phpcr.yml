@@ -15,3 +15,7 @@ Mango\CoreDomainBundle\Document\Product:
             uuid: true
         stock:
             type: long
+
+    referenceOne:
+        category:
+            strategy: weak

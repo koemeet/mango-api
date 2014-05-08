@@ -51,3 +51,10 @@ Mango\CoreDomain\Model\Product:
             - NotBlank: ~
         category:
             - NotBlank: ~
+
+Mango\CoreDomain\Model\Category:
+    properties:
+        application:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~

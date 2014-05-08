@@ -39,30 +39,25 @@ abstract class CoreService
      */
     public function processForm(FormTypeInterface $formType, $model, Request $request)
     {
+        $form = $this->formFactory->create($formType, $model);
         $data = $request->request->get($formType->getName()) ?: $request->request->all();
 
-        // Check if $data is associative or not, if it is, make is so.
-        if ($this->isAssoc($data)) {
-            $data = array($data);
+//        // Check if $data is associative or not, if it is, make is so.
+//        if ($this->isAssoc($data)) {
+//            $data = array($data);
+//        }
+
+        if (is_array($data)) {
+            $data = array_intersect_key($data, $form->all());
         }
 
-        $forms = array();
-        foreach ($data as $item) {
-            $form = $this->formFactory->create($formType, $model);
-            $forms[] = $form;
-
-            if (is_array($item)) {
-                $item = array_intersect_key($item, $form->all());
-            }
-
-            // Only submit form data if we use one of the following HTTP verbs.
-            if (in_array($request->getMethod(), array("POST", "PUT", "PATCH"))) {
-                // $clearMissing needs to be false, is belangrijk..
-                $form->submit($item);
-            }
+        // Only submit form data if we use one of the following HTTP verbs.
+        if (in_array($request->getMethod(), array("POST", "PUT", "PATCH"))) {
+            // $clearMissing needs to be false, is belangrijk..
+            $form->submit($data);
         }
 
-        return reset($forms);
+        return $form;
     }
 
     protected function isAssoc($array) {

@@ -27,6 +27,9 @@ services:
     mango_core_domain.product_repository:
         alias: mango_core_domain.product_repository.doctrine
 
+    mango_core_domain.category_repository:
+        alias: mango_core_domain.category_repository.doctrine
+
     # Infrasturcture Services
     mango_core_domain.user_service:
         class: Mango\CoreDomainBundle\Service\UserService
@@ -39,3 +42,7 @@ services:
     mango_core_domain.product_service:
         class: Mango\CoreDomainBundle\Service\ProductService
         arguments: ["@mango_core_domain.product_repository", "@form.factory"]
+
+    mango_core_domain.category_service:
+        class: Mango\CoreDomainBundle\Service\CategoryService
+        arguments: ["@mango_core_domain.category_repository", "@form.factory"]

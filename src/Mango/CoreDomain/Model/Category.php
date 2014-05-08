@@ -17,6 +17,11 @@ class Category
     protected $id;
 
     /**
+     * @var Application
+     */
+    protected $application;
+
+    /**
      * @var string
      */
     protected $name;
@@ -43,6 +48,22 @@ class Category
     }
 
     /**
+     * @param Application $application
+     */
+    public function setApplication(Application $application)
+    {
+        $this->application = $application;
+    }
+
+    /**
+     * @return Application
+     */
+    public function getApplication()
+    {
+        return $this->application;
+    }
+
+    /**
      * @param string $name
      */
     public function setName($name)
@@ -59,7 +80,7 @@ class Category
     }
 
     /**
-     * @param \Mango\CoreDomain\Model\Category $parent
+     * @param Category $parent
      */
     public function setParent($parent)
     {
@@ -67,7 +88,7 @@ class Category
     }
 
     /**
-     * @return \Mango\CoreDomain\Model\Category
+     * @return Category
      */
     public function getParent()
     {
