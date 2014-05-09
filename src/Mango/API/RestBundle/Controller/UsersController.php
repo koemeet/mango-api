@@ -94,7 +94,7 @@ class UsersController extends RestController
      */
     public function getUserAction($id)
     {
-        return array('user' => $this->userService->findByIdentifier($id));
+        return array('users' => array($this->userService->findByIdentifier($id)));
     }
 
     /**

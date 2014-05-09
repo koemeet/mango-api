@@ -33,6 +33,7 @@ class SerializerCompilerPass implements CompilerPassInterface
         //$container->getDefinition('hateoas.event_subscriber.json.class')->replaceArgument(0, new Reference('mango_api_rest.serializer.link_factory'));
         $container->setParameter('jms_serializer.json_serialization_visitor.class', 'Mango\API\RestBundle\Serializer\Visitor\JsonSerializationVisitor');
         $container->setParameter('hateoas.serializer.json_hal.class', 'Mango\\API\\RestBundle\\Serializer\\JsonApiSerializer');
+        $container->getDefinition('hateoas.serializer.json_hal')->setArguments(array(new Reference("request_stack")));
 
         //$container->setParameter('hateoas.event_subscriber.json.class', 'Mango\\API\\RestBundle\\Serializer\\EventSubscriber\\JsonApiSubscriber');
         $container->setParameter('jms_serializer.form_error_handler.class', 'Mango\\API\\RestBundle\\Serializer\\Form\\FormErrorHandler');

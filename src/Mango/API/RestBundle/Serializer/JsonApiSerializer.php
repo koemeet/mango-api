@@ -6,6 +6,8 @@ use Doctrine\Common\Util\Inflector;
 use Hateoas\Serializer\JsonSerializerInterface;
 use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\SerializationContext;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class JsonApiSerializer
@@ -18,6 +20,19 @@ class JsonApiSerializer implements JsonSerializerInterface
      */
     protected $links = array();
     protected $relations = array();
+
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @param RequestStack $requestStack
+     */
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->request = $requestStack->getCurrentRequest();
+    }
 
     /**
      * @param Link[] $links
@@ -66,11 +81,13 @@ class JsonApiSerializer implements JsonSerializerInterface
             }
         }
 
-        $visitor->setRoot(
-            array_replace_recursive($visitor->getRoot(), array(
-                'links' => $topLevelLinks
-            ))
-        );
+        if (!empty($topLevelLinks)) {
+            $visitor->setRoot(
+                array_replace_recursive($visitor->getRoot(), array(
+                    'links' => $topLevelLinks
+                ))
+            );
+        }
 
         $visitor->addData('links', $serializedLinks);
     }
@@ -85,9 +102,16 @@ class JsonApiSerializer implements JsonSerializerInterface
      */
     public function serializeEmbeddeds(array $embeddeds, JsonSerializationVisitor $visitor, SerializationContext $context)
     {
+        // TODO: Refactor the way includes are handled
+        $includes = array_map('trim', explode(',', $this->request->get('include')));
+
         // Slowly build "linked" to a full stacked relation hierarchy.
         foreach ($embeddeds as $embedded) {
             $ids = array();
+
+            if (!in_array($embedded->getRel(), $includes)) {
+                continue;
+            }
 
             // Is this a single embedded resource?
             $single = false;
@@ -110,10 +134,13 @@ class JsonApiSerializer implements JsonSerializerInterface
             }
         }
 
-        $root = $visitor->getRoot();
-        $root['linked'] = $this->getRelations();
+        $relations = $this->getRelations();
 
-        $visitor->setRoot($root);
+        if (!empty($relations)) {
+            $root = $visitor->getRoot();
+            $root['linked'] = $this->getRelations();
+            $visitor->setRoot($root);
+        }
     }
 
     protected function appendId(&$ids, $object)

@@ -1,0 +1,4 @@
+Mango\CoreDomainBundle\Document\Category:
+    properties:
+        path:
+            exclude: true

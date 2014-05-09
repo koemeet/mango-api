@@ -13,8 +13,25 @@ Mango\CoreDomainBundle\Document\Product:
     fields:
         id:
             uuid: true
+        productType:
+            type: long
+        title:
+            type: string
+        description:
+            type: string
         stock:
             type: long
+        price:
+            type: double
+        retailPrice:
+            type: double
+            nullable: true
+
+    referenceMany:
+        tags:
+            strategy: weak
+        images:
+            strategy: weak
 
     referenceOne:
         category:

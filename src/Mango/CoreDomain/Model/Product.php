@@ -7,6 +7,7 @@
  */
 
 namespace Mango\CoreDomain\Model;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class Product
@@ -75,14 +76,23 @@ class Product
     protected $category;
 
     /**
-     * @var array
+     * @var ArrayCollection
      */
-    protected $tags = array();
+    protected $tags;
 
     /**
-     * @var Image[]
+     * @var ArrayCollection
      */
-    protected $images = array();
+    protected $images;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+        $this->images = new ArrayCollection();
+    }
 
     /**
      * Get id

@@ -42,5 +42,6 @@ Mango\CoreDomain\Model\Application:
         modules:
             exclude: true
         users:
+            exclude: true
             accessor:
                 getter: getUsers

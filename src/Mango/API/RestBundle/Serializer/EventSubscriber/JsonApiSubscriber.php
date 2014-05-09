@@ -16,6 +16,7 @@ use JMS\Serializer\EventDispatcher\Events;
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\ObjectEvent;
 use Mango\API\RestBundle\Serializer\JsonHalSerializer;
+use Mango\API\RestBundle\Serializer\SerializerContext;
 use Mango\API\RestBundle\Serializer\View;
 
 class JsonApiSubscriber implements EventSubscriberInterface
