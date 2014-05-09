@@ -14,7 +14,7 @@ use Mango\CoreDomain\Model\Category;
  *
  * @package Mango\CoreDomain\Repository
  */
-interface CategoryRepositoryInterface extends GenericRepositoryInterface
+interface CategoryRepositoryInterface extends RepositoryInterface
 {
     /**
      * Create a new category object.

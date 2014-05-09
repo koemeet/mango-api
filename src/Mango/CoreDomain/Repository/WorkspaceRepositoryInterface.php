@@ -12,7 +12,7 @@ namespace Mango\CoreDomain\Repository;
  * Interface WorkspaceRepositoryInterface
  * @package Mango\CoreDomain\Repository
  */
-interface WorkspaceRepositoryInterface extends GenericRepositoryInterface
+interface WorkspaceRepositoryInterface extends RepositoryInterface
 {
 
 } 
