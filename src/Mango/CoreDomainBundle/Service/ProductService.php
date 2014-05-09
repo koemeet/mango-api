@@ -7,6 +7,7 @@
  */
 
 namespace Mango\CoreDomainBundle\Service;
+
 use Mango\CoreDomain\Repository\ProductRepositoryInterface;
 use Mango\CoreDomainBundle\Form\ProductType;
 use Symfony\Component\Form\FormFactoryInterface;

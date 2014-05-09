@@ -8,13 +8,29 @@
 
 namespace Mango\CoreDomainBundle\Repository;
 
-
 use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\WorkspaceRepositoryInterface;
 
+/**
+ * Class WorkspaceRepository
+ *
+ * @package Mango\CoreDomainBundle\Repository
+ */
 class WorkspaceRepository extends EntityRepository implements WorkspaceRepositoryInterface
 {
     protected $class = 'MangoCoreDomain:Workspace';
+
+    /**
+     * Get the object id of the given model.
+     *
+     * @param $model
+     * @return mixed
+     */
+    public function getModelIdentifier($model)
+    {
+        return $this->em->getUnitOfWork()->getEntityIdentifier($model);
+    }
+
 
     /**
      * Find records by identifier.

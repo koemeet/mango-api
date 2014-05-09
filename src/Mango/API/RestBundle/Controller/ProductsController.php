@@ -7,10 +7,12 @@
  */
 
 namespace Mango\API\RestBundle\Controller;
+
 use FOS\RestBundle\Request\ParamFetcher;
 use Mango\CoreDomain\Repository\ProductRepositoryInterface;
 use Mango\CoreDomainBundle\Service\ProductService;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Class ProductsController
@@ -36,6 +38,11 @@ class ProductsController extends RestController
     }
 
     /**
+     * Get all products.
+     *
+     * @ApiDoc(
+     *  section = "Products"
+     * )
      * @param ParamFetcher $paramFetcher
      * @return mixed
      */
@@ -46,12 +53,21 @@ class ProductsController extends RestController
         );
     }
 
+    /**
+     * Create a new product.
+     *
+     * @ApiDoc(
+     *  section = "Products"
+     * )
+     * @param Request $request
+     * @return array|\Symfony\Component\Form\FormInterface
+     */
     public function postProductsAction(Request $request)
     {
         $form = $this->productService->create($request);
 
         if ($form->isValid()) {
-            return array("success" => "JAA!!!");
+            return array($form->getName() => $form->getData());
         }
 
         return $form;

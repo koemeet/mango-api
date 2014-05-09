@@ -34,6 +34,18 @@ class CategoryRepository extends DocumentRepository implements CategoryRepositor
     }
 
     /**
+     * Get the object id of the given model.
+     *
+     * @param $model
+     * @return mixed
+     */
+    public function getModelIdentifier($model)
+    {
+        return $this->dm->getUnitOfWork()->getDocumentId($model);
+    }
+
+
+    /**
      * Add category.
      *
      * @param $category

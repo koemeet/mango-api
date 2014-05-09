@@ -20,12 +20,11 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO: Create our own form type that uses repositories.
         $builder
-            ->add('workspace', 'entity', array(
-                'class' => 'Mango\CoreDomain\Model\Workspace',
-                'property' => 'name'
+            ->add('workspace', 'mango_repository', array(
+                'service_id' => 'mango_core_domain.workspace_repository'
             ))
+            ->add('productType')
             ->add('title')
             ->add('description')
             ->add('price')
@@ -33,12 +32,9 @@ class ProductType extends AbstractType
             ->add('brand')
             ->add('type')
             ->add('stock')
-            ->add('category', 'phpcr_document', array(
-                'class' => 'Mango\CoreDomainBundle\Document\Category',
-                'property' => 'name',
+            ->add('category', 'mango_repository', array(
+                'service_id' => 'mango_core_domain.category_repository'
             ))
-            ->add('tags', 'collection')
-            ->add('images', 'collection')
         ;
     }
     

@@ -46,3 +46,11 @@ services:
     mango_core_domain.category_service:
         class: Mango\CoreDomainBundle\Service\CategoryService
         arguments: ["@mango_core_domain.category_repository", "@form.factory"]
+
+
+    # Form types
+    mango_core_domain.type.mango_repository:
+        class: Mango\CoreDomainBundle\Form\Type\MangoRepositoryType
+        arguments: [@service_container]
+        tags:
+            - { name: form.type, alias: mango_repository }
