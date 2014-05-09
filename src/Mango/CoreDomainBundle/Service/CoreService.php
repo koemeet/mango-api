@@ -42,11 +42,6 @@ abstract class CoreService
         $form = $this->formFactory->create($formType, $model);
         $data = $request->request->get($formType->getName()) ?: $request->request->all();
 
-//        // Check if $data is associative or not, if it is, make is so.
-//        if ($this->isAssoc($data)) {
-//            $data = array($data);
-//        }
-
         if (is_array($data)) {
             $data = array_intersect_key($data, $form->all());
         }

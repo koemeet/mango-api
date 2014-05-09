@@ -18,22 +18,22 @@ use Mango\CoreDomain\Model\Category as BaseCategory;
 class Category extends BaseCategory
 {
     protected $path;
-    protected $parent;
+    protected $phpcrParent;
 
     /**
-     * @param mixed $parent
+     * @param mixed $phpcrParent
      */
-    public function setParent($parent)
+    public function setPhpcrParent($phpcrParent)
     {
-        $this->parent = $parent;
+        $this->phpcrParent = $phpcrParent;
     }
 
     /**
      * @return mixed
      */
-    public function getParent()
+    public function getPhpcrParent()
     {
-        return $this->parent;
+        return $this->phpcrParent;
     }
 
     /**

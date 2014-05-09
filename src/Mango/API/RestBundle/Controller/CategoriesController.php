@@ -9,6 +9,7 @@
 namespace Mango\API\RestBundle\Controller;
 
 use FOS\RestBundle\Request\ParamFetcher;
+use FOS\RestBundle\Util\Codes;
 use Mango\CoreDomain\Repository\CategoryRepositoryInterface;
 use Mango\CoreDomainBundle\Service\CategoryService;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,13 +43,21 @@ class CategoriesController extends RestController
         );
     }
 
+    public function getCategoryAction($id)
+    {
+        /** @var CategoryRepositoryInterface $repo */
+        $repo = $this->get('mango_core_domain.category_repository');
+        return array(
+            'category' => $repo->find($id)
+        );
+    }
+
     public function postCategoriesAction(Request $request)
     {
         $form = $this->categoryService->create($request);
 
         if ($form->isValid()) {
-            echo "CREATED";
-            die;
+            return $this->createView($form, Codes::HTTP_CREATED, 'get_category');
         }
 
         return $form;

@@ -7,5 +7,9 @@ Mango\CoreDomainBundle\Document\Category:
         generator:
             strategy: parent
 
-    parentdocument: parent
+    parentdocument: phpcrParent
     nodename: name
+
+    fields:
+        id:
+            uuid: true

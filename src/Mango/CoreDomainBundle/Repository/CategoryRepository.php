@@ -64,7 +64,7 @@ class CategoryRepository extends DocumentRepository implements CategoryRepositor
         $session->save();
 
         $parent = $this->dm->find(null, $parentPath);
-        $category->setParent($parent);
+        $category->setPhpcrParent($parent);
 
         $this->dm->persist($category);
         $this->dm->flush($category);

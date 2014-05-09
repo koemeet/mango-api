@@ -71,7 +71,8 @@ class RestController extends FOSRestController
     {
         $view = View::create(array($form->getName() => $form->getViewData()), $statusCode);
 
-        if ($locationRoute !== null) {
+        if ($locationRoute !== null
+            && null !== $form->getData()->getId()) {
             $view->setHeader("Location", $this->generateUrl($locationRoute, array("id" => $form->getData()->getId()), true));
         }
 
