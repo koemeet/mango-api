@@ -74,11 +74,11 @@ class UsersController extends RestController
         $data = $this->userRepository->findByQuery($this->extract($paramFetcher));
 
         return array(
-//            'meta' => array(
-//                'count' => $data->getCount(),
-//                'limit' => $data->getLimit(),
-//                'offset' => $data->getOffset()
-//            ),
+            'meta' => array(
+                'count' => $data->getCount(),
+                'limit' => $data->getLimit(),
+                'offset' => $data->getOffset()
+            ),
             'users' => $data
         );
     }
