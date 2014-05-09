@@ -38,6 +38,10 @@ mango_api_rest_products:
     type: rest
     resource: MangoAPIRestBundle:Products
 
+mango_api_rest_shopproducts:
+    type: rest
+    resource: MangoAPIRestBundle:Shopproducts
+
 mango_api_rest_categories:
     type: rest
     resource: MangoAPIRestBundle:Categories

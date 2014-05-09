@@ -2,17 +2,15 @@
 
 namespace Mango\CoreDomainBundle\Form;
 
-use Doctrine\Bundle\PHPCRBundle\Form\DataTransformer\DocumentToPathTransformer;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class ProductType
+ * Class ShopproductType
  *
  * @package Mango\CoreDomainBundle\Form
  */
-class ProductType extends AbstractType
+class ShopproductType extends ProductType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -20,28 +18,20 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('productType')
-            ->add('title')
-            ->add('description')
-            ->add('price', 'money')
-            ->add('retailPrice')
-            ->add('brand')
-            ->add('type')
-            ->add('stock')
-            ->add('category', 'mango_repository', array(
-                'service_id' => 'mango_core_domain.category_repository'
-            ))
-        ;
+        $builder->add('application', 'mango_repository', array(
+            'service_id' => 'mango_core_domain.application_repository'
+        ));
+
+        parent::buildForm($builder, $options);
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Mango\CoreDomain\Model\Product',
+            'data_class' => 'Mango\CoreDomain\Model\Shopproduct',
             'csrf_protection' => false
         ));
     }
@@ -51,6 +41,6 @@ class ProductType extends AbstractType
      */
     public function getName()
     {
-        return 'product';
+        return 'shop_product';
     }
 }

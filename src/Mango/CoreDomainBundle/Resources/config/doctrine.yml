@@ -8,6 +8,7 @@ parameters:
     mango_core_domain.module_repository.doctrine.class: Mango\CoreDomainBundle\Repository\ModuleRepository
     mango_core_domain.product_repository.doctrine.class: Mango\CoreDomainBundle\Repository\ProductRepository
     mango_core_domain.category_repository.doctrine.class: Mango\CoreDomainBundle\Repository\CategoryRepository
+    mango_core_domain.shopproduct_repository.doctrine.class: Mango\CoreDomainBundle\Repository\ShopproductRepository
 
 services:
     mango_core_domain.user_repository.doctrine:
@@ -55,3 +56,8 @@ services:
         class: %mango_core_domain.category_repository.doctrine.class%
         public: false
         arguments: ["@doctrine_phpcr.odm.document_manager"]
+
+    mango_core_domain.shopproduct_repository.doctrine:
+        class: %mango_core_domain.shopproduct_repository.doctrine.class%
+        public: false
+        arguments: [@doctrine_phpcr.odm.document_manager]

@@ -2,19 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: Steffen
- * Date: 25/04/14
- * Time: 16:47
+ * Date: 09/05/14
+ * Time: 15:01
  */
 
 namespace Mango\CoreDomainBundle\Document;
 
-use Mango\CoreDomain\Model\Product as BaseProduct;
+use Mango\CoreDomain\Model\StoreProduct as BaseStoreProduct;
 
 /**
- * Class Product
+ * Class StoreProduct
+ *
  * @package Mango\CoreDomainBundle\Document
  */
-class Product extends BaseProduct
+class StoreProduct extends BaseStoreProduct
 {
     protected $parent;
     protected $path;

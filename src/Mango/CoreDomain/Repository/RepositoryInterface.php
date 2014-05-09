@@ -30,4 +30,11 @@ interface RepositoryInterface
      * @return mixed
      */
     public function find($id);
+
+    /**
+     * Find all objects.
+     *
+     * @return mixed
+     */
+    public function findAll();
 } 

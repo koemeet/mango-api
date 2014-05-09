@@ -15,14 +15,14 @@ namespace Mango\CoreDomain\Model;
 class ShopProduct extends Product
 {
     /**
-     * @var string
-     */
-    protected $uri;
-
-    /**
      * @var Application
      */
     protected $application;
+
+    /**
+     * @var string
+     */
+    protected $uri;
 
     /**
      * @var string
@@ -40,6 +40,22 @@ class ShopProduct extends Product
     protected $metaKeywords;
 
     /**
+     * @param Application $application
+     */
+    public function setApplication(Application $application)
+    {
+        $this->application = $application;
+    }
+
+    /**
+     * @return Application
+     */
+    public function getApplication()
+    {
+        return $this->application;
+    }
+
+    /**
      * @param string $uri
      */
     public function setUri($uri)
@@ -53,22 +69,6 @@ class ShopProduct extends Product
     public function getUri()
     {
         return $this->uri;
-    }
-
-    /**
-     * @param Application $application
-     */
-    public function setApplication($application)
-    {
-        $this->application = $application;
-    }
-
-    /**
-     * @return Application
-     */
-    public function getApplication()
-    {
-        return $this->application;
     }
 
     /**

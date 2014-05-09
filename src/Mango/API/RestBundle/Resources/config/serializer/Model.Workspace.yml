@@ -1,0 +1,16 @@
+Mango\CoreDomain\Model\Workspace:
+    relations:
+        - rel: users
+          href:
+            route: get_workspace_users
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+            attributes:
+                topLevel: true
+          embedded:
+            content: expr(object.getUsers())
+
+    properties:
+        users:
+            exclude: true

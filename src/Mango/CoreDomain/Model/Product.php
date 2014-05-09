@@ -26,11 +26,6 @@ class Product
     protected $id;
 
     /**
-     * @var Workspace
-     */
-    protected $workspace;
-
-    /**
      * @var integer
      */
     protected $productType;
@@ -118,22 +113,6 @@ class Product
     public function getProductType()
     {
         return $this->productType;
-    }
-
-    /**
-     * @param Workspace $workspace
-     */
-    public function setWorkspace(Workspace $workspace)
-    {
-        $this->workspace = $workspace;
-    }
-
-    /**
-     * @return Workspace
-     */
-    public function getWorkspace()
-    {
-        return $this->workspace;
     }
 
     /**

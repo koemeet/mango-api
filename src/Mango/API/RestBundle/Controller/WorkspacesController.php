@@ -10,6 +10,7 @@ namespace Mango\API\RestBundle\Controller;
 
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Mango\CoreDomain\Model\Workspace;
+use Mango\CoreDomain\Repository\UserRepositoryInterface;
 use Mango\CoreDomain\Repository\WorkspaceRepositoryInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -25,11 +26,17 @@ class WorkspacesController extends RestController
     /**
      * @var WorkspaceRepositoryInterface
      */
-    protected $workspacesRepository;
+    protected $workspaceRepository;
+
+    /**
+     * @var UserRepositoryInterface;
+     */
+    protected $userRepository;
 
     public function init()
     {
-        $this->workspacesRepository = $this->get('mango_core_domain.workspace_repository');
+        $this->workspaceRepository = $this->get('mango_core_domain.workspace_repository');
+        $this->userRepository = $this->get('mango_core_domain.user_repository');
     }
 
     /**
@@ -48,7 +55,7 @@ class WorkspacesController extends RestController
     public function getWorkspacesAction(ParamFetcherInterface $paramFetcher)
     {
         $query = $this->queryExtractor->extract($paramFetcher);
-        return array('workspaces' => $this->workspacesRepository->findByQuery($query));
+        return array('workspaces' => $this->workspaceRepository->findByQuery($query));
     }
 
     /**
@@ -62,7 +69,7 @@ class WorkspacesController extends RestController
      */
     public function getWorkspaceAction($id)
     {
-        return array('workspace' => $this->workspacesRepository->find($id));
+        return array('workspace' => $this->workspaceRepository->find($id));
     }
 
     /**
@@ -78,12 +85,14 @@ class WorkspacesController extends RestController
     public function getWorkspaceUsersAction($id)
     {
         /** @var Workspace $workspace */
-        $workspace = $this->workspacesRepository->find($id);
+        $workspace = $this->workspaceRepository->find($id);
 
         if (!$workspace) {
             throw new ResourceNotFoundException(sprintf("Workspace with id %s could not be found.", $id));
         }
 
-        return array('users' => $workspace->getUsers());
+        $users = $this->userRepository->findByWorkspace($workspace);
+
+        return array('users' => $users);
     }
 } 

@@ -46,6 +46,17 @@ class ApplicationRepository extends EntityRepository implements ApplicationRepos
     }
 
     /**
+     * Get the object id of the given model.
+     *
+     * @param $model
+     * @return mixed
+     */
+    public function getModelIdentifier($model)
+    {
+        return $this->em->getUnitOfWork()->getEntityIdentifier($model);
+    }
+
+    /**
      * @return Application
      */
     public function createApplication()

@@ -11,6 +11,8 @@ namespace Mango\CoreDomainBundle\Repository;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Model\Workspace;
+use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
 
 /**
@@ -92,4 +94,43 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
     {
         return $this->userManager->findUserByEmail($email);
     }
+
+    /**
+     * Get the object id of the given model.
+     *
+     * @param $model
+     * @return mixed
+     */
+    public function getModelIdentifier($model)
+    {
+        return $this->em->getUnitOfWork()->getEntityIdentifier($model);
+    }
+
+    /**
+     * Find all objects.
+     *
+     * @return mixed
+     */
+    public function findAll()
+    {
+        // TODO: Implement findAll() method.
+    }
+
+    /**
+     * Find users by workspace and optionally a query.
+     *
+     * @param Workspace $workspace
+     * @param Query     $query
+     * @return mixed
+     */
+    public function findByWorkspace(Workspace $workspace, Query $query = null)
+    {
+        $qb = $this->getQueryBuilder($this->class, $query);
+        $qb->innerJoin('t.workspaces', 'workspace')
+            ->andWhere('workspace = :workspace')->setParameter('workspace', $workspace);
+
+        return $qb->getQuery()->getResult();
+    }
+
+
 }

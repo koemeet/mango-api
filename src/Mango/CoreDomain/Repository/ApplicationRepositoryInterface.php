@@ -17,7 +17,7 @@ use Mango\CoreDomain\Persistence\Query;
  *
  * @package Mango\CoreDomain\Repository
  */
-interface ApplicationRepositoryInterface extends GenericRepositoryInterface
+interface ApplicationRepositoryInterface extends RepositoryInterface
 {
     /**
      * Add an Application.

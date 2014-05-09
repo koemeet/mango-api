@@ -37,8 +37,6 @@ Mango\CoreDomain\Model\Page:
 
 Mango\CoreDomain\Model\Product:
     properties:
-        workspace:
-            - NotBlank: ~
         productType:
             - NotBlank: ~
         title:
@@ -50,6 +48,16 @@ Mango\CoreDomain\Model\Product:
         stock:
             - NotBlank: ~
         category:
+            - NotBlank: ~
+
+Mango\CoreDomain\Model\StoreProduct:
+    properties:
+        workspace:
+            - NotBlank: ~
+
+Mango\CoreDomain\Model\ShopProduct:
+    properties:
+        application:
             - NotBlank: ~
 
 Mango\CoreDomain\Model\Category:

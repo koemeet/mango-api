@@ -9,13 +9,14 @@
 namespace Mango\CoreDomain\Repository;
 
 use Mango\CoreDomain\Model\User;
+use Mango\CoreDomain\Model\Workspace;
 use Mango\CoreDomain\Persistence\Query;
 
 /**
  * Interface UserRepositoryInterface
  * @package Mango\API\DomainBundle\Repository
  */
-interface UserRepositoryInterface
+interface UserRepositoryInterface extends RepositoryInterface
 {
     /**
      * Creata and return a new user
@@ -63,4 +64,13 @@ interface UserRepositoryInterface
      * @return mixed
      */
     public function remove(User $user);
+
+    /**
+     * Find users by workspace and optionally a query.
+     *
+     * @param Workspace $workspace
+     * @param Query     $query
+     * @return mixed
+     */
+    public function findByWorkspace(Workspace $workspace, Query $query = null);
 }

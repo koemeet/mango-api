@@ -1,11 +1,11 @@
-Mango\CoreDomainBundle\Document\Product:
+Mango\CoreDomainBundle\Document\ShopProduct:
     type: document
     referenceable: true
 
     id:
         fieldName: path
         generator:
-            strategy: parent
+            strategy: auto
 
     parentdocument: parent
     nodename: name
@@ -13,6 +13,9 @@ Mango\CoreDomainBundle\Document\Product:
     fields:
         id:
             uuid: true
+        application:
+            type: string
+            nullable: false
         productType:
             type: long
         title:

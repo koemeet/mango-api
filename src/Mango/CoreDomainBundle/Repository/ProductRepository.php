@@ -41,8 +41,6 @@ class ProductRepository extends DocumentRepository implements ProductRepositoryI
             throw new \InvalidArgumentException("product is not the correct type");
         }
 
-        $product->setName(UUIDHelper::generateUUID());
-
         $workspaceId = $product->getWorkspace()->getId();
         $rootPath = '/workspaces/' . $workspaceId . '/products';
 
