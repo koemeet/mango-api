@@ -16,12 +16,11 @@ Mango\CoreDomain\Model\Application:
         # Related applications
         - rel: relatedTo
           href:
-            route: get_application_related
+            route: get_application
             parameters:
-                id: expr(object.getId())
+                id: expr(object.getRelatedTo().getId())
             absolute: true
           attributes:
-            topLevel: true
             type: applications
           embedded:
             content: expr(object.getRelatedTo())
@@ -33,8 +32,8 @@ Mango\CoreDomain\Model\Application:
             parameters:
                 id: expr(object.getId())
             absolute: true
-          attributes:
-            topLevel: true
+#          attributes:
+#            topLevel: true
 
     properties:
         relatedTo:

@@ -89,7 +89,7 @@ class JsonApiSerializer implements JsonSerializerInterface
             );
         }
 
-        //$visitor->addData('links', $serializedLinks);
+        $visitor->addData('links', $serializedLinks);
     }
 
     /**
@@ -139,7 +139,7 @@ class JsonApiSerializer implements JsonSerializerInterface
 
         // Add embedded resource as links.
         if (!empty($links)) {
-            $visitor->addData('links', $links);
+            //$visitor->addData('links', $links);
         }
 
         $relations = $this->getRelations();
