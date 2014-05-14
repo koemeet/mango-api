@@ -41,7 +41,7 @@ class CompanyRepository extends EntityRepository implements CompanyRepositoryInt
      */
     public function find($id)
     {
-        $this->em->getRepository($this->class)->find($id);
+        return $this->em->getRepository($this->class)->find($id);
     }
 
     /**

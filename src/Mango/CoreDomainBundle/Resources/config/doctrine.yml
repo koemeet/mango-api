@@ -9,6 +9,7 @@ parameters:
     mango_core_domain.product_repository.doctrine.class: Mango\CoreDomainBundle\Repository\ProductRepository
     mango_core_domain.category_repository.doctrine.class: Mango\CoreDomainBundle\Repository\CategoryRepository
     mango_core_domain.shopproduct_repository.doctrine.class: Mango\CoreDomainBundle\Repository\ShopproductRepository
+    mango_core_domain.employee_repository.doctrine.class: Mango\CoreDomainBundle\Repository\EmployeeRepository
 
 services:
     mango_core_domain.user_repository.doctrine:
@@ -38,6 +39,11 @@ services:
 
     mango_core_domain.module_repository.doctrine:
         class: %mango_core_domain.module_repository.doctrine.class%
+        public: false
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    mango_core_domain.employee_repository.doctrine:
+        class: %mango_core_domain.employee_repository.doctrine.class%
         public: false
         arguments: ["@doctrine.orm.entity_manager"]
 

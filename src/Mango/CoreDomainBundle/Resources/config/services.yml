@@ -33,6 +33,9 @@ services:
     mango_core_domain.shopproduct_repository:
         alias: mango_core_domain.shopproduct_repository.doctrine
 
+    mango_core_domain.employee_repository:
+        alias: mango_core_domain.employee_repository.doctrine
+
     # Infrasturcture Services
     mango_core_domain.user_service:
         class: Mango\CoreDomainBundle\Service\UserService
@@ -57,6 +60,10 @@ services:
     mango_core_domain.shopproduct_service:
         class: Mango\CoreDomainBundle\Service\ShopproductService
         arguments: [@mango_core_domain.shopproduct_repository, @form.factory]
+
+    mango_core_domain.employee_service:
+        class: Mango\CoreDomainBundle\Service\EmployeeService
+        arguments: [@mango_core_domain.employee_repository, @form.factory]
 
 
     # Form types
