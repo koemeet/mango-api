@@ -8,6 +8,7 @@
 
 namespace Mango\CoreDomainBundle\Repository;
 
+use Mango\CoreDomain\Model\Company;
 use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\CompanyRepositoryInterface;
 
@@ -21,6 +22,16 @@ use Mango\CoreDomain\Repository\CompanyRepositoryInterface;
 class CompanyRepository extends EntityRepository implements CompanyRepositoryInterface
 {
     protected $class = 'MangoCoreDomain:Company';
+
+    /**
+     * Create a company object.
+     *
+     * @return Company
+     */
+    public function createCompany()
+    {
+        return new Company();
+    }
 
     /**
      * Find records by identifier.
@@ -74,5 +85,17 @@ class CompanyRepository extends EntityRepository implements CompanyRepositoryInt
     public function findByQuery(Query $query)
     {
         return $this->getQueryBuilder($this->class, $query)->getQuery()->getResult();
+    }
+
+    /**
+     * Add a company.
+     *
+     * @param $company
+     * @return mixed
+     */
+    public function add($company)
+    {
+        $this->em->persist($company);
+        $this->em->flush($company);
     }
 } 

@@ -10,9 +10,12 @@ namespace Mango\CoreDomain\Repository;
 
 /**
  * Class CustomerRepositoryInterface
+ *
+ * Repository for finding and persisting customer domain models.
+ *
  * @package Mango\CoreDomain\Repository
  */
-interface CustomerRepositoryInterface extends GenericRepositoryInterface
+interface CustomerRepositoryInterface extends RepositoryInterface
 {
 
-} 
+}

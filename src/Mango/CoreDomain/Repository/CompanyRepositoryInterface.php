@@ -7,6 +7,7 @@
  */
 
 namespace Mango\CoreDomain\Repository;
+use Mango\CoreDomain\Model\Company;
 
 /**
  * Class CompanyRepositoryInterface
@@ -14,5 +15,18 @@ namespace Mango\CoreDomain\Repository;
  */
 interface CompanyRepositoryInterface extends GenericRepositoryInterface
 {
+    /**
+     * Create a company object.
+     *
+     * @return Company
+     */
+    public function createCompany();
 
+    /**
+     * Add a company.
+     *
+     * @param $company
+     * @return mixed
+     */
+    public function add($company);
 }

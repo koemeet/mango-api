@@ -9,6 +9,7 @@
 namespace Mango\API\RestBundle\Controller;
 
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use FOS\RestBundle\Util\Codes;
 use Mango\API\RestBundle\Component\ActionHandler\ActionHandlerInterface;
 use Mango\API\RestBundle\Component\ActionHandler\Data\ResultFetcherInterface;
 use Mango\API\RestBundle\Component\ActionHandler\Query\ParamQueryExtractor;
@@ -19,7 +20,9 @@ use Mango\CoreDomain\Model\Company;
 use Mango\CoreDomain\Repository\CompanyRepositoryInterface;
 //use Mango\CoreDomainBundle\Form\CompanyType;
 use Mango\CoreDomainBundle\Form\UserType;
+use Mango\CoreDomainBundle\Service\CompanyService;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class CompaniesController
@@ -32,9 +35,15 @@ class CompaniesController extends RestController
      */
     protected $companyRepository;
 
+    /**
+     * @var CompanyService
+     */
+    protected $companyService;
+
     public function init()
     {
         $this->companyRepository = $this->get('mango_core_domain.company_repository');
+        $this->companyService = $this->get('mango_core_domain.company_service');
     }
 
     /**
@@ -42,8 +51,8 @@ class CompaniesController extends RestController
      *
      * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
      * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
-     * @Rest\QueryParam(name="limit", description="Number of results to fetch", default=10)
-     * @Rest\QueryParam(name="fields", description="Filter fields to serialize")
+     * @Rest\QueryParam(name="count", description="Number of results to fetch", default=10)
+     * @Rest\QueryParam(name="filter", description="Filter fields to serialize")
      * @ApiDoc(
      *  section="Companies"
      * )
@@ -82,5 +91,14 @@ class CompaniesController extends RestController
         /** @var ActionHandlerInterface $handler */
         $handler = $this->get('mango_api_rest.phpcr_action_handler');
         return $handler->find('Mango\\API\\RestBundle\\Document\\Page', $paramFetcher);
+    }
+
+    public function postCompaniesAction(Request $request)
+    {
+        $form = $this->companyService->create($request);
+        if ($form->isValid()) {
+            $this->createView($form, Codes::HTTP_CREATED, 'get_company');
+        }
+        return $form;
     }
 }

@@ -22,6 +22,11 @@ Mango\CoreDomain\Model\Customer:
         company:
             - NotBlank: ~
 
+Mango\CoreDomain\Model\Company:
+    properties:
+        name:
+            - NotBlank: ~
+
 Mango\CoreDomain\Model\Page:
     properties:
         name:
