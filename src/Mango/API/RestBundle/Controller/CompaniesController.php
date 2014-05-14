@@ -93,6 +93,15 @@ class CompaniesController extends RestController
         return $handler->find('Mango\\API\\RestBundle\\Document\\Page', $paramFetcher);
     }
 
+    /**
+     * Create new company.
+     *
+     * @ApiDoc(
+     *  section = "Companies"
+     * )
+     * @param Request $request
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function postCompaniesAction(Request $request)
     {
         $form = $this->companyService->create($request);

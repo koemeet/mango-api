@@ -24,6 +24,7 @@ use Mango\Bundle\CmsBundle\Document\Page;
 use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Model\User;
 use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
+use Mango\CoreDomain\Repository\CategoryRepositoryInterface;
 use Mango\CoreDomain\Repository\PageRepositoryInterface;
 use Mango\CoreDomainBundle\Form\ApplicationType;
 use Mango\CoreDomainBundle\Form\UserType;
@@ -136,6 +137,32 @@ class ApplicationsController extends RestController
         $pages = $this->get('mango_core_domain.page_repository')->findByApplication($application);
 
         return array('pages' => $pages);
+    }
+
+    /**
+     * Get all categories that belong to an application.
+     *
+     * @ApiDoc(
+     *  section = "Applications"
+     * )
+     * @param $id
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     * @return array
+     */
+    public function getApplicationCategoriesAction($id)
+    {
+        $application = $this->applicationRepository->find($id);
+
+        if (!$application) {
+            throw new ResourceNotFoundException(sprintf('Application with id "%s" does not exist.', $id));
+        }
+
+        /** @var CategoryRepositoryInterface $categoryRepository */
+        $categoryRepository = $this->get('mango_core_domain.category_repository');
+
+        return array(
+            'categories' => $categoryRepository->findByApplication($application)
+        );
     }
 
     /**

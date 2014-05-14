@@ -9,6 +9,7 @@
 namespace Mango\CoreDomainBundle\Repository;
 
 use Mango\CoreDomain\Data\PaginatedResult;
+use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomainBundle\Document\Category;
 use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\CategoryRepositoryInterface;
@@ -116,5 +117,34 @@ class CategoryRepository extends DocumentRepository implements CategoryRepositor
     public function findByQuery(Query $query)
     {
         // TODO: Implement findByQuery() method.
+    }
+
+    /**
+     * Find categories by application.
+     *
+     * @param Application $application
+     * @param Query       $query
+     * @return mixed
+     */
+    public function findByApplication(Application $application, Query $query = null)
+    {
+        $categories = $this->getQueryBuilder($application)->getQuery()->execute();
+        return $this->normalizeArray($categories);
+    }
+
+    /**
+     * @param Application $application
+     * @return \Doctrine\ODM\PHPCR\Query\Builder\QueryBuilder
+     */
+    protected function getQueryBuilder(Application $application = null)
+    {
+        $qb = $this->dm->getRepository($this->class)->createQueryBuilder('category');
+
+        if (null !== $application) {
+            $parentPath = '/applications/' . $application->getId() . '/categories';
+            $qb->where()->descendant($parentPath, 'category');
+        }
+
+        return $qb;
     }
 } 

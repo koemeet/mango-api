@@ -7,7 +7,10 @@
  */
 
 namespace Mango\CoreDomain\Repository;
+
+use Mango\CoreDomain\Model\Application;
 use Mango\CoreDomain\Model\Category;
+use Mango\CoreDomain\Persistence\Query;
 
 /**
  * Interface CategoryRepositoryInterface
@@ -29,4 +32,13 @@ interface CategoryRepositoryInterface extends RepositoryInterface
      * @param $category
      */
     public function add($category);
+
+    /**
+     * Find categories by application.
+     *
+     * @param Application $application
+     * @param Query       $query
+     * @return mixed
+     */
+    public function findByApplication(Application $application, Query $query = null);
 }

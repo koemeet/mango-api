@@ -42,6 +42,14 @@ class Company
     protected $website;
 
     /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @param string $zipCode
      */
     public function setZipCode($zipCode)
