@@ -9,7 +9,7 @@
 namespace Mango\CoreDomainBundle\Document;
 
 use Mango\CoreDomain\Model\StoreProduct as BaseStoreProduct;
-
+use Netvlies\Bundle\DoctrineBridgeBundle\Mapping\Annotations as BRIDGE;
 /**
  * Class StoreProduct
  *
@@ -19,7 +19,11 @@ class StoreProduct extends BaseStoreProduct
 {
     protected $parent;
     protected $path;
-    protected $name;
+
+    /**
+     * @BRIDGE\Entity(targetEntity="MangoCoreDomain:Workspace", entityManager="default")
+     */
+    protected $workspace;
 
     /**
      * @param mixed $parent
@@ -51,21 +55,5 @@ class StoreProduct extends BaseStoreProduct
     public function getPath()
     {
         return $this->path;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 }

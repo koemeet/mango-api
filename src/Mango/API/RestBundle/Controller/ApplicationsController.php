@@ -50,6 +50,19 @@ class ApplicationsController extends RestController
 
     public function init()
     {
+//        /** @var DocumentManager $dm */
+//        $dm = $this->get('doctrine_phpcr.odm.document_manager');
+//        $products = $dm->getRepository('Mango\CoreDomainBundle\Document\StoreProduct')->findAll();
+//
+//        foreach ($products as $product) {
+//            $dm->remove($product);
+//        }
+//
+//        $dm->flush();
+//
+//        echo "TAN";
+//        die;
+
         $this->applicationRepository = $this->get('mango_core_domain.application_repository');
         $this->pageService = $this->get('mango_core_domain.page_service');
     }

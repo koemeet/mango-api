@@ -19,7 +19,7 @@ class StoreProductType extends ProductType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('workspace', 'mango_repository', array(
-            'service_id' => 'mango_core_domain.application_repository'
+            'service_id' => 'mango_core_domain.workspace_repository'
         ));
 
         parent::buildForm($builder, $options);

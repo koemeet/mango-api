@@ -5,7 +5,7 @@ use Mango\CoreDomain\Data\PaginatedResult;
 use Mango\CoreDomain\Model\Workspace;
 use Mango\CoreDomain\Persistence\Query;
 use Mango\CoreDomain\Repository\ProductRepositoryInterface;
-use Mango\CoreDomainBundle\Document\Product;
+use Mango\CoreDomainBundle\Document\StoreProduct;
 use PHPCR\Util\NodeHelper;
 use PHPCR\Util\UUIDHelper;
 
@@ -16,16 +16,16 @@ use PHPCR\Util\UUIDHelper;
  */
 class ProductRepository extends DocumentRepository implements ProductRepositoryInterface
 {
-    protected $class = 'Mango\CoreDomainBundle\Document\Product';
+    protected $class = 'Mango\CoreDomainBundle\Document\StoreProduct';
 
     /**
      * Create a new product object.
      *
-     * @return Product
+     * @return StoreProduct
      */
     public function createProduct()
     {
-        return new Product();
+        return new StoreProduct();
     }
 
     /**
@@ -37,7 +37,7 @@ class ProductRepository extends DocumentRepository implements ProductRepositoryI
      */
     public function add($product)
     {
-        if (!$product instanceof Product) {
+        if (!$product instanceof StoreProduct) {
             throw new \InvalidArgumentException("product is not the correct type");
         }
 

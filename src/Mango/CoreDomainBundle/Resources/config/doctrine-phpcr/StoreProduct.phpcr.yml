@@ -8,7 +8,7 @@ Mango\CoreDomainBundle\Document\StoreProduct:
             strategy: auto
 
     parentdocument: parent
-    nodename: name
+#    nodename: name
 
     fields:
         id:

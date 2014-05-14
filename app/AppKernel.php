@@ -30,6 +30,7 @@ class AppKernel extends Kernel
 
             // Doctrine PHPCR
             new Doctrine\Bundle\PHPCRBundle\DoctrinePHPCRBundle(),
+            new Netvlies\Bundle\DoctrineBridgeBundle\NetvliesDoctrineBridgeBundle(),
 
             new \Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
 //            new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),

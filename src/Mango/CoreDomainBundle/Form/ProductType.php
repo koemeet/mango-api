@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  *
  * @package Mango\CoreDomainBundle\Form
  */
-class ProductType extends AbstractType
+abstract class ProductType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

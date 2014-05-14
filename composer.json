@@ -31,13 +31,15 @@
         "mopa/bootstrap-bundle": "v3.0.0-beta3",
         "phpunit/phpunit": "4.0.*@dev",
 
+        "jackalope/jackalope-jackrabbit": "1.0.*",
         "jackalope/jackalope-doctrine-dbal": "*",
         "doctrine/phpcr-bundle": "1.0.*",
         "doctrine/phpcr-odm": "1.0.*",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
 
-        "symfony-cmf/symfony-cmf": "1.0.*"
-
+        "symfony-cmf/symfony-cmf": "1.0.*",
+        "hacfi/object-bridge-bundle": "dev-master",
+        "netvlies/doctrinebridgebundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

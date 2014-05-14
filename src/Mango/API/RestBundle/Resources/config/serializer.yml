@@ -10,10 +10,10 @@ services:
         tags:
             - { name: jms_serializer.subscribing_handler }
 
-    mango_api_rest.serializer.view_handler:
-        class: %mango_api_rest.serializer.view_handler.class%
-        tags:
-            - { name: jms_serializer.subscribing_handler }
+#    mango_api_rest.serializer.view_handler:
+#        class: %mango_api_rest.serializer.view_handler.class%
+#        tags:
+#            - { name: jms_serializer.subscribing_handler }
 
     mango_api_rest.serializer.link_factory:
         class: %mango_api_rest.serializer.link_factory.class%

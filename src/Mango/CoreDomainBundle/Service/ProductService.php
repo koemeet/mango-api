@@ -10,6 +10,7 @@ namespace Mango\CoreDomainBundle\Service;
 
 use Mango\CoreDomain\Repository\ProductRepositoryInterface;
 use Mango\CoreDomainBundle\Form\ProductType;
+use Mango\CoreDomainBundle\Form\StoreProductType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -41,7 +42,7 @@ class ProductService extends CoreService
     public function create(Request $request)
     {
         $product = $this->productRepository->createProduct();
-        $form = $this->processForm(new ProductType(), $product, $request);
+        $form = $this->processForm(new StoreProductType(), $product, $request);
 
         if ($form->isValid()) {
             $this->productRepository->add($product);

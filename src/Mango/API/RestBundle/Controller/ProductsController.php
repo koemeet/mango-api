@@ -14,6 +14,12 @@ use Mango\CoreDomainBundle\Service\ProductService;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+class Testing {
+    protected $string = "abc";
+    protected $int = 12;
+    protected $array = array(1, 2, 3);
+}
+
 /**
  * Class ProductsController
  *
@@ -48,8 +54,10 @@ class ProductsController extends RestController
      */
     public function getProductsAction(ParamFetcher $paramFetcher)
     {
+        $products = $this->productRepository->findAll();
+
         return array(
-            'products' => $this->productRepository->findAll()
+            'products' => $products
         );
     }
 

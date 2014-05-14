@@ -89,7 +89,7 @@ class JsonApiSerializer implements JsonSerializerInterface
             );
         }
 
-        $visitor->addData('links', $serializedLinks);
+        //$visitor->addData('links', $serializedLinks);
     }
 
     /**
@@ -104,6 +104,8 @@ class JsonApiSerializer implements JsonSerializerInterface
     {
         // TODO: Refactor the way includes are handled
         $includes = array_map('trim', explode(',', $this->request->get('include')));
+
+        $links = array();
 
         // Slowly build "linked" to a full stacked relation hierarchy.
         foreach ($embeddeds as $embedded) {
@@ -130,8 +132,14 @@ class JsonApiSerializer implements JsonSerializerInterface
             }
 
             if (!empty($ids)) {
-                $visitor->addData($embedded->getRel(), ($single) ? reset($ids) : $ids);
+                $links[$embedded->getRel()] = ($single) ? reset($ids) : $ids;
+                //$visitor->addData($embedded->getRel(), ($single) ? reset($ids) : $ids);
             }
+        }
+
+        // Add embedded resource as links.
+        if (!empty($links)) {
+            $visitor->addData('links', $links);
         }
 
         $relations = $this->getRelations();

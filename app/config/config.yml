@@ -82,7 +82,11 @@ doctrine_phpcr:
     session:
         backend:
             type: doctrinedbal
-        workspace: mango
+        # Use this at production!
+#        backend:
+#            type: jackrabbit
+#            url: http://localhost:6060/server/
+        workspace: default
         username: admin
         password: admin
     odm:
