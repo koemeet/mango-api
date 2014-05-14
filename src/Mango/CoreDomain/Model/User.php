@@ -71,6 +71,16 @@ class User extends BaseUser
 
     protected $notes;
 
+    /**
+     * @var \DateTime
+     */
+    protected $lastModified;
+
+    /**
+     * @var \DateTime
+     */
+    protected $createdOn;
+
 
     /**
      * @param Customer $customer
@@ -462,5 +472,46 @@ class User extends BaseUser
         return $this->zipcode;
     }
 
+    /**
+     * @param \DateTime $createdOn
+     */
+    public function setCreatedOn($createdOn)
+    {
+        $this->createdOn = $createdOn;
+    }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * @param \DateTime $lastModified
+     */
+    public function setLastModified($lastModified)
+    {
+        $this->lastModified = $lastModified;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastModified()
+    {
+        return $this->lastModified;
+    }
+
+    public function prePersist()
+    {
+        $this->setCreatedOn(new \DateTime());
+        $this->setLastModified(new \DateTime());
+    }
+
+    public function preUpdate()
+    {
+        $this->setLastModified(new \DateTime());
+    }
 }

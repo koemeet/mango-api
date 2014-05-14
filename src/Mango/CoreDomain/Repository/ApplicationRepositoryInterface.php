@@ -20,7 +20,14 @@ use Mango\CoreDomain\Persistence\Query;
 interface ApplicationRepositoryInterface extends RepositoryInterface
 {
     /**
-     * Add an Application.
+     * Create a new application object.
+     *
+     * @return Application
+     */
+    public function createApplication();
+
+    /**
+     * Add an application.
      *
      * @param Application $application
      * @return bool
@@ -34,11 +41,6 @@ interface ApplicationRepositoryInterface extends RepositoryInterface
      * @return bool
      */
     public function remove(Application $application);
-
-    /**
-     * @return Application
-     */
-    public function createApplication();
 
     /**
      * Find applications by user.

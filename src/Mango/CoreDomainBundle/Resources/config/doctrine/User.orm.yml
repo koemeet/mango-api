@@ -141,6 +141,12 @@ Mango\CoreDomain\Model\User:
             type: string
             nullable: true
             column: notes
+        lastModified:
+            column: last_modified
+            type: datetime
+        createdOn:
+            column: created_on
+            type: datetime
 
     oneToMany:
         applications:
@@ -170,3 +176,7 @@ Mango\CoreDomain\Model\User:
                 inverseJoinColumns:
                   workspace_id:
                     referencedColumnName: id
+
+    lifecycleCallbacks:
+        prePersist: [ prePersist ]
+        preUpdate: [ preUpdate ]
