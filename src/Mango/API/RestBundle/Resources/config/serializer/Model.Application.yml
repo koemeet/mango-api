@@ -21,7 +21,9 @@ Mango\CoreDomain\Model\Application:
                 id: expr(object.getRelatedTo().getId())
             absolute: true
           attributes:
-            type: applications
+            type: application
+          exclusion:
+            exclude_if: expr(object.getRelatedTo() === null)
           embedded:
             content: expr(object.getRelatedTo())
 
