@@ -72,7 +72,7 @@ doctrine:
             MangoAPISecurityBundle: ~
             MangoCoreDomain:
                 type: yml
-                dir: %kernel.root_dir%/../src/Mango/CoreDomainBundle/Resources/config/doctrine
+                dir: %kernel.root_dir%/../libs/src/Mango/CoreDomainBundle/Resources/config/doctrine
                 prefix: Mango\CoreDomain\Model
                 alias: MangoCoreDomain
                 is_bundle: false
@@ -93,7 +93,7 @@ doctrine_phpcr:
         mappings:
             MangoCmsBundle:
                 type: yml
-                dir: %kernel.root_dir%/../src/Mango/CoreDomainBundle/Resources/config/doctrine-phpcr
+                dir: %kernel.root_dir%/../libs/src/Mango/CoreDomainBundle/Resources/config/doctrine-phpcr
                 prefix: Mango\CoreDomainBundle\Document
                 alias: MangoCoreDomainBundle
 
