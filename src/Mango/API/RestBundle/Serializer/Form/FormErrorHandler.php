@@ -126,7 +126,8 @@ class FormErrorHandler implements SubscribingHandlerInterface
 
         $form = $errors = array();
         foreach ($data->getErrors() as $error) {
-            $errors[] = $this->getErrorMessage($error);
+            //$errors[] = $this->getErrorMessage($error);
+            $errors = $this->getErrorMessage($error);
         }
 
         if ($errors) {
