@@ -137,10 +137,11 @@ fos_rest:
             json: true
         templating_formats:
             html: true
+        failed_validation: 422
     format_listener:
         rules:
             # We do not want to allow the html media type inside the API
-            - { path: '^/v1', priorities: ['json', 'xml'], fallback_format: json }
+            - { path: '^/v1', priorities: ['json'], fallback_format: json }
             - { path: '^/', priorities: ['html', 'json', 'xml'], fallback_format: html }
 
     access_denied_listener: true

@@ -8,6 +8,7 @@
 
 namespace Mango\CoreDomain\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 
 /**
@@ -16,11 +17,6 @@ use FOS\UserBundle\Model\User as BaseUser;
  */
 class User extends BaseUser
 {
-    /*
-     * @var Customer
-     */
-    protected $customer;
-
     /**
      * @var UserApplication[]
      */
@@ -81,6 +77,11 @@ class User extends BaseUser
      */
     protected $createdOn;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->workspaces = new ArrayCollection();
+    }
 
     /**
      * @param Customer $customer
@@ -141,11 +142,11 @@ class User extends BaseUser
      */
     public function setWorkspaces($workspaces)
     {
-        $this->workspaces = $workspaces;
+        $this->workspaces = new ArrayCollection($workspaces);
     }
 
     /**
-     * @return Workspace[]
+     * @return ArrayCollection
      */
     public function getWorkspaces()
     {

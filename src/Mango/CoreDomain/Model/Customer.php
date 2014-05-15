@@ -12,7 +12,7 @@ namespace Mango\CoreDomain\Model;
  * Class Customer
  * @package Mango\CoreDomain\Model
  */
-class Customer
+class Customer extends User
 {
     protected $id;
 

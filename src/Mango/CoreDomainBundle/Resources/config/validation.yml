@@ -16,6 +16,8 @@ Mango\CoreDomain\Model\User:
             - Email: ~
         plainPassword:
             - NotBlank: ~
+        workspaces:
+            - NotBlank: ~
 
 Mango\CoreDomain\Model\Customer:
     properties:

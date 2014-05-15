@@ -15,22 +15,14 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('workspaces', 'entity', array(
+                'class' => 'Mango\CoreDomain\Model\Workspace',
+                'property' => 'name',
+                'multiple' => true
+            ))
             ->add('username')
             ->add('email')
             ->add('plainPassword', 'password')
-            ->add('roles', 'collection', array(
-                'options' => array(
-                    'choices'  => array(
-                        'nashville' => 'Nashville',
-                        'paris'     => 'Paris',
-                        'berlin'    => 'Berlin',
-                        'london'    => 'London',
-                    )
-                ),
-                'type' => 'choice',
-                'allow_add' => true,
-                'allow_delete' => true
-            ))
         ;
     }
     
