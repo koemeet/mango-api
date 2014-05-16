@@ -9,6 +9,7 @@
 namespace Mango\API\RestBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Util\Codes;
@@ -95,6 +96,28 @@ class UsersController extends RestController
     public function getUserAction($id)
     {
         return array('users' => array($this->userService->findByIdentifier($id)));
+    }
+
+    /**
+     * Search users by term.
+     *
+     * @Rest\View
+     * @Rest\QueryParam(name="term", description="Filter users by search term")
+     * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
+     * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
+     * @Rest\QueryParam(name="count", description="Number of results to fetch", default=10)
+     * @Rest\QueryParam(name="filter", description="Filter fields to serialize")
+     * @ApiDoc(
+     *  section = "Users"
+     * )
+     * @param ParamFetcher $paramFetcher
+     * @return array
+     */
+    public function searchUsersAction(ParamFetcher $paramFetcher)
+    {
+        return array(
+            'users' => $this->userRepository->search($paramFetcher->get('term'), $this->extract($paramFetcher))
+        );
     }
 
     /**
