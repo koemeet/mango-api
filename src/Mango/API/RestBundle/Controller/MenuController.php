@@ -7,6 +7,7 @@
  */
 
 namespace Mango\API\RestBundle\Controller;
+use Mango\CoreDomain\Repository\MenuRepositoryInterface;
 
 /**
  * Class MenuController
@@ -17,6 +18,11 @@ class MenuController extends RestController
 {
     public function getMenusAction()
     {
+        /** @var MenuRepositoryInterface $repo */
+        $repo = $this->get('mango_core_domain.menu_repository');
 
+        return array(
+            'menus' => $repo->findAll()
+        );
     }
 }

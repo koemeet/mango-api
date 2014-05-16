@@ -1,0 +1,4 @@
+Mango\CoreDomain\Model\Address:
+    properties:
+        validTypes:
+            exclude: true

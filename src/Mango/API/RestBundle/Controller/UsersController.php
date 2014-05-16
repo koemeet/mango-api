@@ -98,9 +98,13 @@ class UsersController extends RestController
     }
 
     /**
+     * Create a new user
+     *
      * @ApiDoc(
      *  section = "Users",
-     *  input = "Mango\API\DomainBundle\Form\UserType"
+     *  input = {
+     *      "class" = "Mango\CoreDomainBundle\Form\UserType"
+     *  }
      * )
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\Form\FormInterface

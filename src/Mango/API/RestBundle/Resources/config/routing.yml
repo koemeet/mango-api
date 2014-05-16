@@ -49,3 +49,7 @@ mango_api_rest_categories:
 mango_api_rest_employees:
     type: rest
     resource: MangoAPIRestBundle:Employees
+
+mango_api_rest_menu:
+    type: rest
+    resource: MangoAPIRestBundle:Menu
