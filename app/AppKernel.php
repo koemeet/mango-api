@@ -32,10 +32,10 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\PHPCRBundle\DoctrinePHPCRBundle(),
             //new Netvlies\Bundle\DoctrineBridgeBundle\NetvliesDoctrineBridgeBundle(),
 
-            new \Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
+            new Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
 //            new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
-            new \Symfony\Cmf\Bundle\ContentBundle\CmfContentBundle(),
-            new \Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle(),
+            new Symfony\Cmf\Bundle\ContentBundle\CmfContentBundle(),
+            new Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle(),
 
             // Serializer
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
@@ -43,7 +43,7 @@ class AppKernel extends Kernel
             // ===================== MANGO ======================= //
 
             // Core Bundles
-            new \Mango\CoreDomainBundle\MangoCoreDomainBundle(),
+            new Mango\CoreDomainBundle\MangoCoreDomainBundle(),
 
             // Load API related bundles
             new Mango\API\DocsBundle\MangoAPIDocsBundle(),

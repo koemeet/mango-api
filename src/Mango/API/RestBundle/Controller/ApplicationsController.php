@@ -89,40 +89,6 @@ class ApplicationsController extends RestController
      */
     public function getApplicationsAction(ParamFetcherInterface $paramFetcher)
     {
-        /** @var DocumentManager $dm */
-        $dm = $this->get('doctrine_phpcr.odm.document_manager');
-//
-//        /** @var MenuRepositoryInterface $repo */
-//        $repo = $this->get('mango_core_domain.menu_repository');
-//        $menu = $repo->createMenu();
-
-        $parentPath = '/applications/01cd0360-d11c-11e3-89b3-a8b38a9a6428/menus';
-        $session = $dm->getPhpcrSession();
-        NodeHelper::createPath($session, $parentPath);
-        $parentNode = $dm->find(null, $parentPath);
-
-        $menu = new Menu();
-        $menu->setName('tann2');
-        $menu->setUri('http://www.example.com');
-        $menu->setLabel('My menu!!');
-        $menu->setParent($parentNode);
-
-        $dm->persist($menu);
-
-        $node = new MenuNode();
-        $node->setName('home');
-        $node->setLabel('Homepage!');
-        $node->setUri('http://www.google.nl');
-        $node->setParent($menu);
-
-        $dm->persist($node);
-
-        $menu->addChild($node);
-
-        $dm->flush();
-
-        die;
-
         $query = $this->queryExtractor->extract($paramFetcher);
         $applications = $this->applicationRepository->findByQuery($query)->getArrayCopy();
 
