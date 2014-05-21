@@ -21,7 +21,8 @@ Mango\CoreDomain\Model\Application:
                 id: expr(object.getRelatedTo().getId())
             absolute: true
           attributes:
-            type: application
+            topLevel: true
+            type: applications
           exclusion:
             exclude_if: expr(object.getRelatedTo() === null)
           embedded:
@@ -31,6 +32,15 @@ Mango\CoreDomain\Model\Application:
         - rel: pages
           href:
             route: get_application_pages
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+#          attributes:
+#            topLevel: true
+
+        - rel: menus
+          href:
+            route: get_application_menus
             parameters:
                 id: expr(object.getId())
             absolute: true

@@ -65,7 +65,6 @@ class JsonApiSerializer implements JsonSerializerInterface
 
                 $this->links[$rel] = $link;
                 $topLevelLinks[$rel] = $serializedLink;
-
                 continue;
             }
 
@@ -82,11 +81,11 @@ class JsonApiSerializer implements JsonSerializerInterface
         }
 
         if (!empty($topLevelLinks)) {
-            $visitor->setRoot(
-                array_replace_recursive($visitor->getRoot(), array(
-                    'links' => $topLevelLinks
-                ))
-            );
+//            $visitor->setRoot(
+//                array_replace_recursive($visitor->getRoot(), array(
+//                    'links' => $topLevelLinks
+//                ))
+//            );
         }
 
         $visitor->addData('links', $serializedLinks);
@@ -112,13 +111,13 @@ class JsonApiSerializer implements JsonSerializerInterface
             $ids = array();
 
             if (!in_array($embedded->getRel(), $includes)) {
-                continue;
+                //continue;
             }
 
             // Is this a single embedded resource?
             $single = false;
 
-            if ($embedded->getData() instanceof \Traversable) {
+            if ($embedded->getData() instanceof \Traversable || is_array($embedded->getData())) {
                 foreach ($embedded->getData() as $data) {
                     $this->appendId($ids, $data);
                     $rel = $this->getRelationKey($embedded->getRel());
@@ -133,7 +132,7 @@ class JsonApiSerializer implements JsonSerializerInterface
 
             if (!empty($ids)) {
                 $links[$embedded->getRel()] = ($single) ? reset($ids) : $ids;
-                //$visitor->addData($embedded->getRel(), ($single) ? reset($ids) : $ids);
+                $visitor->addData($embedded->getRel(), ($single) ? reset($ids) : $ids);
             }
         }
 
@@ -146,7 +145,7 @@ class JsonApiSerializer implements JsonSerializerInterface
 
         if (!empty($relations)) {
             $root = $visitor->getRoot();
-            $root['linked'] = $this->getRelations();
+            $root['linked'] = $relations;
             $visitor->setRoot($root);
         }
     }

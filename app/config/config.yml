@@ -91,6 +91,11 @@ doctrine_phpcr:
         password: admin
     odm:
         mappings:
+            MangoCoreDomain:
+                type: xml
+                dir: %kernel.root_dir%/../libs/src/Mango/CoreDomainBundle/Resources/config/doctrine-model
+                prefix: Mango\CoreDomain\Model
+                alias: MangoCoreDomain
             MangoCmsBundle:
                 type: yml
                 dir: %kernel.root_dir%/../libs/src/Mango/CoreDomainBundle/Resources/config/doctrine-phpcr

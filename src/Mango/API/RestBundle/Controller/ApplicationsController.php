@@ -55,19 +55,6 @@ class ApplicationsController extends RestController
 
     public function init()
     {
-//        /** @var DocumentManager $dm */
-//        $dm = $this->get('doctrine_phpcr.odm.document_manager');
-//        $products = $dm->getRepository('Mango\CoreDomainBundle\Document\StoreProduct')->findAll();
-//
-//        foreach ($products as $product) {
-//            $dm->remove($product);
-//        }
-//
-//        $dm->flush();
-//
-//        echo "TAN";
-//        die;
-
         $this->applicationRepository = $this->get('mango_core_domain.application_repository');
         $this->pageService = $this->get('mango_core_domain.page_service');
     }
@@ -166,6 +153,30 @@ class ApplicationsController extends RestController
 
         return array(
             'categories' => $categoryRepository->findByApplication($application)
+        );
+    }
+
+    /**
+     * @ApiDoc(
+     *  section = "Applications"
+     * )
+     * @param $id
+     * @return array
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     */
+    public function getApplicationMenusAction($id)
+    {
+        $application = $this->applicationRepository->find($id);
+        if (!$application) {
+            throw new ResourceNotFoundException(sprintf('Application with id "%s" does not exist.', $id));
+        }
+
+        /** @var MenuRepositoryInterface $menuRepository */
+        $menuRepository = $this->get('mango_core_domain.menu_repository');
+        $menus = $menuRepository->findByApplication($application);
+
+        return array(
+            'menus' => $menus
         );
     }
 

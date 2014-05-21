@@ -1,0 +1,24 @@
+Mango\CoreDomainBundle\Document\Menu:
+    relations:
+        - rel: self
+          href:
+            route: get_menu
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+
+        - rel: children
+          href:
+              route: get_menu_children
+              parameters:
+                  id: expr(object.getId())
+              absolute: true
+          attributes:
+            type: menus
+            topLevel: true
+          embedded:
+            content: expr(object.getChildren())
+
+    properties:
+        path:
+            exclude: true

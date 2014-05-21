@@ -1,0 +1,4 @@
+Mango\CoreDomain\Model\MenuNodeBase:
+    properties:
+        children:
+            exclude: true
