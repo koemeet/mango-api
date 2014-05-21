@@ -39,24 +39,6 @@ class MenusController extends RestController
     }
 
     /**
-     * Get all menus.
-     *
-     * @ApiDoc(
-     *  section = "Menus"
-     * )
-     * @return array
-     */
-    public function getMenusAction()
-    {
-        /** @var MenuRepositoryInterface $repo */
-        $repo = $this->get('mango_core_domain.menu_repository');
-
-        return array(
-            'menus' => $repo->findAll()
-        );
-    }
-
-    /**
      * Get a single menu node.
      *
      * @ApiDoc(
