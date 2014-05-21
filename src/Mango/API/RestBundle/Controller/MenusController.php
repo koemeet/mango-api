@@ -13,6 +13,7 @@ use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Mango\CoreDomainBundle\Service\MenuService;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Class MenuController
@@ -37,6 +38,14 @@ class MenusController extends RestController
         $this->menuService = $this->get('mango_core_domain.menu_service');
     }
 
+    /**
+     * Get all menus.
+     *
+     * @ApiDoc(
+     *  section = "Menus"
+     * )
+     * @return array
+     */
     public function getMenusAction()
     {
         /** @var MenuRepositoryInterface $repo */
@@ -47,25 +56,52 @@ class MenusController extends RestController
         );
     }
 
+    /**
+     * Get a single menu node.
+     *
+     * @ApiDoc(
+     *  section = "Menus"
+     * )
+     * @param $id
+     * @return array
+     */
     public function getMenuAction($id)
     {
-
-    }
-
-    public function getMenuChildrenAction($id)
-    {
-
+        $menu = $this->menuRepository->find($id);
+        return array(
+            'menus' => array($menu)
+        );
     }
 
     /**
+     * Get nodes of a menu.
+     *
+     * @ApiDoc(
+     *  section = "Menus"
+     * )
+     * @param $id
+     * @throws \RuntimeException
+     */
+    public function getMenuChildrenAction($id)
+    {
+        // TODO: Implement
+        throw new \RuntimeException("This feature is not implemented yet!");
+    }
+
+    /**
+     *  Add a new menu.
+     *
+     * @ApiDoc(
+     *  section = "Menus",
+     *  input = "Mango\CoreDomainBundle\Form\MenuType"
+     * )
      * @Post("/menus")
      */
     public function postMenusAction(Request $request)
     {
         $form = $this->menuService->create($request);
         if ($form->isValid()) {
-            echo "Yey";
-            die;
+            return $this->createCreatedView($form, 'get_menu');
         }
         return $form;
     }

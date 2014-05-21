@@ -11,6 +11,7 @@ namespace Mango\API\RestBundle\Controller;
 use Doctrine\ORM\UnitOfWork;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Component\ActionHandler\ActionHandler;
 use Mango\API\RestBundle\Request\ParamFetcher\QueryExtractor;
@@ -63,18 +64,33 @@ class RestController extends FOSRestController
 
     /**
      * @param FormInterface $form
-     * @param $statusCode
-     * @param null $locationRoute
+     * @param               $route
      * @return View
      */
-    public function createView(FormInterface $form, $statusCode, $locationRoute = null)
+    protected function createCreatedView(FormInterface $form, $route)
     {
-        $view = View::create(array($form->getName() => $form->getViewData()), $statusCode);
+        return $this->createView($form, Codes::HTTP_CREATED, $route);
+    }
 
-        if ($locationRoute !== null
+    /**
+     * @param FormInterface $form
+     * @param               $statusCode
+     * @param null          $route
+     * @internal param null $locationRoute
+     * @return View
+     */
+    public function createView(FormInterface $form, $statusCode, $route = null)
+    {
+        $data = array($form->getName() => $form->getViewData());
+
+        if ($route !== null
             && null !== $form->getData()->getId()) {
-            $view->setHeader("Location", $this->generateUrl($locationRoute, array("id" => $form->getData()->getId()), true));
+            $view = $this->routeRedirectView($route, array('id' => $form->getData()->getId()));
+        } else {
+            $view = View::create(null, $statusCode);
         }
+
+        $view->setData($data);
 
         return $view;
     }
