@@ -56,6 +56,9 @@ class ProductsController extends RestController
     {
         $products = $this->productRepository->findAll();
 
+//        echo $products['0']->getWorkspace()->getName();
+//        die;
+
         return array(
             'products' => $products
         );

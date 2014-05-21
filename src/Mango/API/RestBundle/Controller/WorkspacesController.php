@@ -69,7 +69,7 @@ class WorkspacesController extends RestController
      */
     public function getWorkspaceAction($id)
     {
-        return array('workspace' => $this->workspaceRepository->find($id));
+        return array('workspaces' => array($this->workspaceRepository->find($id)));
     }
 
     /**
