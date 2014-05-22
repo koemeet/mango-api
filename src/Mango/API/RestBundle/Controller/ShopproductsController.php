@@ -8,6 +8,7 @@
 
 namespace Mango\API\RestBundle\Controller;
 use FOS\RestBundle\Util\Codes;
+use Mango\CoreDomain\Model\ShopProduct;
 use Mango\CoreDomain\Repository\ShopproductRepositoryInterface;
 use Mango\CoreDomainBundle\Service\ShopproductService;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,8 +65,10 @@ class ShopproductsController extends RestController
      */
     public function getShopproductAction($id)
     {
+        /** @var ShopProduct $product */
+        $product = $this->shopproductRepository->find($id);
         return array(
-            'shopproduct' => $this->shopproductRepository->find($id)
+            'shopproduct' => $product
         );
     }
 

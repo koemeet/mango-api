@@ -1,0 +1,6 @@
+Mango\CoreDomainBundle\Document\ShopProduct:
+    properties:
+        name:
+            exclude: true
+        path:
+            exclude: true

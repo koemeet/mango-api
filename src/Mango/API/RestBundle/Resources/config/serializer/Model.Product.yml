@@ -1,0 +1,12 @@
+Mango\CoreDomain\Model\Product:
+    virtual_properties:
+        getTitle:
+            serialized_name: title
+        getPrice:
+            serialized_name: price
+        getDescription:
+            serialized_name: description
+
+    properties:
+        detail:
+            exclude: true
