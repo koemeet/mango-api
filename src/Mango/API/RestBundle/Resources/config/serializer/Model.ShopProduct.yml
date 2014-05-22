@@ -2,3 +2,7 @@ Mango\CoreDomain\Model\ShopProduct:
     virtual_properties:
         getType:
             serialized_name: type
+
+    properties:
+        storeProduct:
+            exclude: true
