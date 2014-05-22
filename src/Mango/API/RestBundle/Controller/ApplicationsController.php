@@ -27,6 +27,7 @@ use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
 use Mango\CoreDomain\Repository\CategoryRepositoryInterface;
 use Mango\CoreDomain\Repository\MenuRepositoryInterface;
 use Mango\CoreDomain\Repository\PageRepositoryInterface;
+use Mango\CoreDomain\Repository\ShopproductRepositoryInterface;
 use Mango\CoreDomainBundle\Form\ApplicationType;
 use Mango\CoreDomainBundle\Form\UserType;
 use Mango\CoreDomainBundle\Service\PageService;
@@ -178,6 +179,30 @@ class ApplicationsController extends RestController
         return array(
             'menus' => $menus
         );
+    }
+
+    /**
+     * Find shop products by application
+     *
+     * @ApiDoc(
+     *  section = "Applications"
+     * )
+     * @param $id
+     * @return array
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     */
+    public function getApplicationShopproductsAction($id)
+    {
+        $application = $this->applicationRepository->find($id);
+        if (!$application) {
+            throw new ResourceNotFoundException(sprintf('Application with id "%s" does not exist.', $id));
+        }
+
+        /** @var ShopproductRepositoryInterface $shopproductRepository */
+        $shopproductRepository = $this->get('mango_core_domain.shopproduct_repository');
+        $products = $shopproductRepository->findByApplication($application);
+
+        return array('shopproducts' => $products);
     }
 
     /**
