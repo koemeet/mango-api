@@ -2,9 +2,9 @@ mango_api_rest_companies:
     type: rest
     resource: MangoAPIRestBundle:Companies
 
-mango_api_rest_customers:
-    type: rest
-    resource: MangoAPIRestBundle:Customers
+#mango_api_rest_customers:
+#    type: rest
+#    resource: MangoAPIRestBundle:Customers
 
 mango_api_rest_users:
     type: rest
