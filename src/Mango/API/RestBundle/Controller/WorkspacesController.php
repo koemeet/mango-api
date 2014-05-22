@@ -10,6 +10,7 @@ namespace Mango\API\RestBundle\Controller;
 
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Mango\CoreDomain\Model\Workspace;
+use Mango\CoreDomain\Repository\ProductRepositoryInterface;
 use Mango\CoreDomain\Repository\UserRepositoryInterface;
 use Mango\CoreDomain\Repository\WorkspaceRepositoryInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -71,6 +72,29 @@ class WorkspacesController extends RestController
     public function getWorkspaceAction($id)
     {
         return array('workspaces' => array($this->workspaceRepository->find($id)));
+    }
+
+    /**
+     * Find products in a workspace.
+     *
+     * @ApiDoc(
+     *  section = "Workspaces"
+     * )
+     * @param $id
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     * @return array
+     */
+    public function getWorkspaceProductsAction($id)
+    {
+        $workspace = $this->workspaceRepository->find($id);
+        if (!$workspace) {
+            throw new ResourceNotFoundException(sprintf('Workspace with id "%s" does not exist.', $id));
+        }
+
+        /** @var ProductRepositoryInterface $productRepository */
+        $productRepository = $this->get('mango_core_domain.product_repository');
+        $products = $productRepository->findByWorkspace($workspace);
+        return array('products' => $products);
     }
 
     /**
