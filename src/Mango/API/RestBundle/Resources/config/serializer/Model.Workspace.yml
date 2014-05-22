@@ -1,15 +1,17 @@
 Mango\CoreDomain\Model\Workspace:
-#    relations:
-#        - rel: users
-#          href:
-#            route: get_workspace_users
-#            parameters:
-#                id: expr(object.getId())
-#            absolute: true
-#            attributes:
-#                topLevel: true
+    relations:
+        - rel: users
+          href:
+            route: get_workspace_users
+            parameters:
+                id: expr(object.getId())
+            absolute: true
 #          embedded:
+#            exclusion:
+#                maxDepth: 1
 #            content: expr(object.getUsers())
+#          exclusion:
+#            maxDepth: 1
 
     properties:
         users:

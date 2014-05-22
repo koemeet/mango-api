@@ -42,6 +42,7 @@ class WorkspacesController extends RestController
     /**
      * Retrieve all users of Mango.
      *
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\QueryParam(name="sort", description="Sort results by fields in the following notation [field]:[order], where order can be 'a' (ascending) or 'd' (descending)", default=null)
      * @Rest\QueryParam(name="page", description="Pagination for your results", default=1)
      * @Rest\QueryParam(name="count", description="Number of results to fetch", default=10)

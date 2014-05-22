@@ -237,4 +237,9 @@ class UsersController extends RestController
 
         return array('workspaces' => $user->getWorkspaces());
     }
+
+    public function getUserAddressesAction($id)
+    {
+        return array(1, 2, 3);
+    }
 }

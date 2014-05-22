@@ -68,7 +68,8 @@ class ProductsController extends RestController
      * Create a new product.
      *
      * @ApiDoc(
-     *  section = "Products"
+     *  section = "Products",
+     *  input = "Mango\CoreDomainBundle\Form\StoreProductType"
      * )
      * @param Request $request
      * @return array|\Symfony\Component\Form\FormInterface

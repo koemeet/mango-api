@@ -37,21 +37,27 @@ class ShopproductsController extends RestController
     }
 
     /**
+     * Get all webshop products.
+     *
+     * NOTE: These products inherit from <code>product</code>, only they contain more info about meta data etc.
+     *
      * @ApiDoc(
-     *  section = "Shop"
+     *  section = "Webshops"
      * )
      * @return mixed
      */
     public function getShopproductsAction()
     {
-        return $this->shopproductRepository->findAll();
+        return array(
+            'shopproducts' => $this->shopproductRepository->findAll()
+        );
     }
 
     /**
      * Get a single shop product.
      *
      * @ApiDoc(
-     *  section = "Shop"
+     *  section = "Webshops"
      * )
      * @param $id
      * @return array
@@ -69,6 +75,12 @@ class ShopproductsController extends RestController
     }
 
     /**
+     * Add a new shop product to an application.
+     *
+     * @ApiDoc(
+     *  section = "Webshops",
+     *  input = "Mango\CoreDomainBundle\Form\ShopproductType"
+     * )
      * @param Request $request
      * @return mixed
      */

@@ -25,6 +25,13 @@ Mango\CoreDomain\Model\User:
           embedded:
             content: expr(object.getWorkspaces())
 
+        - rel: addresses
+          href:
+            route: get_user_addresses
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+
         - rel: new
           href:
             route: new_users
@@ -34,4 +41,6 @@ Mango\CoreDomain\Model\User:
 #        applications:
 #            exclude: true
         workspaces:
+            exclude: true
+        addresses:
             exclude: true
