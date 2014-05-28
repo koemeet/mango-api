@@ -71,7 +71,7 @@ class MenusController extends RestController
     }
 
     /**
-     *  Add a new menu.
+     * Add a new menu.
      *
      * @ApiDoc(
      *  section = "Menus",
@@ -82,6 +82,26 @@ class MenusController extends RestController
     public function postMenusAction(Request $request)
     {
         $form = $this->menuService->create($request);
+        if ($form->isValid()) {
+            return $this->createCreatedView($form, 'get_menu');
+        }
+        return $form;
+    }
+
+    /**
+     * Update a menu.
+     *
+     * @ApiDoc(
+     *  section = "Menus",
+     *  input = "Mango\CoreDomainBundle\Form\MenuType"
+     * )
+     * @param string  $id
+     * @param Request $request
+     * @return \FOS\RestBundle\View\View|void
+     */
+    public function putMenuAction($id, Request $request)
+    {
+        $form = $this->menuService->update($id, $request);
         if ($form->isValid()) {
             return $this->createCreatedView($form, 'get_menu');
         }
