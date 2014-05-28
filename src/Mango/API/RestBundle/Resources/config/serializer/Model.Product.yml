@@ -6,6 +6,8 @@ Mango\CoreDomain\Model\Product:
             serialized_name: price
         getDescription:
             serialized_name: description
+        getImages:
+            serialized_name: images
 
     properties:
         detail:

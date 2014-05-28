@@ -53,3 +53,7 @@ mango_api_rest_employees:
 mango_api_rest_menus:
     type: rest
     resource: MangoAPIRestBundle:Menus
+
+mango_api_rest_images:
+    type: rest
+    resource: MangoAPIRestBundle:Images

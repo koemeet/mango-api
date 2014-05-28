@@ -8,6 +8,7 @@
 
 namespace Mango\API\RestBundle\Controller;
 use FOS\RestBundle\Util\Codes;
+use Mango\CoreDomain\Model\Image;
 use Mango\CoreDomain\Model\ShopProduct;
 use Mango\CoreDomain\Repository\ShopproductRepositoryInterface;
 use Mango\CoreDomainBundle\Service\ShopproductService;
@@ -90,11 +91,30 @@ class ShopproductsController extends RestController
     public function postShopproductsAction(Request $request)
     {
         $form = $this->shopproductService->create($request);
-
         if ($form->isValid()) {
             return $this->createView($form, Codes::HTTP_CREATED, 'get_shopproduct');
         }
+        return $form;
+    }
 
+    /**
+     * Update an existing shop product.
+     *
+     * @ApiDoc(
+     *  section = "Webshops",
+     *  input = "Mango\CoreDomainBundle\Form\ShopproductType"
+     * )
+     *
+     * @param         $id
+     * @param Request $request
+     * @return \FOS\RestBundle\View\View|\Symfony\Component\Form\FormInterface
+     */
+    public function putShopproductAction($id, Request $request)
+    {
+        $form = $this->shopproductService->update($id, $request);
+        if ($form->isValid()) {
+            return $this->createView($form, Codes::HTTP_OK, 'get_shopproduct');
+        }
         return $form;
     }
 

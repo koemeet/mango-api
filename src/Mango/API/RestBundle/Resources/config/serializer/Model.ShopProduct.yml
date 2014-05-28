@@ -6,3 +6,5 @@ Mango\CoreDomain\Model\ShopProduct:
     properties:
         storeProduct:
             exclude: true
+        routes:
+            exclude: true

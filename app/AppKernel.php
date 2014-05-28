@@ -35,6 +35,7 @@ class AppKernel extends Kernel
             new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
             new Symfony\Cmf\Bundle\ContentBundle\CmfContentBundle(),
             new Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle(),
+            new \Symfony\Cmf\Bundle\MediaBundle\CmfMediaBundle(),
 
             // Serializer
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
