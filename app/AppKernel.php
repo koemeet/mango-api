@@ -26,14 +26,13 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Problematic\AclManagerBundle\ProblematicAclManagerBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
 
             // Doctrine PHPCR
             new Doctrine\Bundle\PHPCRBundle\DoctrinePHPCRBundle(),
-//            new Netvlies\Bundle\DoctrineBridgeBundle\NetvliesDoctrineBridgeBundle(),
 
+            // Symfony CMF dependencies
             new Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
-//            new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
+            new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
             new Symfony\Cmf\Bundle\ContentBundle\CmfContentBundle(),
             new Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle(),
 

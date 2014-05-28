@@ -27,6 +27,7 @@ use Mango\CoreDomain\Repository\ApplicationRepositoryInterface;
 use Mango\CoreDomain\Repository\CategoryRepositoryInterface;
 use Mango\CoreDomain\Repository\MenuRepositoryInterface;
 use Mango\CoreDomain\Repository\PageRepositoryInterface;
+use Mango\CoreDomain\Repository\RouteRepositoryInterface;
 use Mango\CoreDomain\Repository\ShopproductRepositoryInterface;
 use Mango\CoreDomainBundle\Form\ApplicationType;
 use Mango\CoreDomainBundle\Form\UserType;
@@ -109,6 +110,30 @@ class ApplicationsController extends RestController
             ),
             'applications' => array($results)
         );
+    }
+
+    /**
+     * Get application routes.
+     *
+     * @ApiDoc(
+     *  section = "Applications"
+     * )
+     * @param $id
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     * @return array
+     */
+    public function getApplicationRoutesAction($id)
+    {
+        $application = $this->applicationRepository->find($id);
+        if (!$application) {
+            throw new ResourceNotFoundException(sprintf('No application with the id "%s" exists.', $id));
+        }
+
+        /** @var RouteRepositoryInterface $routeRepository */
+        $routeRepository = $this->get('mango_core_domain.route_repository');
+        $routes = $routeRepository->findByApplication($application);
+
+        return array('routes' => $routes);
     }
 
     /**

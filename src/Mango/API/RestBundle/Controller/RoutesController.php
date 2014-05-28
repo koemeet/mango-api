@@ -48,30 +48,11 @@ class RoutesController extends FOSRestController
     }
 
     /**
-     * Get candiates for URL
-     *
-     * @param $url
-     * @return array
+     * @param $id
      */
-    protected function getCandidates($url)
+    public function getRouteAction($id)
     {
-        $candidates = array();
-        if ('/' !== $url) {
-            if (preg_match('/(.+)\.[a-z]+$/i', $url, $matches)) {
-                $candidates[] = $this->idPrefix . $url;
-                $url = $matches[1];
-            }
-
-            $part = $url;
-            while (false !== ($pos = strrpos($part, '/'))) {
-                $candidates[] = $this->idPrefix . $part;
-                $part = substr($url, 0, $pos);
-            }
-        }
-
-        $candidates[] = $this->idPrefix;
-
-        return $candidates;
+        return array(1, 2, 3);
     }
 
     /**

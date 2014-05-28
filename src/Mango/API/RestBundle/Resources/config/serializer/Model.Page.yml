@@ -1,0 +1,4 @@
+Mango\CoreDomain\Model\Page:
+    virtual_properties:
+        getType:
+            serialized_name: type

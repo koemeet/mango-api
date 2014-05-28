@@ -11,6 +11,5 @@ require __DIR__ . '/../libs/autoload.php';
  */
 $loader = require __DIR__.'/../vendor/autoload.php';
 AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
-AnnotationRegistry::registerFile(__DIR__.'/../vendor/netvlies/doctrinebridgebundle/Netvlies/Bundle/DoctrineBridgeBundle/Mapping/Annotations/DoctrineAnnotations.php');
 
 return $loader;

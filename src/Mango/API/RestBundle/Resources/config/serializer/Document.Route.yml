@@ -1,0 +1,18 @@
+Mango\CoreDomainBundle\Document\Route:
+    relations:
+        - rel: self
+          href:
+            route: get_route
+            parameters:
+                id: 232
+            absolute: true
+#        - rel: content
+#          embedded:
+#            content: expr(object.getContent())
+
+    properties:
+        # We expose uuid's as ids to the outer world
+        uuid:
+            serialized_name: id
+        content:
+            exclude: true
