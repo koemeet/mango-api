@@ -1,0 +1,4 @@
+Mango\CoreDomainBundle\Document\Page:
+    properties:
+        routes:
+            exclude: true
