@@ -8,6 +8,7 @@
 
 namespace Mango\API\RestBundle\Controller;
 
+use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Component\ActionHandler\Data\ResultFetcherInterface;
 use Mango\API\RestBundle\Component\ActionHandler\Query\Query;
@@ -16,6 +17,7 @@ use Mango\CoreDomainBundle\Form\PageType;
 use Mango\CoreDomainBundle\Service\PageService;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
  * Class PagesController
@@ -107,6 +109,26 @@ class PagesController extends RestController
             return $this->createView($form, 200);
         }
         return $form;
+    }
+
+    /**
+     * Delete a page.
+     *
+     * @ApiDoc(
+     *  section = "Pages"
+     * )
+     * @param $id
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     * @return \FOS\RestBundle\View\View
+     */
+    public function deletePageAction($id)
+    {
+        $page = $this->pageRepository->find($id);
+        if (!$page) {
+            throw new ResourceNotFoundException(sprintf('Could not find page with id "%s"', $id));
+        }
+        $this->pageRepository->delete($page);
+        return View::create(null, Codes::HTTP_NO_CONTENT);
     }
 
     /**
