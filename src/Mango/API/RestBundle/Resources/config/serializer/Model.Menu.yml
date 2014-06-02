@@ -1,0 +1,18 @@
+Mango\CoreDomain\Model\Menu:
+    relations:
+        - rel: application
+          href:
+            route: get_application
+            parameters:
+                id: expr(object.getApplication().getId())
+            absolute: true
+          attributes:
+            topLevel: true
+            type: applications
+          exclusion:
+            exclude_if: expr(object.getApplication() === null)
+          embedded:
+            content: expr(object.getApplication())
+    properties:
+        application:
+            exclude: true
