@@ -47,6 +47,13 @@ Mango\CoreDomain\Model\Application:
 #          attributes:
 #            topLevel: true
 
+        - rel: categories
+          href:
+            route: get_application_categories
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+
     properties:
         relatedTo:
             exclude: true
