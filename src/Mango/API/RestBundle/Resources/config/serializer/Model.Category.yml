@@ -1,0 +1,8 @@
+Mango\CoreDomain\Model\Category:
+    relations:
+         - rel: children
+           attributes:
+             type: categories
+             topLevel: true
+           embedded:
+             content: expr(object.getChildren())

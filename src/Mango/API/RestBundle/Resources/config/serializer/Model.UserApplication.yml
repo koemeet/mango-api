@@ -1,0 +1,14 @@
+Mango\CoreDomain\Model\UserApplication:
+    relations:
+        - rel: application
+          attributes:
+            topLevel: true
+            type: applications
+          embedded:
+            content: expr(object.getApplication())
+
+    properties:
+        application:
+            exclude: true
+        user:
+            exclude: true

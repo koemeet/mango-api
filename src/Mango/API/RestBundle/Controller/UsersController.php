@@ -222,7 +222,7 @@ class UsersController extends RestController
         // Find applications for the given user
         $applications = $applicationRepository->findByUser($user, $this->extract($paramFetcher));
 
-        return array('applications' => $user->getApplications());
+        return array('user_applications' => $user->getApplications());
     }
 
     /**

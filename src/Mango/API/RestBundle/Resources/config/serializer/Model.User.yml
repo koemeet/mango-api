@@ -7,12 +7,12 @@ Mango\CoreDomain\Model\User:
                 id: expr(object.getId())
             absolute: true
 
-#        - rel: applications
-#          href:
-#            route: get_user_applications
-#            parameters:
-#                id: expr(object.getId())
-#            absolute: true
+        - rel: applications
+          href:
+            route: get_user_applications
+            parameters:
+                id: expr(object.getId())
+            absolute: true
 #          embedded:
 #            content: expr(object.getApplications())
 
@@ -38,8 +38,8 @@ Mango\CoreDomain\Model\User:
             absolute: true
 
     properties:
-#        applications:
-#            exclude: true
+        applications:
+            exclude: true
         workspaces:
             exclude: true
         addresses:

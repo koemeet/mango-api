@@ -210,6 +210,6 @@ class JsonApiSerializer implements JsonSerializerInterface
             }
         }
 
-        return $rel;
+        return Inflector::pluralize($rel);
     }
 }
