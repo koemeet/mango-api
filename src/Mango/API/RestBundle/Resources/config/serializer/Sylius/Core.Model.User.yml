@@ -1,0 +1,32 @@
+Sylius\Component\Core\Model\User:
+    exclusion_policy: ALL
+
+    properties:
+        username:
+            expose: true
+        email:
+            expose: true
+        enabled:
+            expose: true
+        groups:
+            expose: true
+        locked:
+            expose: true
+        expired:
+            expose: true
+        roles:
+            expose: true
+        credentialsExpired:
+            expose: true
+        firstName:
+            expose: true
+        lastName:
+            expose: true
+        createdAt:
+            expose: true
+        updatedAt:
+            expose: true
+        currency:
+            expose: true
+        addresses:
+            expose: true

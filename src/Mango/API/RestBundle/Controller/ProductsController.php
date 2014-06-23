@@ -1,93 +1,39 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Steffen
- * Date: 08/05/14
- * Time: 15:02
+/*
+ * This file is part of the Mango package.
+ *
+ * (c) Steffen Brem <steffenbrem@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Mango\API\RestBundle\Controller;
 
-use FOS\RestBundle\Request\ParamFetcher;
-use Mango\CoreDomain\Repository\ProductRepositoryInterface;
-use Mango\CoreDomainBundle\Service\ProductService;
-use Symfony\Component\HttpFoundation\Request;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
-class Testing {
-    protected $string = "abc";
-    protected $int = 12;
-    protected $array = array(1, 2, 3);
-}
+use Doctrine\Common\Collections\ArrayCollection;
+use FOS\RestBundle\Controller\FOSRestController;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\Serializer;
+use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\TaxonInterface;
+use Sylius\Component\Product\Model\Product;
+use Sylius\Component\Product\Model\Variant;
 
 /**
- * Class ProductsController
- *
- * @package Mango\API\RestBundle\Controller
+ * @author Steffen Brem <steffenbrem@gmail.com>
  */
-class ProductsController extends RestController
+class ProductsController extends FOSRestController
 {
-    /**
-     * @var ProductRepositoryInterface
-     */
-    protected $productRepository;
-
-    /**
-     * @var ProductService
-     */
-    protected $productService;
-
-    public function init()
+    public function getProductsAction()
     {
-        $this->productRepository = $this->get('mango_core_domain.product_repository');
-        $this->productService = $this->get('mango_core_domain.product_service');
+        // Nice, this works correctly :)
+        $repo = $this->get('sylius.repository.product');
+
+        /** @var ProductInterface $product */
+        $product = $repo->find(1);
+
+        // TODO: $repo->findByApplication($application); We can find products that belong to a certain application
+
+        return $product;
     }
-
-    /**
-     * Get all products.
-     *
-     * @ApiDoc(
-     *  section = "Products"
-     * )
-     * @param ParamFetcher $paramFetcher
-     * @return mixed
-     */
-    public function getProductsAction(ParamFetcher $paramFetcher)
-    {
-        $products = $this->productRepository->findAll();
-
-//        echo $products['0']->getWorkspace()->getName();
-//        die;
-
-        return array(
-            'products' => $products
-        );
-    }
-
-    /**
-     * Create a new product.
-     *
-     * @ApiDoc(
-     *  section = "Products",
-     *  input = "Mango\CoreDomainBundle\Form\StoreProductType"
-     * )
-     * @param Request $request
-     * @return array|\Symfony\Component\Form\FormInterface
-     */
-    public function postProductsAction(Request $request)
-    {
-        $form = $this->productService->create($request);
-
-        if ($form->isValid()) {
-            return array($form->getName() => $form->getData());
-        }
-
-        return $form;
-    }
-
-    public function newProductsAction(Request $request)
-    {
-        $form = $this->postProductsAction($request);
-        return $this->generateNewView($form, 'post_products');
-    }
-}
+} 

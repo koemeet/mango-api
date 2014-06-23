@@ -1,5 +1,7 @@
 # This file is auto-generated during the composer install
 parameters:
+    mango.library_folder: mango-library
+
     database_driver: pdo_mysql
     database_host: 127.0.0.1
     database_port: null

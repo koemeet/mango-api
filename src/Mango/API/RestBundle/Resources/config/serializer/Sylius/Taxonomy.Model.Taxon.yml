@@ -1,0 +1,18 @@
+Sylius\Component\Taxonomy\Model\Taxon:
+    exclusion_policy: ALL
+
+    properties:
+        name:
+            expose: true
+        slug:
+            expose: true
+        permalink:
+            expose: true
+        description:
+            expose: true
+        level:
+            expose: true
+        children:
+            expose: true
+#        parent:
+#            expose: true

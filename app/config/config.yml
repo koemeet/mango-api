@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: @MangoCoreBundle/Resources/config/app/main.yml }
 
 framework:
     #esi:             ~
@@ -29,9 +30,6 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
-    form:
-        resources:
-            - 'CmfMediaBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -47,11 +45,11 @@ assetic:
         #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
 # This API uses doctrine to manage OAuth related stuff
-doctrine:
-    orm:
-        mappings:
-            FOSOAuthServerBundle: ~
-            MangoAPISecurityBundle: ~
+#doctrine:
+#    orm:
+#        mappings:
+#            FOSOAuthServerBundle: ~
+#            MangoAPISecurityBundle: ~
 
 #mango_odm_bridge:
 #    metadata:
@@ -60,25 +58,9 @@ doctrine:
 #                namespace_prefix: 'Mango\CoreDomain\Model'
 #                path: %kernel.root_dir%/../src/Mango/CoreDomainBundle/Resources/config/doctrine
 
-cmf_core:
-    persistence:
-        phpcr:
-            enabled: true
-            basepath: /cms
-    publish_workflow:
-        enabled: false
-
-# Swiftmailer Configuration
-swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
-
-sensio_framework_extra:
-    view:
-        annotations: false
+#sensio_framework_extra:
+#    view:
+#        annotations: false
 
 # FOS Rest Configuration
 fos_rest:
@@ -109,16 +91,16 @@ fos_rest:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
 
 # FOS OAuth Server Configuration
-fos_oauth_server:
-    db_driver: orm       # Driver availables: orm, mongodb, or propel
-    client_class:           Mango\API\SecurityBundle\Entity\Client
-    access_token_class:     Mango\API\SecurityBundle\Entity\AccessToken
-    refresh_token_class:    Mango\API\SecurityBundle\Entity\RefreshToken
-    auth_code_class:        Mango\API\SecurityBundle\Entity\AuthCode
-    service:
-        user_provider: fos_user.user_manager
-        options:
-            access_token_lifetime: 86400
+#fos_oauth_server:
+#    db_driver: orm       # Driver availables: orm, mongodb, or propel
+#    client_class:           Mango\API\SecurityBundle\Entity\Client
+#    access_token_class:     Mango\API\SecurityBundle\Entity\AccessToken
+#    refresh_token_class:    Mango\API\SecurityBundle\Entity\RefreshToken
+#    auth_code_class:        Mango\API\SecurityBundle\Entity\AuthCode
+#    service:
+#        user_provider: fos_user.user_manager
+#        options:
+#            access_token_lifetime: 86400
 
 # Mango API Configuration
 mango_api_rest:
@@ -144,6 +126,9 @@ jms_serializer:
             CoreDomainBundle:
                 namespace_prefix: "Mango\\CoreDomainBundle"
                 path: "@MangoAPIRestBundle/Resources/config/serializer/"
+            Sylius:
+                namespace_prefix: "Sylius\\Component"
+                path: "@MangoAPIRestBundle/Resources/config/serializer/Sylius"
 
 nelmio_api_doc:
     sandbox:
