@@ -3,11 +3,10 @@
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Composer\Autoload\ClassLoader;
 
-$loader = require __DIR__.'/../vendor/autoload.php';
-AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+$mainLoader = require __DIR__.'/../vendor/autoload.php';
+AnnotationRegistry::registerLoader(array($mainLoader, 'loadClass'));
 
-require __DIR__.'/../mango-library/autoload.php';
-AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+$libraryLoader = require __DIR__.'/../mango-library/autoload.php';
+AnnotationRegistry::registerLoader(array($libraryLoader, 'loadClass'));
 
-
-return $loader;
+return $mainLoader;

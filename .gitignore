@@ -1,4 +1,6 @@
+.DS_Store
 vendor
 composer.lock
 app/cache/*
 app/logs/*
+web/media/*

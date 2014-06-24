@@ -5,8 +5,8 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
-    secret:          "%secret%"
+    translator:      { fallback: "%locale%" }
+    secret:          "%sylius.secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~

@@ -1,11 +1,4 @@
 {
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/mango-group/symfony"
-        }
-    ],
-
     "name": "symfony/framework-standard-edition",
     "license": "MIT",
     "type": "project",
@@ -15,23 +8,17 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "mango-group/symfony": "dev-master",
-        "twig/extensions": "~1.0",
-        "symfony/assetic-bundle": "~2.3",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~2.3",
-        "sensio/framework-extra-bundle": "~3.0",
-        "sensio/generator-bundle": "~2.3",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "friendsofsymfony/rest-bundle": "*",
-        "jms/serializer-bundle": "*",
-        "nelmio/api-doc-bundle": "@stable",
-        "willdurand/hateoas-bundle": "@stable",
-        "white-october/pagerfanta-bundle": "dev-master",
-        "problematic/acl-manager-bundle": "dev-master",
-        "mopa/bootstrap-bundle": "v3.0.0-beta3",
-        "phpunit/phpunit": "4.0.*@dev"
+        "sensio/framework-extra-bundle":            "~3.0",
+        "sensio/generator-bundle":                  "~2.3",
+        "incenteev/composer-parameter-handler":     "~2.0",
+        "friendsofsymfony/rest-bundle":             "dev-master",
+        "jms/serializer-bundle":                    "dev-master",
+        "nelmio/api-doc-bundle":                    "@stable",
+        "willdurand/hateoas-bundle":                "@stable",
+        "white-october/pagerfanta-bundle":          "dev-master",
+        "problematic/acl-manager-bundle":           "dev-master",
+        "mopa/bootstrap-bundle":                    "v3.0.0-beta3",
+        "phpunit/phpunit":                          "4.0.*@dev"
     },
     "scripts": {
         "post-install-cmd": [
