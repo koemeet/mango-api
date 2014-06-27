@@ -12,9 +12,7 @@ use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Component\ActionHandler\Data\ResultFetcherInterface;
 use Mango\API\RestBundle\Component\ActionHandler\Query\Query;
-use Mango\CoreDomain\Repository\PageRepositoryInterface;
-use Mango\CoreDomainBundle\Form\PageType;
-use Mango\CoreDomainBundle\Service\PageService;
+use Mango\Bundle\CoreBundle\Document\Route;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -25,40 +23,10 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  */
 class PagesController extends RestController
 {
-    /**
-     * @var PageRepositoryInterface
-     */
-    protected $pageRepository;
-
-    /**
-     * @var PageService
-     */
-    protected $pageService;
-
-    public function init()
-    {
-        $this->pageRepository = $this->get('mango_core_domain.page_repository');
-        $this->pageService = $this->get('mango_core_domain.page_service');
-    }
-
-//    /**
-//     * @param ResultFetcherInterface $resultFetcher
-//     */
-//    public function getPagesAction(ResultFetcherInterface $resultFetcher)
-//    {
-//        /** @var ResultFetcherInterface $resultFetcher */
-//        $resultFetcher = $this->get('mango_api_rest.phpcr.result_fetcher');
-//
-//        $query = new Query();
-//        $root = '/cms/applications/1';
-//
-//        // Find all pages for this application
-//        $resultFetcher->find($root . '/pages', $query);
-//    }
-
     public function getPagesAction()
     {
-        return $this->pageRepository->findAll();
+        $repository = $this->get('sylius.repository.page');
+        return array('pages' => $repository->findAll());
     }
 
     /**
@@ -85,11 +53,7 @@ class PagesController extends RestController
      */
     public function postPagesAction(Request $request)
     {
-        $form = $this->pageService->create($request);
-        if ($form->isValid()) {
-            return $this->createView($form, 201, 'get_page');
-        }
-        return $form;
+        return $this->domainService->create('page', $request->request->all());
     }
 
     /**
@@ -137,6 +101,16 @@ class PagesController extends RestController
      */
     public function newPagesAction(Request $request)
     {
+        $service = new DomainService();
+        $service->setContainer($this->container);
+
+        $form = $service->getForm('page');
+
+        $view = View::create(array('form' => $form->createView(), 'route' => 'get_page'));
+        $view->setFormat('html');
+        $view->setTemplate('MangoAPIRestBundle::new.html.twig');
+
+        return $view;
         return $this->generateNewView($this->postPagesAction($request), 'post_pages');
     }
 }

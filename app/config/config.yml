@@ -11,7 +11,7 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
-    csrf_protection: ~
+    csrf_protection: false
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -30,6 +30,9 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
+    form:
+        resources:
+            - 'MangoAPIRestBundle::forms.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -66,7 +69,7 @@ assetic:
 fos_rest:
     param_fetcher_listener: true
     body_listener: true
-    allowed_methods_listener: false
+    allowed_methods_listener: true
     view:
         view_response_listener: 'force'
         formats:
@@ -91,16 +94,16 @@ fos_rest:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
 
 # FOS OAuth Server Configuration
-#fos_oauth_server:
-#    db_driver: orm       # Driver availables: orm, mongodb, or propel
-#    client_class:           Mango\API\SecurityBundle\Entity\Client
-#    access_token_class:     Mango\API\SecurityBundle\Entity\AccessToken
-#    refresh_token_class:    Mango\API\SecurityBundle\Entity\RefreshToken
-#    auth_code_class:        Mango\API\SecurityBundle\Entity\AuthCode
-#    service:
-#        user_provider: fos_user.user_manager
-#        options:
-#            access_token_lifetime: 86400
+fos_oauth_server:
+    db_driver: orm       # Driver availables: orm, mongodb, or propel
+    client_class:           Mango\API\SecurityBundle\Entity\Client
+    access_token_class:     Mango\API\SecurityBundle\Entity\AccessToken
+    refresh_token_class:    Mango\API\SecurityBundle\Entity\RefreshToken
+    auth_code_class:        Mango\API\SecurityBundle\Entity\AuthCode
+    service:
+        user_provider: fos_user.user_manager
+        options:
+            access_token_lifetime: 86400
 
 # Mango API Configuration
 mango_api_rest:
@@ -126,6 +129,9 @@ jms_serializer:
             CoreDomainBundle:
                 namespace_prefix: "Mango\\CoreDomainBundle"
                 path: "@MangoAPIRestBundle/Resources/config/serializer/"
+            MangoContentBundle:
+                namespace_prefix: "Mango\\Bundle\\ContentBundle"
+                path: "@MangoAPIRestBundle/Resources/config/serializer/"
             Sylius:
                 namespace_prefix: "Sylius\\Component"
                 path: "@MangoAPIRestBundle/Resources/config/serializer/Sylius"
@@ -135,9 +141,3 @@ nelmio_api_doc:
         authentication:
             name: access_token
             delivery: query
-
-mopa_bootstrap:
-    form:
-        show_legend: false # default is true
-        show_child_legend: false # default is true
-        error_type: block # or inline which is default

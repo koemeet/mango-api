@@ -34,9 +34,12 @@ use Mango\CoreDomainBundle\Form\UserType;
 use Mango\CoreDomainBundle\Service\PageService;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PHPCR\Util\NodeHelper;
+use Symfony\Cmf\Bundle\ContentBundle\Model\StaticContent;
 use Symfony\Cmf\Bundle\MenuBundle\Doctrine\Phpcr\Menu;
 use Symfony\Cmf\Bundle\MenuBundle\Doctrine\Phpcr\MenuNode;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
@@ -57,8 +60,8 @@ class ApplicationsController extends RestController
 
     public function init()
     {
-        $this->applicationRepository = $this->get('mango_core_domain.application_repository');
-        $this->pageService = $this->get('mango_core_domain.page_service');
+        //$this->applicationRepository = $this->get('mango_core_domain.application_repository');
+        //$this->pageService = $this->get('mango_core_domain.page_service');
     }
 
     /**
@@ -78,16 +81,10 @@ class ApplicationsController extends RestController
      */
     public function getApplicationsAction(ParamFetcherInterface $paramFetcher)
     {
-        $query = $this->queryExtractor->extract($paramFetcher);
-        $applications = $this->applicationRepository->findByQuery($query)->getArrayCopy();
-
-        // This view is handled by JMS serializer.
-        return array(
-            'meta' => array(
-                'total' => 345
-            ),
-            'applications' => $applications
-        );
+        $repo = $this->get('sylius.repository.page');
+        $appRepo = $this->get('mango.repository.application');
+        $app = $appRepo->find(2);
+        return $repo->findByApplication($app);
     }
 
     /**
@@ -150,8 +147,16 @@ class ApplicationsController extends RestController
      */
     public function getApplicationPagesAction($id, ParamFetcherInterface $paramFetcher)
     {
-        $application = $this->applicationRepository->find($id);
-        $pages = $this->get('mango_core_domain.page_repository')->findByApplication($application);
+        $application = $this->get('mango.repository.application')->find($id);
+
+        if (!$application) {
+            throw new NotFoundHttpException(sprintf(
+                'Could not find application with id: %s',
+                $id
+            ));
+        }
+
+        $pages = $this->get('sylius.repository.page')->findByApplication($application);
 
         return array('pages' => $pages);
     }

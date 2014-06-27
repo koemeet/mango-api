@@ -12,6 +12,8 @@
         "sensio/generator-bundle":                  "~2.3",
         "incenteev/composer-parameter-handler":     "~2.0",
         "friendsofsymfony/rest-bundle":             "dev-master",
+        "friendsofsymfony/oauth2-php":              "dev-master",
+        "friendsofsymfony/oauth-server-bundle":     "dev-master",
         "jms/serializer-bundle":                    "dev-master",
         "nelmio/api-doc-bundle":                    "@stable",
         "willdurand/hateoas-bundle":                "@stable",
@@ -19,6 +21,10 @@
         "problematic/acl-manager-bundle":           "dev-master",
         "mopa/bootstrap-bundle":                    "v3.0.0-beta3",
         "phpunit/phpunit":                          "4.0.*@dev"
+    },
+    "require-dev": {
+        "behat/behat": "~3.0",
+        "guzzle/guzzle": "2.4.*"
     },
     "scripts": {
         "post-install-cmd": [

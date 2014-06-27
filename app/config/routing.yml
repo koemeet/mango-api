@@ -9,8 +9,8 @@ mango_api_rest:
     prefix: /v1
 
 # OAuth2 endpoints
-#fos_oauth_server_token:
-#    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
 
 # TODO
 #fos_oauth_server_authorize:

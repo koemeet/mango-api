@@ -1,0 +1,30 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Create new page{% endblock %}
+
+{% block content %}
+    <form class="form-horizontal" action="" method="POST" {{ form_enctype(form) }}>
+        <div class="panel">
+            <div class="panel-body">
+                <form class="form-inline">
+                    {{ form_row(form.title) }}
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h3>Routes</h3>
+                            <p>tan</p>
+                        </div>
+                        <div class="col-md-8">
+                            {{ form_row(form.routes.name) }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <input type="submit" value="Save" class="btn btn-blue pull-right">
+            </div>
+        </div>
+    </form>
+{% endblock %}

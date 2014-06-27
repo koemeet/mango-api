@@ -32,10 +32,18 @@ class MenusController extends RestController
      */
     protected $menuService;
 
-    public function init()
+//    public function init()
+//    {
+//        $this->menuRepository = $this->get('mango_core_domain.menu_repository');
+//        $this->menuService = $this->get('mango_core_domain.menu_service');
+//    }
+
+    public function getMenusAction()
     {
-        $this->menuRepository = $this->get('mango_core_domain.menu_repository');
-        $this->menuService = $this->get('mango_core_domain.menu_service');
+        $menus = $this->get('sylius.repository.menu')->findAll();
+        return array(
+            'menus' => $menus
+        );
     }
 
     /**
@@ -49,6 +57,8 @@ class MenusController extends RestController
      */
     public function getMenuAction($id)
     {
+        throw new \RuntimeException("Not implemented.");
+        die;
         $menu = $this->menuRepository->find($id);
         return array(
             'menus' => array($menu)
@@ -81,11 +91,7 @@ class MenusController extends RestController
      */
     public function postMenusAction(Request $request)
     {
-        $form = $this->menuService->create($request);
-        if ($form->isValid()) {
-            return $this->createCreatedView($form, 'get_menu');
-        }
-        return $form;
+        return $this->domainService->create('menu', $request->request->all());
     }
 
     /**

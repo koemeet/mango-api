@@ -1,4 +1,4 @@
 # This file is auto-generated during the composer install
 parameters:
-    mango.library_folder:   mango-library
-    locale:                 en
+    mango.library_folder: mango-library
+    locale: en

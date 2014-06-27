@@ -15,4 +15,4 @@ Mango\API\SecurityBundle\Entity\AuthCode:
             joinColumn:
                 nullable: false
         user:
-            targetEntity: Mango\CoreDomain\Model\User
+            targetEntity: Sylius\Component\Core\Model\User

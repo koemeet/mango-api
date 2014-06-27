@@ -1,0 +1,14 @@
+mango_api_products_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.product:indexAction
+        _sylius:
+            method: createPaginator
+            arguments: [$criteria, $sorting, $deleted]
+
+mango_api_products_show:
+    pattern: /{id}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.product:showAction

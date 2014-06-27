@@ -17,7 +17,7 @@ Mango\API\SecurityBundle\Entity\AccessToken:
                 referencedColumnName: id
                 nullable: false
         user:
-            targetEntity: Mango\CoreDomain\Model\User
+            targetEntity: Sylius\Component\Core\Model\User
             joinColumn:
                 name: user_id
                 referencedColumnName: id

@@ -1,7 +1,0 @@
-parameters:
-#    mango_api_image.example.class: Mango\API\ImageBundle\Example
-
-services:
-#    mango_api_image.example:
-#        class: %mango_api_image.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

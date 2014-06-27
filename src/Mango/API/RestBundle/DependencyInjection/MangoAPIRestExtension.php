@@ -26,7 +26,7 @@ class MangoAPIRestExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        foreach (array('services.yml') as $file) {
+        foreach (array('services.yml', 'serializer.yml') as $file) {
             $loader->load($file);
         }
     }

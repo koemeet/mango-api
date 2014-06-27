@@ -49,11 +49,11 @@ class UsersController extends RestController
     /**
      * Set commonly used services and repositories.
      */
-    public function init()
-    {
-        $this->userService = $this->container->get('mango_core_domain.user_service');
-        $this->userRepository = $this->get('mango_core_domain.user_repository');
-    }
+//    public function init()
+//    {
+//        $this->userService = $this->container->get('mango_core_domain.user_service');
+//        $this->userRepository = $this->get('mango_core_domain.user_repository');
+//    }
 
     /**
      * Retrieve all the users that uses Mango.
@@ -95,7 +95,12 @@ class UsersController extends RestController
      */
     public function getUserAction($id)
     {
-        return array('users' => array($this->userService->findByIdentifier($id)));
+        if ($id === '@me') {
+            $user = $this->get('security.context')->getToken()->getUser();
+        } else {
+            $user = $this->get('sylius.repository.user')->find($id);
+        }
+        return array('users' => array($user));
     }
 
     /**

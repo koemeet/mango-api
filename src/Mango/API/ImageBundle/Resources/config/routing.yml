@@ -1,3 +1,0 @@
-mango_api_image_homepage:
-    pattern:  /image
-    defaults: { _controller: MangoAPIImageBundle:Default:render }

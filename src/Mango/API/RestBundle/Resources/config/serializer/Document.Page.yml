@@ -1,4 +1,5 @@
-Mango\CoreDomainBundle\Document\Page:
+Mango\Bundle\ContentBundle\Document\Page:
     properties:
-        routes:
-            exclude: true
+        uuid:
+            # force uuid to be the "id" property
+            serialized_name: id

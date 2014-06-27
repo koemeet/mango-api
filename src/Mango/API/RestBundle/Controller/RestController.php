@@ -15,6 +15,7 @@ use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 use Mango\API\RestBundle\Component\ActionHandler\ActionHandler;
 use Mango\API\RestBundle\Request\ParamFetcher\QueryExtractor;
+use Mango\Bundle\CoreBundle\Service\DomainService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -35,6 +36,11 @@ class RestController extends FOSRestController
     protected $queryExtractor;
 
     /**
+     * @var DomainService
+     */
+    protected $domainService;
+
+    /**
      * Initialize controller
      */
     protected function init() {}
@@ -48,6 +54,7 @@ class RestController extends FOSRestController
     {
         $this->container = $container;
         $this->queryExtractor = $this->get('mango_api_rest.query_extractor');
+        $this->domainService = $this->get('mango.domain_service');
         $this->init();
     }
 

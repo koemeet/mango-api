@@ -1,59 +1,65 @@
-mango_api_rest_companies:
-    type: rest
-    resource: MangoAPIRestBundle:Companies
-
-#mango_api_rest_customers:
+#mango_api_rest_companies:
 #    type: rest
-#    resource: MangoAPIRestBundle:Customers
-
+#    resource: MangoAPIRestBundle:Companies
+#
+##mango_api_rest_customers:
+##    type: rest
+##    resource: MangoAPIRestBundle:Customers
+#
 mango_api_rest_users:
     type: rest
     resource: MangoAPIRestBundle:Users
-
-mango_api_rest_routes:
-    type: rest
-    resource: MangoAPIRestBundle:Routes
-
-mango_api_rest_posts:
-    type: rest
-    resource: MangoAPIRestBundle:Posts
-
+#
+#mango_api_rest_routes:
+#    type: rest
+#    resource: MangoAPIRestBundle:Routes
+#
+#mango_api_rest_posts:
+#    type: rest
+#    resource: MangoAPIRestBundle:Posts
+#
 mango_api_rest_applications:
     type: rest
     resource: MangoAPIRestBundle:Applications
-
-mango_api_rest_workspaces:
-    type: rest
-    resource: MangoAPIRestBundle:Workspaces
-
+#
+#mango_api_rest_workspaces:
+#    type: rest
+#    resource: MangoAPIRestBundle:Workspaces
+#
 mango_api_rest_pages:
     type: rest
     resource: MangoAPIRestBundle:Pages
+#
+#mango_api_rest_modules:
+#    type: rest
+#    resource: MangoAPIRestBundle:Modules
+#
 
-mango_api_rest_modules:
-    type: rest
-    resource: MangoAPIRestBundle:Modules
+#mango_api_rest_products:
+#    type: rest
+#    resource: MangoAPIRestBundle:Product
 
-mango_api_rest_products:
-    type: rest
-    resource: MangoAPIRestBundle:Products
-
-mango_api_rest_shopproducts:
-    type: rest
-    resource: MangoAPIRestBundle:Shopproducts
-
-mango_api_rest_categories:
-    type: rest
-    resource: MangoAPIRestBundle:Categories
-
-mango_api_rest_employees:
-    type: rest
-    resource: MangoAPIRestBundle:Employees
-
+#
+#mango_api_rest_shopproducts:
+#    type: rest
+#    resource: MangoAPIRestBundle:Shopproducts
+#
+#mango_api_rest_categories:
+#    type: rest
+#    resource: MangoAPIRestBundle:Categories
+#
+#mango_api_rest_employees:
+#    type: rest
+#    resource: MangoAPIRestBundle:Employees
+#
 mango_api_rest_menus:
     type: rest
     resource: MangoAPIRestBundle:Menus
+#
+#mango_api_rest_images:
+#    type: rest
+#    resource: MangoAPIRestBundle:Images
 
-mango_api_rest_images:
-    type: rest
-    resource: MangoAPIRestBundle:Images
+mango_api_products:
+    resource: @MangoAPIRestBundle/Resources/config/routing/products.yml
+    prefix: /products
