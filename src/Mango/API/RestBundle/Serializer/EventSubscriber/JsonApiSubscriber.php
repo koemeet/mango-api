@@ -92,7 +92,6 @@ class JsonApiSubscriber implements EventSubscriberInterface
         $embeddeds = $this->embeddedsInlineDeferrer->handleItems($object, $embeddeds, $context);
         $links  = $this->linksInlineDeferrer->handleItems($object, $links, $context);
 
-
         if (count($links) > 0) {
             $this->jsonSerializer->serializeLinks($links, $event->getVisitor(), $context);
         }

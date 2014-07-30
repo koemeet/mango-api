@@ -47,13 +47,6 @@ assetic:
         #yui_css:
         #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
-# This API uses doctrine to manage OAuth related stuff
-#doctrine:
-#    orm:
-#        mappings:
-#            FOSOAuthServerBundle: ~
-#            MangoAPISecurityBundle: ~
-
 #mango_odm_bridge:
 #    metadata:
 #        directories:
@@ -88,22 +81,22 @@ fos_rest:
     routing_loader:
         default_format: json
     serializer:
-        serialize_null: false
+        serialize_null: true
     exception:
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
 
 # FOS OAuth Server Configuration
 fos_oauth_server:
-    db_driver: orm       # Driver availables: orm, mongodb, or propel
-    client_class:           Mango\API\SecurityBundle\Entity\Client
-    access_token_class:     Mango\API\SecurityBundle\Entity\AccessToken
-    refresh_token_class:    Mango\API\SecurityBundle\Entity\RefreshToken
-    auth_code_class:        Mango\API\SecurityBundle\Entity\AuthCode
+    db_driver: orm          # Driver availables: orm, mongodb, or propel
+    client_class:           Mango\API\RestBundle\Entity\Client
+    access_token_class:     Mango\API\RestBundle\Entity\AccessToken
+    refresh_token_class:    Mango\API\RestBundle\Entity\RefreshToken
+    auth_code_class:        Mango\API\RestBundle\Entity\AuthCode
     service:
         user_provider: fos_user.user_manager
         options:
-            access_token_lifetime: 86400
+            access_token_lifetime: 86400 # access tokens live for 1 day (24 hours)
 
 # Mango API Configuration
 mango_api_rest:
@@ -117,18 +110,18 @@ jms_serializer:
     metadata:
         auto_detection: true
         directories:
+            CmfRouting:
+                namespace_prefix: Symfony\Cmf\Bundle\RoutingBundle
+                path: @MangoAPIRestBundle/Resources/config/serializer/Cmf/Routing
             FOSUserBundle:
                 namespace_prefix: "FOS\\UserBundle"
                 path: "@MangoAPIRestBundle/Resources/config/serializer/FOSUser"
-#            CmfRoutingBundle:
-#                namespace_prefix: "Symfony\\Cmf\\Bundle\\RoutingBundle"
-#                path: "@MangoAPIRestBundle/Resources/config/serializer/CmfRouting"
-            CoreDomain:
-                namespace_prefix: "Mango\\CoreDomain"
-                path: "@MangoAPIRestBundle/Resources/config/serializer/"
-            CoreDomainBundle:
-                namespace_prefix: "Mango\\CoreDomainBundle"
-                path: "@MangoAPIRestBundle/Resources/config/serializer/"
+            MangoCore:
+                namespace_prefix: Mango\Component\Core
+                path: @MangoAPIRestBundle/Resources/config/serializer/Mango/Core
+            MangoContent:
+                namespace_prefix: Mango\Component\Content
+                path: @MangoAPIRestBundle/Resources/config/serializer/Mango/Content
             MangoContentBundle:
                 namespace_prefix: "Mango\\Bundle\\ContentBundle"
                 path: "@MangoAPIRestBundle/Resources/config/serializer/"

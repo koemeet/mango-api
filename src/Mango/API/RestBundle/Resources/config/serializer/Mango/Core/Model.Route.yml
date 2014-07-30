@@ -1,0 +1,8 @@
+Mango\Component\Core\Model\Route:
+    virtual_properties:
+        getLocale:
+            serialized_name: locale
+
+    properties:
+        uuid:
+            serialized_name: id

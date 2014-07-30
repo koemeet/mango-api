@@ -35,10 +35,14 @@ class JsonSerializationVisitor extends \JMS\Serializer\JsonSerializationVisitor
         if (isset($root['linked']) && isset($root['linked'][$rootName])) {
             $primary =& $root['linked'][$rootName];
             foreach ($primary as $k => $item) {
-                if (isset($root[$rootName]) && in_array($item, $root[$rootName])) {
+                if (!empty($root[$rootName]) && in_array($item, $root[$rootName])) {
                     unset($primary[$k]);
                     $primary = array_values($primary);
                 }
+            }
+
+            if (empty($primary)) {
+                unset($root['linked'][$rootName]);
             }
         }
 

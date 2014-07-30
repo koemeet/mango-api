@@ -98,7 +98,7 @@ class ApplicationsController extends RestController
      */
     public function getApplicationAction($id)
     {
-        $results = $this->applicationRepository->find($id);
+        $results = $this->get('mango.repository.application')->find($id);
 
         // TODO: Nice way to do this shit
         return array(
@@ -197,18 +197,16 @@ class ApplicationsController extends RestController
      */
     public function getApplicationMenusAction($id)
     {
-        $application = $this->applicationRepository->find($id);
+        $application = $this->get('mango.repository.application')->find($id);
         if (!$application) {
-            throw new ResourceNotFoundException(sprintf('Application with id "%s" does not exist.', $id));
+            throw new NotFoundHttpException(sprintf(
+                'Could not find application with id: %s',
+                $id
+            ));
         }
 
-        /** @var MenuRepositoryInterface $menuRepository */
-        $menuRepository = $this->get('mango_core_domain.menu_repository');
-        $menus = $menuRepository->findByApplication($application);
-
-        return array(
-            'menus' => $menus
-        );
+        $menus = $this->get('mango.repository.menu')->findByApplication($application);
+        return array('menus' => $menus);
     }
 
     /**

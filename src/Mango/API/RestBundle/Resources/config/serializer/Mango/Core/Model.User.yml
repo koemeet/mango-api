@@ -1,0 +1,23 @@
+Mango\Component\Core\Model\User:
+    relations:
+        - rel: workspace
+          attributes:
+            topLevel: true
+            type: workspaces
+          exclusion:
+            exclude_if: expr(object.getWorkspace() === null)
+          embedded:
+            content: expr(object.getWorkspace())
+
+        - rel: applications
+          href:
+            route: get_user_applications
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+
+    properties:
+        workspace:
+            exclude: true
+        applications:
+            exclude: true

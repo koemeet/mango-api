@@ -15,6 +15,7 @@ use Mango\CoreDomain\Repository\UserRepositoryInterface;
 use Mango\CoreDomain\Repository\WorkspaceRepositoryInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 
@@ -25,7 +26,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class WorkspacesController extends RestController
 {
     /**
-     * @var WorkspaceRepositoryInterface
+     * @var RepositoryInterface
      */
     protected $workspaceRepository;
 
@@ -36,8 +37,7 @@ class WorkspacesController extends RestController
 
     public function init()
     {
-        $this->workspaceRepository = $this->get('mango_core_domain.workspace_repository');
-        $this->userRepository = $this->get('mango_core_domain.user_repository');
+        $this->workspaceRepository = $this->get('mango.repository.workspace');
     }
 
     /**
@@ -56,8 +56,8 @@ class WorkspacesController extends RestController
      */
     public function getWorkspacesAction(ParamFetcherInterface $paramFetcher)
     {
-        $query = $this->queryExtractor->extract($paramFetcher);
-        return array('workspaces' => $this->workspaceRepository->findByQuery($query));
+        // TODO: Retrieve all workspaces for the current user.
+        return array('workspaces' => $this->workspaceRepository->findAll());
     }
 
     /**

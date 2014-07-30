@@ -1,0 +1,28 @@
+Mango\Component\Core\Model\Application:
+    relations:
+        - rel: users
+          attributes:
+            topLevel: true
+            type: users
+          exclusion:
+            exclude_if: expr(object.getUsers() === null)
+          embedded:
+            content: expr(object.getUsers())
+
+        - rel: pages
+          href:
+            route: get_application_pages
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+
+        - rel: menus
+          href:
+            route: get_application_menus
+            parameters:
+                id: expr(object.getId())
+            absolute: true
+
+    properties:
+        users:
+            exclude: true

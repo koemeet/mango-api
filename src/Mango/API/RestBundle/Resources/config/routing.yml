@@ -21,15 +21,15 @@ mango_api_rest_users:
 mango_api_rest_applications:
     type: rest
     resource: MangoAPIRestBundle:Applications
-#
-#mango_api_rest_workspaces:
-#    type: rest
-#    resource: MangoAPIRestBundle:Workspaces
-#
+
+mango_api_rest_workspaces:
+    type: rest
+    resource: MangoAPIRestBundle:Workspaces
+
 mango_api_rest_pages:
     type: rest
     resource: MangoAPIRestBundle:Pages
-#
+
 #mango_api_rest_modules:
 #    type: rest
 #    resource: MangoAPIRestBundle:Modules

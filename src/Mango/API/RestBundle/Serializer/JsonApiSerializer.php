@@ -88,7 +88,9 @@ class JsonApiSerializer implements JsonSerializerInterface
 //            );
         }
 
-        $visitor->addData('links', $serializedLinks);
+        if (!empty($serializedLinks)) {
+            $visitor->addData('links', $serializedLinks);
+        }
     }
 
     /**

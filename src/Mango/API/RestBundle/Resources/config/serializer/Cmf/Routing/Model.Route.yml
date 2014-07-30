@@ -1,4 +1,4 @@
 Symfony\Cmf\Bundle\RoutingBundle\Model\Route:
     properties:
-#        content:
-#            exclude: true
+        content:
+            exclude: true

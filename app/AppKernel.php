@@ -19,9 +19,7 @@ class AppKernel extends Kernel
     {
         $bundles = array(
             new \Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-//            new \Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new \Mango\API\RestBundle\MangoAPIRestBundle(),
-            new \Mango\API\SecurityBundle\MangoAPISecurityBundle(),
             new \Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
             new \FOS\OAuthServerBundle\FOSOAuthServerBundle()
         );

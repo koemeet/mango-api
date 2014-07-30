@@ -1,0 +1,19 @@
+Mango\Component\Content\Model\MenuNode:
+    relations:
+        - rel: content
+          href:
+            route: get_user_applications
+            parameters:
+                id: 2
+            absolute: true
+          attributes:
+            topLevel: true
+            type: pages
+          exclusion:
+            exclude_if: expr(object.getContent() === null)
+          embedded:
+            content: expr(object.getContent())
+
+    properties:
+        content:
+            exclude: true

@@ -29,6 +29,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Security\Core\SecurityContext;
 
 /**
  * Class UsersController
@@ -100,6 +101,7 @@ class UsersController extends RestController
         } else {
             $user = $this->get('sylius.repository.user')->find($id);
         }
+
         return array('users' => array($user));
     }
 
@@ -214,20 +216,20 @@ class UsersController extends RestController
      */
     public function getUserApplicationsAction($id, ParamFetcherInterface $paramFetcher)
     {
-        $user = $this->userService->findByIdentifier($id);
+        $repository = $this->get('mango.repository.application');
+
+        if ($id === '@me') {
+            $user = $this->get('security.context')->getToken()->getUser();
+        } else {
+            $user = $this->get('sylius.repository.user')->find($id);
+        }
 
         if (!$user) {
             throw new ResourceNotFoundException(sprintf("Could not find user with identifier %s.", $id));
         }
 
-        /** @var ApplicationRepositoryInterface $applicationRepository */
-        $applicationRepository = $this->get('mango_core_domain.application_repository');
-        $applicationRepository->findByQuery($this->extract($paramFetcher));
-
-        // Find applications for the given user
-        $applications = $applicationRepository->findByUser($user, $this->extract($paramFetcher));
-
-        return array('user_applications' => $user->getApplications());
+        $applications = $repository->findByUser($user);
+        return array('applications' => $applications);
     }
 
     /**

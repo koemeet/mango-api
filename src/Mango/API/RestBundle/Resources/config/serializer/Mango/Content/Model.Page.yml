@@ -1,0 +1,11 @@
+Mango\Component\Content\Model\Page:
+    relations:
+        - rel: routes
+          exclusion:
+            exclude_if: expr(object.getRoutes() === null)
+          embedded:
+            content: expr(object.getRoutes())
+
+    properties:
+        routes:
+            exclude: true

@@ -5,10 +5,10 @@ parameters:
     mango_api_rest.serializer.link_factory.class: Mango\API\RestBundle\Serializer\Factory\LinkFactory
     mango_api_rest.serializer.array_collection_handler.class: Mango\API\RestBundle\Serializer\Handler\ArrayCollectionHandler
 services:
-    mango_api_rest.serializer.array_object_handler:
-        class: %mango_api_rest.serializer.array_object_handler.class%
-        tags:
-            - { name: jms_serializer.subscribing_handler }
+#    mango_api_rest.serializer.array_object_handler:
+#        class: %mango_api_rest.serializer.array_object_handler.class%
+#        tags:
+#            - { name: jms_serializer.subscribing_handler }
 
     # this handler makes sure that all array collections are associative arrays with proper keys
     mango_api_rest.serializer.array_collection_handler:
